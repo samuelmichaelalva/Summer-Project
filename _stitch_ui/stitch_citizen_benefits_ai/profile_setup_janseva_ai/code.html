@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Setup - JanSeva AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-container": "#996100",
+                    "surface-container-low": "#f2f3ff",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#6cf8bb",
+                    "on-surface-variant": "#434655",
+                    "on-primary-fixed": "#00174b",
+                    "outline": "#737686",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffddb8",
+                    "primary-fixed": "#dbe1ff",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed": "#2a1700",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf8ff",
+                    "secondary": "#006c49",
+                    "surface-bright": "#faf8ff",
+                    "inverse-on-surface": "#eef0ff",
+                    "inverse-surface": "#283044",
+                    "surface-container": "#eaedff",
+                    "surface-dim": "#d2d9f4",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-container": "#eeefff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#131b2e",
+                    "tertiary": "#784b00",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-tint": "#0053db",
+                    "outline-variant": "#c3c6d7",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#dae2fd",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-container": "#00714d",
+                    "on-background": "#131b2e",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "1rem",
+                    "2xl": "3rem",
+                    "max-width": "1280px",
+                    "sm": "0.5rem",
+                    "lg": "1.5rem",
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "xl": "2rem",
+                    "base": "4px",
+                    "xs": "0.25rem",
+                    "md": "1rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .step-transition { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-bar-glow { box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-extrabold text-primary">JanSeva AI</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-md py-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">language</span>
+<span class="font-label-md text-label-md hidden md:block">English</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-colors">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">JS</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-start py-xl px-margin-mobile">
+<!-- Onboarding Container -->
+<div class="w-full max-w-[640px] flex flex-col gap-xl">
+<!-- Progress Stepper Header -->
+<div class="flex flex-col gap-md">
+<div class="flex justify-between items-end mb-1">
+<h1 class="font-headline-md text-headline-md text-on-surface">Complete Your Profile</h1>
+<span class="font-label-md text-label-md text-primary" id="progress-text">Step 1 of 3</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary progress-bar-glow step-transition" id="progress-indicator" style="width: 33.33%;"></div>
+</div>
+<div class="flex justify-between">
+<div class="flex items-center gap-xs">
+<div class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">1</div>
+<span class="text-label-sm font-label-sm text-primary">Personal</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-[10px] font-bold" id="step-2-indicator">2</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant" id="step-2-label">Occupation</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-[10px] font-bold" id="step-3-indicator">3</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant" id="step-3-label">Income</span>
+</div>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg md:p-2xl shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+<form class="relative" id="onboarding-form">
+<!-- Step 1: Personal Information -->
+<div class="step-content space-y-lg" id="step-1">
+<div class="space-y-md">
+<h2 class="font-headline-sm text-[20px] font-bold text-on-surface">Personal Information</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Please provide your details as per your Aadhaar or government ID.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Full Name</label>
+<input class="h-11 rounded-lg border-outline-variant focus:ring-primary focus:border-primary transition-all" placeholder="e.g. Rahul Sharma" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Age</label>
+<input class="h-11 rounded-lg border-outline-variant focus:ring-primary focus:border-primary transition-all" placeholder="Years" type="number"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">State of Residence</label>
+<select class="h-11 rounded-lg border-outline-variant focus:ring-primary focus:border-primary transition-all">
+<option value="">Select State</option>
+<option>Maharashtra</option>
+<option>Uttar Pradesh</option>
+<option>Karnataka</option>
+<option>Tamil Nadu</option>
+<option>Bihar</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Category</label>
+<select class="h-11 rounded-lg border-outline-variant focus:ring-primary focus:border-primary transition-all">
+<option value="">Select Category</option>
+<option>General</option>
+<option>OBC</option>
+<option>SC</option>
+<option>ST</option>
+<option>EWS</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Step 2: Occupation (Hidden by default) -->
+<div class="step-content hidden space-y-lg" id="step-2">
+<div class="space-y-md">
+<h2 class="font-headline-sm text-[20px] font-bold text-on-surface">What do you do?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">This helps us find employment and training schemes tailored for you.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<label class="relative flex items-center p-md border border-outline-variant rounded-xl hover:bg-surface-container-low cursor-pointer transition-all group has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<input class="hidden" name="occupation" type="radio" value="farmer"/>
+<span class="material-symbols-outlined text-primary mr-md">agriculture</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Farmer</span>
+<span class="text-[12px] text-on-surface-variant">Agriculture &amp; allied activities</span>
+</div>
+<span class="material-symbols-outlined absolute right-4 text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+<label class="relative flex items-center p-md border border-outline-variant rounded-xl hover:bg-surface-container-low cursor-pointer transition-all group has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<input class="hidden" name="occupation" type="radio" value="student"/>
+<span class="material-symbols-outlined text-primary mr-md">school</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Student</span>
+<span class="text-[12px] text-on-surface-variant">Currently enrolled in education</span>
+</div>
+<span class="material-symbols-outlined absolute right-4 text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+<label class="relative flex items-center p-md border border-outline-variant rounded-xl hover:bg-surface-container-low cursor-pointer transition-all group has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<input class="hidden" name="occupation" type="radio" value="business"/>
+<span class="material-symbols-outlined text-primary mr-md">storefront</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Self-Employed</span>
+<span class="text-[12px] text-on-surface-variant">Own business or shop</span>
+</div>
+<span class="material-symbols-outlined absolute right-4 text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+<label class="relative flex items-center p-md border border-outline-variant rounded-xl hover:bg-surface-container-low cursor-pointer transition-all group has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<input class="hidden" name="occupation" type="radio" value="laborer"/>
+<span class="material-symbols-outlined text-primary mr-md">construction</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Daily Wage</span>
+<span class="text-[12px] text-on-surface-variant">Manual labor / Construction</span>
+</div>
+<span class="material-symbols-outlined absolute right-4 text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+</div>
+</div>
+<!-- Step 3: Income details (Hidden by default) -->
+<div class="step-content hidden space-y-lg" id="step-3">
+<div class="space-y-md">
+<h2 class="font-headline-sm text-[20px] font-bold text-on-surface">Income &amp; Benefits</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Most government schemes are based on annual household income thresholds.</p>
+</div>
+<div class="space-y-xl">
+<div class="flex flex-col gap-md">
+<label class="font-label-md text-label-md text-on-surface">Annual Household Income (₹)</label>
+<input class="w-full h-2 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary" id="incomeRange" max="2000000" min="0" step="50000" type="range" value="300000"/>
+<div class="flex justify-between items-center bg-surface-container p-md rounded-lg">
+<span class="text-label-md font-label-md">Estimated Income:</span>
+<span class="text-headline-md font-bold text-primary" id="incomeDisplay">₹ 3,00,000</span>
+</div>
+</div>
+<div class="p-lg bg-tertiary-fixed/20 border border-tertiary-fixed rounded-xl flex gap-md">
+<span class="material-symbols-outlined text-tertiary">info</span>
+<p class="text-label-sm font-label-sm text-on-tertiary-fixed-variant">Providing accurate data ensures you only see schemes for which you are genuinely eligible. This data is encrypted and secure.</p>
+</div>
+</div>
+</div>
+<!-- Navigation Controls -->
+<div class="flex items-center justify-between mt-2xl pt-lg border-t border-outline-variant">
+<button class="flex items-center gap-xs px-xl py-md rounded-lg text-on-surface-variant font-label-md text-label-md opacity-0 pointer-events-none transition-all hover:bg-surface-container-low" id="back-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                            Back
+                        </button>
+<button class="flex items-center gap-xs px-2xl py-md bg-primary text-white rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant shadow-md hover:shadow-lg transition-all active:scale-95" id="next-btn" type="button">
+                            Next Step
+                            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Visual Decorative Area -->
+<div class="flex flex-col items-center gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Secured by NIC Digital India Encryption</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shell Implementation) -->
+<footer class="w-full py-xl px-margin-mobile md:px-margin-desktop flex flex-col items-center gap-md text-center bg-surface-container-low border-t border-outline-variant mt-auto">
+<span class="text-label-md font-label-md font-bold text-on-surface">JanSeva AI</span>
+<div class="flex flex-wrap justify-center gap-xl">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">About Us</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Disclaimer</a>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">© 2024 Digital India Benefits Portal. Government of India Initiative.</p>
+</footer>
+<script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const steps = [
+            document.getElementById('step-1'),
+            document.getElementById('step-2'),
+            document.getElementById('step-3')
+        ];
+        const progressIndicator = document.getElementById('progress-indicator');
+        const progressText = document.getElementById('progress-text');
+        const incomeRange = document.getElementById('incomeRange');
+        const incomeDisplay = document.getElementById('incomeDisplay');
+
+        // Update Income Display
+        incomeRange.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value).toLocaleString('en-IN');
+            incomeDisplay.innerText = `₹ ${val}`;
+        });
+
+        function updateStepUI() {
+            // Update progress bar
+            const percentage = (currentStep / totalSteps) * 100;
+            progressIndicator.style.width = `${percentage}%`;
+            progressText.innerText = `Step ${currentStep} of ${totalSteps}`;
+
+            // Update step indicators
+            for (let i = 2; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`step-${i}-indicator`);
+                const label = document.getElementById(`step-${i}-label`);
+                if (currentStep >= i) {
+                    indicator.classList.remove('bg-surface-variant', 'text-on-surface-variant');
+                    indicator.classList.add('bg-primary', 'text-white');
+                    label.classList.add('text-primary');
+                    label.classList.remove('text-on-surface-variant');
+                } else {
+                    indicator.classList.add('bg-surface-variant', 'text-on-surface-variant');
+                    indicator.classList.remove('bg-primary', 'text-white');
+                    label.classList.remove('text-primary');
+                    label.classList.add('text-on-surface-variant');
+                }
+            }
+
+            // Show/Hide step content
+            steps.forEach((step, index) => {
+                if (index + 1 === currentStep) {
+                    step.classList.remove('hidden');
+                    step.classList.add('animate-in', 'fade-in', 'slide-in-from-right-4', 'duration-500');
+                } else {
+                    step.classList.add('hidden');
+                }
+            });
+
+            // Handle Buttons
+            if (currentStep === 1) {
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            if (currentStep === totalSteps) {
+                nextBtn.innerHTML = 'Complete Setup <span class="material-symbols-outlined text-[20px]">check</span>';
+                nextBtn.classList.add('bg-secondary');
+            } else {
+                nextBtn.innerHTML = 'Next Step <span class="material-symbols-outlined text-[20px]">arrow_forward</span>';
+                nextBtn.classList.remove('bg-secondary');
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStepUI();
+            } else {
+                // Final Submission Effect
+                nextBtn.disabled = true;
+                nextBtn.innerHTML = 'Processing...';
+                setTimeout(() => {
+                    alert('Profile setup complete! Welcome to JanSeva AI.');
+                    window.location.reload();
+                }, 1500);
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        });
+
+        // Initialize UI
+        updateStepUI();
+    </script>
+</body></html>

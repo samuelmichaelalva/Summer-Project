@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JanSeva AI - Scheme Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-container": "#996100",
+                    "surface-container-low": "#f2f3ff",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#6cf8bb",
+                    "on-surface-variant": "#434655",
+                    "on-primary-fixed": "#00174b",
+                    "outline": "#737686",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffddb8",
+                    "primary-fixed": "#dbe1ff",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed": "#2a1700",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf8ff",
+                    "secondary": "#006c49",
+                    "surface-bright": "#faf8ff",
+                    "inverse-on-surface": "#eef0ff",
+                    "inverse-surface": "#283044",
+                    "surface-container": "#eaedff",
+                    "surface-dim": "#d2d9f4",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-container": "#eeefff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#131b2e",
+                    "tertiary": "#784b00",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-tint": "#0053db",
+                    "outline-variant": "#c3c6d7",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#dae2fd",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-container": "#00714d",
+                    "on-background": "#131b2e",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "1rem",
+                    "2xl": "3rem",
+                    "max-width": "1280px",
+                    "sm": "0.5rem",
+                    "lg": "1.5rem",
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "xl": "2rem",
+                    "base": "4px",
+                    "xs": "0.25rem",
+                    "md": "1rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(226, 232, 240, 0.5); }
+        .sidebar-sticky { top: 5rem; height: calc(100vh - 6rem); }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary">JanSeva AI</span>
+</div>
+<div class="hidden md:flex items-center gap-xl">
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors px-3 py-1 rounded-lg font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary px-3 py-1 font-label-md text-label-md" href="#">Scheme Listing</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors px-3 py-1 rounded-lg font-label-md text-label-md" href="#">AI Assistant</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">language</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">account_circle</button>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-lg text-label-sm font-label-sm text-on-surface-variant">
+<span>Home</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Schemes</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary">PM Matru Vandana Yojana</span>
+</nav>
+<!-- Header: Scheme Identity -->
+<section class="mb-2xl flex flex-col md:flex-row md:items-end justify-between gap-lg">
+<div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-label-sm font-label-sm mb-md inline-block">Maternity &amp; Healthcare</span>
+<h1 class="text-headline-xl font-headline-xl text-on-surface">PM Matru Vandana Yojana (PMMVY)</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-sm">Empowering expectant mothers with financial stability for better nutrition.</p>
+</div>
+<div class="bg-surface-container-high p-lg rounded-xl border border-outline-variant flex flex-col items-center md:items-end">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Benefit Amount</span>
+<span class="text-headline-lg font-headline-lg text-primary">₹5,000</span>
+<span class="text-label-sm font-label-sm text-secondary font-bold">Direct Benefit Transfer (DBT)</span>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Main Content -->
+<div class="lg:col-span-8 flex flex-col gap-2xl">
+<!-- 1. Scheme Overview -->
+<article class="bg-surface-container-lowest p-lg md:p-xl rounded-xl border border-outline-variant">
+<div class="flex items-center gap-md mb-lg">
+<div class="bg-primary-container text-on-primary-container p-sm rounded-lg">
+<span class="material-symbols-outlined">info</span>
+</div>
+<h2 class="text-headline-md font-headline-md">Scheme Overview &amp; Benefits</h2>
+</div>
+<div class="text-body-md font-body-md text-on-surface-variant space-y-md">
+<p>Pradhan Mantri Matru Vandana Yojana is a maternity benefit program run by the Government of India. It is a conditional cash transfer scheme for pregnant and lactating women of 19 years of age or above for the first live birth.</p>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-md pt-md">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span>Nutritional support for mother and child.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span>Partial wage compensation during rest.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span>Incentivized institutional deliveries.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<span>Encourages timely immunization.</span>
+</li>
+</ul>
+</div>
+</article>
+<!-- 2. Eligibility Criteria & Personal Insight (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Checklist -->
+<section class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant h-full">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase mb-lg tracking-widest">Eligibility Criteria</h3>
+<ul class="space-y-lg">
+<li class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="text-body-md font-body-md">Indian Citizen</span>
+</div>
+<span class="text-label-sm font-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded">Verified</span>
+</li>
+<li class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="text-body-md font-body-md">Age ≥ 19 years</span>
+</div>
+<span class="text-label-sm font-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded">Verified</span>
+</li>
+<li class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="text-body-md font-body-md">First Pregnancy</span>
+</div>
+<span class="text-label-sm font-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded">Verified</span>
+</li>
+<li class="flex items-center justify-between group opacity-50">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-outline">circle</span>
+<span class="text-body-md font-body-md">Not a Govt. Employee</span>
+</div>
+<span class="text-label-sm font-label-sm bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded">Manual</span>
+</li>
+</ul>
+</section>
+<!-- Personal Insight -->
+<section class="bg-primary text-on-primary p-lg rounded-xl border border-primary relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="text-label-md font-label-md uppercase font-bold tracking-widest">Why You Qualify</h3>
+</div>
+<p class="text-body-md font-body-md leading-relaxed mb-lg">
+                                Based on your linked Aadhaar profile, you meet 3 out of 4 primary conditions. Your location in a rural development block also qualifies you for the additional "Anganwadi Support" bonus.
+                            </p>
+<div class="bg-on-primary/10 rounded-lg p-md">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-xs">
+<span>Profile Match Confidence</span>
+<span>92%</span>
+</div>
+<div class="w-full bg-on-primary/20 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed w-[92%] h-full rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Abstract AI graphic element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-on-primary/5 rounded-full blur-3xl"></div>
+</section>
+</div>
+<!-- 3. Required Documents -->
+<section class="bg-surface-container-lowest p-lg md:p-xl rounded-xl border border-outline-variant">
+<h2 class="text-headline-md font-headline-md mb-xl">Required Documents</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="flex flex-col items-center text-center p-md border border-outline-variant rounded-lg bg-surface hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm">fingerprint</span>
+<span class="text-label-md font-label-md mb-xs">Aadhaar Card</span>
+<span class="text-label-sm font-label-sm text-secondary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">link</span> Linked
+                            </span>
+</div>
+<div class="flex flex-col items-center text-center p-md border border-outline-variant rounded-lg bg-surface hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm">account_balance</span>
+<span class="text-label-md font-label-md mb-xs">Bank Passbook</span>
+<span class="text-label-sm font-label-sm text-secondary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">link</span> Linked
+                            </span>
+</div>
+<div class="flex flex-col items-center text-center p-md border border-outline-variant border-dashed rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-outline text-4xl mb-sm">upload_file</span>
+<span class="text-label-md font-label-md mb-xs">MCP Card</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant italic">Upload required</span>
+</div>
+</div>
+</section>
+<!-- 4. Application Guide -->
+<section>
+<h2 class="text-headline-md font-headline-md mb-xl">Application Guide</h2>
+<div class="space-y-lg relative">
+<!-- Connecting Line -->
+<div class="absolute left-6 top-4 bottom-4 w-0.5 bg-outline-variant hidden md:block"></div>
+<div class="flex flex-col md:flex-row gap-lg relative">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg shrink-0 z-10">1</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex-1">
+<h4 class="font-bold text-body-lg mb-xs">Register at Anganwadi</h4>
+<p class="text-on-surface-variant text-body-md">Visit your nearest Anganwadi Centre (AWC) or approved Health Facility and register using Form 1A.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-lg relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-lg shrink-0 z-10">2</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex-1">
+<h4 class="font-bold text-body-lg mb-xs">First Installment Registration</h4>
+<p class="text-on-surface-variant text-body-md">Submit Form 1A along with Aadhaar details and Bank Account details within 150 days of LMP.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-lg relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-lg shrink-0 z-10">3</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex-1">
+<h4 class="font-bold text-body-lg mb-xs">Direct Benefit Transfer</h4>
+<p class="text-on-surface-variant text-body-md">Upon verification, the amount will be credited directly to your bank account via DBT.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar -->
+<aside class="lg:col-span-4">
+<div class="lg:sticky sidebar-sticky flex flex-col gap-lg">
+<!-- Main CTA Card -->
+<div class="bg-surface-container-high p-lg rounded-2xl border border-outline shadow-lg flex flex-col gap-md">
+<button class="w-full bg-primary text-on-primary py-lg rounded-xl font-bold text-headline-md hover:brightness-110 active:scale-95 transition-all shadow-md flex items-center justify-center gap-md">
+                            Apply Now
+                            <span class="material-symbols-outlined">open_in_new</span>
+</button>
+<button class="w-full bg-surface text-primary border border-primary py-md rounded-xl font-bold text-body-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-md">
+<span class="material-symbols-outlined">smart_toy</span>
+                            Ask AI Assistant
+                        </button>
+<p class="text-label-sm font-label-sm text-center text-on-surface-variant px-md">
+                            Estimated time to finish application: <span class="font-bold">12 minutes</span>.
+                        </p>
+</div>
+<!-- Scheme Snapshot -->
+<div class="bg-surface-container-lowest p-lg rounded-2xl border border-outline-variant">
+<h3 class="font-bold mb-md text-on-surface">Quick Stats</h3>
+<div class="space-y-md">
+<div class="flex justify-between items-center py-xs border-b border-outline-variant border-dashed">
+<span class="text-on-surface-variant text-body-md">Success Rate</span>
+<span class="font-bold text-secondary">94%</span>
+</div>
+<div class="flex justify-between items-center py-xs border-b border-outline-variant border-dashed">
+<span class="text-on-surface-variant text-body-md">Processing Time</span>
+<span class="font-bold">15-20 Days</span>
+</div>
+<div class="flex justify-between items-center py-xs">
+<span class="text-on-surface-variant text-body-md">Active Users</span>
+<span class="font-bold">2.4M+</span>
+</div>
+</div>
+</div>
+<!-- Related Links -->
+<div class="p-lg">
+<h3 class="font-bold mb-sm text-on-surface">Documents</h3>
+<a class="flex items-center gap-sm text-primary hover:underline text-body-md mb-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                            Official Guidelines (PDF)
+                        </a>
+<a class="flex items-center gap-sm text-primary hover:underline text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                            Frequently Asked Questions
+                        </a>
+</div>
+<!-- Image Section -->
+<div class="mt-auto">
+<img class="rounded-xl w-full h-48 object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="A heartwarmingly lit close-up portrait of an expectant mother in a vibrant traditional Indian saree, her hands gently resting on her belly. The background is a soft, warm bokeh of a clean village clinic with bright, optimistic daylight streaming through a window. The style is professional documentary photography, focusing on human dignity and hope, using a color palette of warm ambers and soft blues to match the primary branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTE_XCh8otcfkO5XX0n4hIZhxq1ZJnLEUnV9ImvuWO765XqyFhv858ylrLjTFB0Hnm5rGk4U4ETz9TxMx2T0Hgtcdps2LOks3KnXS-LsCnn3X1e7fFX6ynafZUXKdYRO2UPiZEwUHeTtm9rUilTwz6F1RfA3egreKkUJfd6L3ZCsNBwnIrAusrVofXmzihbUPcv0m6fKV68p2-tO1YKq3fzyezb0jKYnO4p4rp0vwizUAgVk7H0xPScuV6nQn-Xxmq1jwACvBCw7k"/>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-margin-mobile md:px-margin-desktop flex flex-col items-center gap-md text-center bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline mt-2xl">
+<span class="text-label-md font-label-md font-bold text-on-surface">JanSeva AI</span>
+<nav class="flex flex-wrap justify-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-sm font-label-sm" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-sm font-label-sm" href="#">Contact Support</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-sm font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-label-sm font-label-sm" href="#">Disclaimer</a>
+</nav>
+<p class="text-on-surface-variant dark:text-surface-variant text-body-md font-body-md max-w-lg">
+            © 2024 Digital India Benefits Portal. Government of India Initiative. JanSeva AI utilizes secure government APIs for verification.
+        </p>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant lg:hidden shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-label-sm font-label-sm">Schemes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-sm font-label-sm">Assistant</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for eligibility checklist
+        document.querySelectorAll('li.group').forEach(item => {
+            item.addEventListener('click', () => {
+                const icon = item.querySelector('.material-symbols-outlined');
+                if (icon.innerText === 'circle') {
+                    icon.innerText = 'task_alt';
+                    icon.classList.remove('text-outline');
+                    icon.classList.add('text-secondary');
+                    item.classList.remove('opacity-50');
+                    item.querySelector('span:last-child').innerText = 'Checked';
+                    item.querySelector('span:last-child').classList.replace('bg-surface-container-high', 'bg-secondary-container');
+                    item.querySelector('span:last-child').classList.replace('text-on-surface-variant', 'text-on-secondary-container');
+                }
+            });
+        });
+    </script>
+</body></html>

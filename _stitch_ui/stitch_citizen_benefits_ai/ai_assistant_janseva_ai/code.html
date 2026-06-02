@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JanSeva AI - Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-container": "#996100",
+                    "surface-container-low": "#f2f3ff",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#6cf8bb",
+                    "on-surface-variant": "#434655",
+                    "on-primary-fixed": "#00174b",
+                    "outline": "#737686",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffddb8",
+                    "primary-fixed": "#dbe1ff",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed": "#2a1700",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf8ff",
+                    "secondary": "#006c49",
+                    "surface-bright": "#faf8ff",
+                    "inverse-on-surface": "#eef0ff",
+                    "inverse-surface": "#283044",
+                    "surface-container": "#eaedff",
+                    "surface-dim": "#d2d9f4",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-container": "#eeefff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#131b2e",
+                    "tertiary": "#784b00",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-tint": "#0053db",
+                    "outline-variant": "#c3c6d7",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#dae2fd",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed": "#002113",
+                    "on-secondary-container": "#00714d",
+                    "on-background": "#131b2e",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "1rem",
+                    "2xl": "3rem",
+                    "max-width": "1280px",
+                    "sm": "0.5rem",
+                    "lg": "1.5rem",
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "xl": "2rem",
+                    "base": "4px",
+                    "xs": "0.25rem",
+                    "md": "1rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .chat-bubble-user { border-radius: 1.25rem 1.25rem 0.25rem 1.25rem; }
+        .chat-bubble-ai { border-radius: 1.25rem 1.25rem 1.25rem 0.25rem; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c3c6d7; border-radius: 10px; }
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); opacity: 1; }
+            70% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+        .status-pulse { animation: pulse-green 2s infinite; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar (Desktop) -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 p-md flex flex-col gap-sm h-full w-64 hidden lg:flex bg-surface-container-lowest border-r border-outline-variant">
+<div class="mb-lg">
+<span class="text-headline-sm font-headline-sm font-bold text-primary">JanSeva AI</span>
+</div>
+<div class="mb-xl p-md rounded-xl bg-surface-container flex items-center gap-md">
+<img alt="Profile" class="w-10 h-10 rounded-full" data-alt="A professional headshot of a middle-aged Indian man with a warm, confident smile, wearing a clean white shirt. The background is a soft-focus office interior with high-key natural lighting, maintaining a clean light-mode aesthetic. The image is crisp, detailed, and projects an aura of trust and digital literacy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWJQJ9hUqcsq5k5qr1lxpiM-SO5TwPdBbRg_wmfwzpao9gw--aCi56kiV5cxzUsTKsyYhUvx7Zk9pXrU2l59H-nqqGMXRCfl6MFMVOvKoCLuLGuwWMM-j80uMPISmw094z7w7X91Wvebg0nomPyjjCF9XAEjmQtokvOXa0qGSbtCJ_TeD6SLpcW82nu3djNXRlxpjGyFxt326mo2Dh99cEB5C8_Doo37GnkGOSqLRsEgpHgPuMlx080-fiuBwLCvxdjVfMc9CflyE"/>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Welcome, Citizen</p>
+<p class="text-label-sm font-label-sm text-primary">Verify Aadhaar</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-label-md font-label-md">Scheme Listing</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="text-label-md font-label-md">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-md font-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+<button class="mt-auto flex items-center gap-md p-md text-on-surface-variant hover:bg-error-container hover:text-error transition-all rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Logout</span>
+</button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 flex flex-col h-full bg-surface">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-md">
+<button class="lg:hidden p-sm text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-sm">
+<span class="w-3 h-3 bg-secondary rounded-full status-pulse"></span>
+<span class="text-label-md font-label-md text-secondary font-bold">AI Online &amp; Ready</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden md:flex items-center gap-xs px-md py-xs bg-surface-container-low rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">language</span>
+<span class="text-label-md font-label-md">English (India)</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Assistant Page Content -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Chat Sidebar (Suggestions & History) -->
+<div class="hidden md:flex w-80 flex-col border-r border-outline-variant bg-surface-container-low p-lg gap-xl overflow-y-auto custom-scrollbar">
+<section>
+<h3 class="text-label-sm font-label-sm text-outline mb-md uppercase tracking-wider">Suggested Questions</h3>
+<div class="space-y-sm">
+<button class="w-full text-left p-md bg-surface border border-outline-variant rounded-xl hover:border-primary hover:text-primary transition-all text-body-md font-body-md shadow-sm">
+                            "What schemes can I get for my farm?"
+                        </button>
+<button class="w-full text-left p-md bg-surface border border-outline-variant rounded-xl hover:border-primary hover:text-primary transition-all text-body-md font-body-md shadow-sm">
+                            "How to apply for PM-Kisan?"
+                        </button>
+<button class="w-full text-left p-md bg-surface border border-outline-variant rounded-xl hover:border-primary hover:text-primary transition-all text-body-md font-body-md shadow-sm">
+                            "Show me education loans for girls."
+                        </button>
+</div>
+</section>
+<section>
+<div class="flex justify-between items-center mb-md">
+<h3 class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Previous Chats</h3>
+<button class="text-primary text-label-sm font-label-sm">Clear All</button>
+</div>
+<div class="space-y-sm">
+<div class="flex items-start gap-md p-md hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chat_bubble</span>
+<div class="overflow-hidden">
+<p class="text-label-md font-label-md truncate">Housing assistance status</p>
+<p class="text-label-sm font-label-sm text-outline">Yesterday</p>
+</div>
+</div>
+<div class="flex items-start gap-md p-md hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chat_bubble</span>
+<div class="overflow-hidden">
+<p class="text-label-md font-label-md truncate">Solar pump subsidy 2024</p>
+<p class="text-label-sm font-label-sm text-outline">2 days ago</p>
+</div>
+</div>
+</div>
+</section>
+<div class="mt-auto p-md rounded-xl bg-primary/5 border border-primary/10">
+<p class="text-label-sm font-label-sm text-primary mb-xs">Pro Tip</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">You can upload documents to get them analyzed for scheme eligibility.</p>
+</div>
+</div>
+<!-- Main Chat Area -->
+<div class="flex-1 flex flex-col relative bg-surface-container-lowest">
+<!-- Chat Messages Scroll Container -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-xl space-y-xl custom-scrollbar" id="chat-container">
+<!-- AI Message -->
+<div class="flex gap-md max-w-3xl">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="chat-bubble-ai bg-white border border-outline-variant p-lg shadow-sm text-on-surface-variant text-body-md font-body-md leading-relaxed">
+                                Namaste! I am your JanSeva AI Assistant. I can help you find government schemes, check eligibility, and guide you through application processes. 
+                                <br/><br/>
+                                How can I assist you today?
+                            </div>
+<span class="text-label-sm font-label-sm text-outline px-sm">10:02 AM</span>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-md max-w-3xl ml-auto flex-row-reverse">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 shadow-sm border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div class="flex flex-col items-end gap-sm">
+<div class="chat-bubble-user bg-primary text-on-primary p-lg shadow-md text-body-md font-body-md leading-relaxed">
+                                I have a 5-acre farm in Maharashtra. What water-related subsidies are available for me?
+                            </div>
+<span class="text-label-sm font-label-sm text-outline px-sm">10:05 AM</span>
+</div>
+</div>
+<!-- AI Rich Response -->
+<div class="flex gap-md max-w-3xl">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="flex flex-col gap-lg flex-1">
+<div class="chat-bubble-ai bg-white border border-outline-variant p-lg shadow-sm text-on-surface-variant text-body-md font-body-md leading-relaxed">
+                                Based on your location and land size, here are the top 3 water-related schemes you are eligible for. These provide significant subsidies for irrigation and solar equipment:
+                            </div>
+<!-- Rich Card Embed -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="bg-white rounded-xl border border-outline-variant p-md shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container text-label-sm font-label-sm rounded-full">High Match</span>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">water_drop</span>
+</div>
+<h4 class="text-label-md font-label-md font-bold mb-xs">PM-KUSUM Scheme</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-md">Up to 60% subsidy on Solar Water Pumps for irrigation.</p>
+<button class="w-full py-sm bg-surface-container hover:bg-primary hover:text-on-primary transition-colors text-label-sm font-label-sm rounded-lg">View Details</button>
+</div>
+<div class="bg-white rounded-xl border border-outline-variant p-md shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container text-label-sm font-label-sm rounded-full">90% Subsidy</span>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">opacity</span>
+</div>
+<h4 class="text-label-md font-label-md font-bold mb-xs">Drip Irrigation Project</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-md">Subsidy for installing micro-irrigation systems.</p>
+<button class="w-full py-sm bg-surface-container hover:bg-primary hover:text-on-primary transition-colors text-label-sm font-label-sm rounded-lg">View Details</button>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline px-sm">10:05 AM</span>
+</div>
+</div>
+</div>
+<!-- Input Area (Docked Bottom) -->
+<div class="p-margin-mobile md:p-xl bg-surface-container-lowest border-t border-outline-variant">
+<div class="max-w-4xl mx-auto flex items-end gap-md">
+<div class="flex-1 glass-panel rounded-2xl flex flex-col p-sm shadow-lg focus-within:ring-2 focus-within:ring-primary transition-all">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-body-md font-body-md p-md resize-none h-12 max-h-40 custom-scrollbar" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'" placeholder="Type your query here..." rows="1"></textarea>
+<div class="flex items-center justify-between px-md pb-xs">
+<div class="flex gap-sm">
+<button class="p-xs hover:bg-surface-container rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<button class="p-xs hover:bg-surface-container rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="p-xs hover:bg-surface-container rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">image</span>
+</button>
+</div>
+<button class="p-xs text-outline text-label-sm font-label-sm">45/1000</button>
+</div>
+</div>
+<button class="w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center shadow-lg hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[28px]">send</span>
+</button>
+</div>
+<p class="text-center text-label-sm font-label-sm text-outline mt-md">JanSeva AI can make mistakes. Please verify critical information with government offices.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-2 bg-surface border-t border-outline-variant shadow-lg lg:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-label-sm font-label-sm">Schemes</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="text-label-sm font-label-sm">Assistant</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for scroll position
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // Auto-focus the textarea on load
+        window.addEventListener('load', () => {
+            document.querySelector('textarea').focus();
+        });
+
+        // Simple button click ripple effect or feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 100);
+            });
+        });
+    </script>
+</body></html>

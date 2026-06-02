@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JanSeva AI - Citizen Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#2563eb",
+                      "on-tertiary-container": "#ffeedd",
+                      "tertiary-container": "#996100",
+                      "surface-container-low": "#f2f3ff",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#6cf8bb",
+                      "on-surface-variant": "#434655",
+                      "on-primary-fixed": "#00174b",
+                      "outline": "#737686",
+                      "inverse-primary": "#b4c5ff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#ffddb8",
+                      "primary-fixed": "#dbe1ff",
+                      "primary": "#004ac6",
+                      "on-tertiary-fixed": "#2a1700",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#dae2fd",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#faf8ff",
+                      "secondary": "#006c49",
+                      "surface-bright": "#faf8ff",
+                      "inverse-on-surface": "#eef0ff",
+                      "inverse-surface": "#283044",
+                      "surface-container": "#eaedff",
+                      "surface-dim": "#d2d9f4",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-primary-container": "#eeefff",
+                      "error": "#ba1a1a",
+                      "on-surface": "#131b2e",
+                      "tertiary": "#784b00",
+                      "secondary-fixed": "#6ffbbe",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "surface-tint": "#0053db",
+                      "outline-variant": "#c3c6d7",
+                      "on-error": "#ffffff",
+                      "background": "#faf8ff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface-variant": "#dae2fd",
+                      "on-secondary-fixed-variant": "#005236",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e2e7ff",
+                      "on-secondary-fixed": "#002113",
+                      "on-secondary-container": "#00714d",
+                      "on-background": "#131b2e",
+                      "secondary-fixed-dim": "#4edea3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "1rem",
+                      "2xl": "3rem",
+                      "max-width": "1280px",
+                      "sm": "0.5rem",
+                      "lg": "1.5rem",
+                      "margin-desktop": "2.5rem",
+                      "gutter": "1.5rem",
+                      "xl": "2rem",
+                      "base": "4px",
+                      "xs": "0.25rem",
+                      "md": "1rem"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "headline-xl": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-extrabold text-primary">JanSeva AI</span>
+</div>
+<div class="hidden md:flex flex-1 max-w-md mx-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary text-body-md" placeholder="Search schemes, benefits, or help..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 bottom-0 z-40 p-md flex flex-col gap-sm h-full w-64 hidden lg:flex bg-surface-container-lowest border-r border-outline-variant">
+<div class="px-md py-lg mb-md">
+<div class="flex items-center gap-md mb-xs">
+<img alt="User Profile Picture" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-fixed" data-alt="A professional studio portrait of a young Indian man with a friendly expression, wearing a clean white shirt. The background is a soft, out-of-focus neutral grey, reflecting a modern corporate and trustworthy aesthetic. The lighting is balanced and professional, highlighting his face with clarity to evoke a sense of digital identity and verified security." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJrlpRV5rG7n2V9dRfREgQOUfgcyG9J1pfISfe-psGnMHpZ8C_84urf3D9AroYfSwwy0GcI-PEQv9-j-2iLtmMyacYTfZvDCSZt-nMTeWqy5fzyDLZuFE9EHNldnZoH-NRrx3j8tI2JaHII-RXA2B5dzENHDaKK3z-Kz_Ep_QoC3XeBYfO2XizS5M3NTOLbR-wUABWEPWNz0W7D_O4SFsht3OpLbyzK0iXtQaRXKraIpK7IRVOBly4gDT-oWYArw59DK93d9_n7Wk"/>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Welcome, Citizen</p>
+<p class="text-[12px] text-on-surface-variant">Verify your Aadhaar</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-label-md text-label-md">Scheme Listing</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md px-md py-3 text-error hover:bg-error-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 p-margin-mobile md:p-margin-desktop overflow-x-hidden">
+<div class="max-w-max-width mx-auto">
+<!-- Hero Metrics / Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-xl">
+<!-- Total Benefits Card -->
+<div class="md:col-span-2 relative overflow-hidden bg-primary-container rounded-xl p-lg text-white shadow-lg flex flex-col justify-between min-h-[220px]">
+<div class="relative z-10">
+<h2 class="font-label-md text-label-md opacity-80 uppercase tracking-wider mb-xs">Potential Annual Benefits</h2>
+<p class="font-headline-xl text-headline-xl">₹ 1,42,500</p>
+</div>
+<div class="relative z-10 flex items-center gap-md">
+<span class="bg-white/20 px-3 py-1 rounded-full text-label-sm font-label-sm backdrop-blur-sm">8 New Eligible Schemes Found</span>
+<button class="bg-white text-primary px-lg py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors active:scale-95">Claim Benefits</button>
+</div>
+<!-- Abstract BG Decor -->
+<div class="absolute -right-12 -top-12 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute -left-12 -bottom-12 w-48 h-48 bg-secondary-container/20 rounded-full blur-2xl"></div>
+</div>
+<!-- Profile Completion Gauge -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-md">Profile Completion</h3>
+<div class="relative w-32 h-32 mb-md">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="91.1" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-headline-md text-headline-md text-on-surface">75%</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mb-sm">Add Income Certificate to unlock 4 more schemes.</p>
+<button class="text-primary font-label-md text-label-md hover:underline">Update Profile</button>
+</div>
+</div>
+<!-- Main Content Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Left/Middle Content: Schemes -->
+<div class="lg:col-span-2 space-y-xl">
+<!-- Eligible Schemes Section -->
+<section>
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface">Eligible Schemes</h2>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Scheme Card 1 -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-md">
+<div class="bg-surface-container p-2 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="health_and_safety">health_and_safety</span>
+</div>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm">Highly Eligible</span>
+</div>
+<h3 class="font-headline-sm font-bold text-on-surface mb-xs">Ayushman Bharat PMJAY</h3>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2">Health cover of up to Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-md">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-label-sm font-label-sm">Applies in 2d</span>
+</div>
+<button class="text-primary font-label-md text-label-md flex items-center gap-xs group-hover:translate-x-1 transition-transform">
+                                            Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Scheme Card 2 -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-md">
+<div class="bg-surface-container p-2 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="agriculture">agriculture</span>
+</div>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm">Verified</span>
+</div>
+<h3 class="font-headline-sm font-bold text-on-surface mb-xs">PM-Kisan Samman Nidhi</h3>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2">Direct benefit transfer of Rs. 6,000 per year in three equal installments to small farmer families.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-md">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="payments">payments</span>
+<span class="text-label-sm font-label-sm">Next Pay: Sept 24</span>
+</div>
+<button class="text-primary font-label-md text-label-md flex items-center gap-xs group-hover:translate-x-1 transition-transform">
+                                            Check Status <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- New Schemes Section -->
+<section>
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface">New Relevant Schemes</h2>
+</div>
+<div class="space-y-md">
+<div class="flex items-center gap-md p-md bg-surface-container-low rounded-xl border border-outline-variant">
+<img alt="Infrastructure Image" class="w-24 h-24 rounded-lg object-cover hidden md:block" data-alt="A cinematic, wide shot of a modern Indian infrastructure project at sunset, featuring sleek steel bridges and solar panels. The lighting is golden and warm, casting long shadows and highlighting the texture of the modern construction materials. The style is professional and optimistic, symbolizing national progress and digital governance through a clean and sophisticated visual language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC33-RgfmZ0kbqNpxxWUmQOfgsoJkNE8myXZGQXdJH2KWWMAZcoW3ukcpUs9nAnYUWXA1J3qsMnKxFLVf9PP8JgkioXcfd6WjxgGl-X9K_ukISZX9NB504v4b1IV1ZsHfByKStbuY5z1uD9qDjK9P8iYzt8-iSTN2oXixPA99e1yzv73xe8bYicreBC_obkhI-cTuhM0G0N73uXmFjiZHfMAakZsxKhkJljlQR-rmSFNtDb-I8ZmskjuDhE4Eed4AZ1gyhLwRgWMBg"/>
+<div class="flex-1">
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] font-bold uppercase mb-xs inline-block">Education</span>
+<h4 class="font-label-md text-label-md text-on-surface">PM-SHRI Schools Grant</h4>
+<p class="text-body-md text-on-surface-variant text-sm line-clamp-1">Support for school transformation under National Education Policy.</p>
+</div>
+<button class="p-2 rounded-full border border-outline text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Sidebar: Alerts & Activity -->
+<div class="space-y-xl">
+<!-- Expiring Soon Alerts -->
+<section class="bg-error-container/30 border border-error-container rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md text-error">
+<span class="material-symbols-outlined" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h2 class="font-label-md text-label-md font-bold uppercase">Expiring Soon</h2>
+</div>
+<div class="space-y-md">
+<div class="bg-white/60 p-md rounded-lg border border-error-container/50">
+<p class="font-label-md text-label-md text-on-background mb-xs">Aadhaar-PAN Linking</p>
+<p class="text-[12px] text-error mb-md font-bold">Deadline: 48 Hours remaining</p>
+<button class="w-full bg-error text-white py-2 rounded-lg text-label-sm font-label-sm hover:opacity-90 transition-opacity">Complete Now</button>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<h2 class="font-label-md text-label-md font-bold text-on-surface mb-lg">Recent Activity</h2>
+<div class="space-y-lg relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-container">
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container" data-icon="check_circle">check_circle</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface">Income Certificate Verified</p>
+<p class="text-[12px] text-on-surface-variant">2 hours ago</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-primary-container flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-white" data-icon="edit">edit</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface">Updated Profile Details</p>
+<p class="text-[12px] text-on-surface-variant">Yesterday, 4:30 PM</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-surface-container flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" data-icon="visibility">visibility</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface">Viewed "PM-Awas Yojana"</p>
+<p class="text-[12px] text-on-surface-variant">Aug 12, 11:20 AM</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant lg:hidden shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="text-label-sm font-label-sm">Schemes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-sm font-label-sm">Assistant</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Contextual FAB (Only on dashboard) -->
+<button class="fixed bottom-20 right-6 md:bottom-10 md:right-10 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40 group">
+<span class="material-symbols-outlined text-[28px]" data-icon="smart_toy">smart_toy</span>
+<span class="absolute right-full mr-4 bg-on-surface text-white px-4 py-2 rounded-lg text-label-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Ask JanSeva AI</span>
+</button>
+<!-- Footer -->
+<footer class="w-full py-xl px-margin-mobile md:px-margin-desktop flex flex-col items-center gap-md text-center bg-surface-container-low border-t border-outline-variant lg:ml-64 lg:w-[calc(100%-16rem)]">
+<div class="flex gap-lg flex-wrap justify-center">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">About Us</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all" href="#">Disclaimer</a>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">© 2024 Digital India Benefits Portal. Government of India Initiative.</p>
+</footer>
+<script>
+        // Micro-interactions for dashboard
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Subtle ripple effect or state change logic
+                console.log('Interaction captured on:', el.innerText || 'Icon Button');
+            });
+        });
+
+        // Initialize any tooltips or dynamic elements
+        window.addEventListener('DOMContentLoaded', () => {
+            // Animate progress ring on load
+            const circle = document.querySelector('circle.text-primary');
+            if (circle) {
+                // Already handled by CSS transitions but can be triggered via JS if needed
+            }
+        });
+    </script>
+</body></html>
