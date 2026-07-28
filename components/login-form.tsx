@@ -5,7 +5,21 @@ import { useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui";
 
-const strongPassword = "JanSeva@2026#Secure";
+function generateStrongPassword() {
+  const letters = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+  const digits = "23456789";
+  const symbols = "!@#$%&*?";
+  const all = letters + digits + symbols;
+  const required = [
+    letters[Math.floor(Math.random() * 24)],
+    letters[Math.floor(Math.random() * letters.length)].toLowerCase(),
+    digits[Math.floor(Math.random() * digits.length)],
+    symbols[Math.floor(Math.random() * symbols.length)],
+  ];
+
+  const rest = Array.from({ length: 12 }, () => all[Math.floor(Math.random() * all.length)]);
+  return [...required, ...rest].sort(() => Math.random() - 0.5).join("");
+}
 
 function getPasswordScore(password: string) {
   return [
@@ -121,13 +135,18 @@ export function LoginForm() {
         <label className="block">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-semibold">Password</span>
-            <button
-              type="button"
-              onClick={() => setPassword(strongPassword)}
-              className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
-            >
-              <KeyRound size={14} /> Use strong password
-            </button>
+            {mode === "register" && (
+              <button
+                type="button"
+                onClick={() => {
+                  setPassword(generateStrongPassword());
+                  setShowPassword(true);
+                }}
+                className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
+              >
+                <KeyRound size={14} /> Suggest strong password
+              </button>
+            )}
           </div>
           <div className="relative">
             <input
