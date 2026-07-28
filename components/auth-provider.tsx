@@ -3,41 +3,92 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-type User = { name: string; contact: string };
+type User = { id: string; name: string; contact: string };
 
 type AuthContextValue = {
   user: User | null;
-  login: (contact: string) => void;
-  logout: () => void;
+  loading: boolean;
+  login: (contact: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, contact: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("janseva_user");
-    if (stored) setUser(JSON.parse(stored));
+    async function loadSession() {
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = await res.json();
+        if (data.authenticated) {
+          setUser(data.user);
+        }
+      } catch (err) {
+        console.error("Failed to load session:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadSession();
   }, []);
 
   const value = useMemo(
     () => ({
       user,
-      login: (contact: string) => {
-        const nextUser = { name: "Citizen", contact };
-        window.localStorage.setItem("janseva_user", JSON.stringify(nextUser));
-        setUser(nextUser);
-        router.push("/profile-setup");
+      loading,
+      login: async (contact: string, password?: string) => {
+        try {
+          const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ contact, password: password || "password123" }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            return { success: false, error: data.error || "Login failed" };
+          }
+          setUser(data.user);
+          router.push("/profile-setup");
+          return { success: true };
+        } catch (err) {
+          return { success: false, error: "Network error. Please try again." };
+        }
       },
-      logout: () => {
-        window.localStorage.removeItem("janseva_user");
-        setUser(null);
-        router.push("/login");
+      register: async (name: string, contact: string, password?: string) => {
+        try {
+          const res = await fetch("/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, contact, password: password || "password123" }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            return { success: false, error: data.error || "Registration failed" };
+          }
+          setUser(data.user);
+          router.push("/profile-setup");
+          return { success: true };
+        } catch (err) {
+          return { success: false, error: "Network error. Please try again." };
+        }
+      },
+      logout: async () => {
+        try {
+          await fetch("/api/auth/logout", { method: "POST" });
+        } catch (err) {
+          console.error("Logout failed:", err);
+        } finally {
+          setUser(null);
+          router.push("/login");
+        }
       },
     }),
-    [router, user],
+    [router, user, loading],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -8,13 +8,25 @@ export function ProfileSummary() {
   const [profile, setProfile] = useState<StoredProfile | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("janseva_profile");
-    if (stored) setProfile(JSON.parse(stored));
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/profile");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.profile.state) {
+            setProfile(data.profile);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch profile summary:", err);
+      }
+    }
+    fetchProfile();
   }, []);
 
   return (
     <p className="mt-3 text-sm leading-6 text-on-surface-variant">
-      {profile ? `${profile.state} • ${profile.income} • ${profile.primaryNeed}` : "Add income certificate to unlock 4 more schemes."}
+      {profile ? `${profile.state} • ${profile.income} • ${profile.primaryNeed}` : "Configure your profile details to see tailored schemes."}
     </p>
   );
 }
