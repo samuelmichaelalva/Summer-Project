@@ -1,9 +1,21 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, KeyRound } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui";
+
+const strongPassword = "JanSeva@2026#Secure";
+
+function getPasswordScore(password: string) {
+  return [
+    password.length >= 8,
+    /[A-Z]/.test(password),
+    /[a-z]/.test(password),
+    /\d/.test(password),
+    /[^A-Za-z0-9]/.test(password),
+  ].filter(Boolean).length;
+}
 
 export function LoginForm() {
   const { login, register } = useAuth();
@@ -13,10 +25,25 @@ export function LoginForm() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordScore = getPasswordScore(password);
+  const nameError = mode === "register" && name && !/^[A-Za-z][A-Za-z\s.'-]{1,}$/.test(name)
+    ? "Enter a valid name using letters and spaces."
+    : null;
+  const passwordLabel = passwordScore >= 5 ? "Strong" : passwordScore >= 3 ? "Good" : password ? "Weak" : "Required";
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
+    if (nameError) {
+      setError(nameError);
+      return;
+    }
+    if (mode === "register" && passwordScore < 3) {
+      setError("Use a stronger password or choose the suggested password.");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -75,7 +102,9 @@ export function LoginForm() {
             label="Full Name"
             placeholder="Enter your full name"
             value={name}
-            onChange={setName}
+            onChange={(value) => setName(value.replace(/[0-9]/g, ""))}
+            error={nameError}
+            autoComplete="name"
             required
           />
         )}
@@ -85,17 +114,51 @@ export function LoginForm() {
           placeholder="Enter registered contact"
           value={contact}
           onChange={setContact}
+          autoComplete={mode === "login" ? "username" : "email"}
           required
         />
 
-        <Field
-          label="Password"
-          placeholder="Enter password"
-          type="password"
-          value={password}
-          onChange={setPassword}
-          required
-        />
+        <label className="block">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-semibold">Password</span>
+            <button
+              type="button"
+              onClick={() => setPassword(strongPassword)}
+              className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
+            >
+              <KeyRound size={14} /> Use strong password
+            </button>
+          </div>
+          <div className="relative">
+            <input
+              className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 pr-11 text-sm"
+              placeholder="Enter password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              required
+            />
+            <button
+              type="button"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {mode === "register" && (
+            <div className="mt-2">
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((level) => (
+                  <span key={level} className={`h-1.5 flex-1 rounded-full ${passwordScore >= level ? "bg-primary" : "bg-surface-container"}`} />
+                ))}
+              </div>
+              <p className="mt-1 text-xs font-semibold text-on-surface-variant">Password strength: {passwordLabel}</p>
+            </div>
+          )}
+        </label>
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-on-surface-variant">
@@ -124,7 +187,9 @@ function Field({
   type = "text",
   value,
   onChange,
-  required = false
+  required = false,
+  error,
+  autoComplete,
 }: {
   label: string;
   placeholder: string;
@@ -132,18 +197,22 @@ function Field({
   value?: string;
   onChange?: (value: string) => void;
   required?: boolean;
+  error?: string | null;
+  autoComplete?: string;
 }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-semibold">{label}</span>
       <input
-        className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm"
+        className={`h-11 w-full rounded-lg border bg-white px-3 text-sm ${error ? "border-error" : "border-outline-variant"}`}
         placeholder={placeholder}
         type={type}
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
         required={required}
+        autoComplete={autoComplete}
       />
+      {error && <p className="mt-1 text-xs font-semibold text-error">{error}</p>}
     </label>
   );
 }

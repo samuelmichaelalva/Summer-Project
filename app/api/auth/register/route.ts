@@ -11,6 +11,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    if (!/^[A-Za-z][A-Za-z\s.'-]{1,}$/.test(name)) {
+      return NextResponse.json({ error: "Enter a valid name using letters and spaces" }, { status: 400 });
+    }
+
+    if (password.length < 8) {
+      return NextResponse.json({ error: "Password must be at least 8 characters" }, { status: 400 });
+    }
+
     // Check if user already exists
     const existing = await prisma.user.findUnique({
       where: { contact },
@@ -25,7 +33,7 @@ export async function POST(request: Request) {
     // Create user in DB
     const user = await prisma.user.create({
       data: {
-        name,
+        name: name.trim().replace(/\s+/g, " "),
         contact,
         passwordHash,
         preferredLanguage: "English",
