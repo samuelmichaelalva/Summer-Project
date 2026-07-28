@@ -77,8 +77,8 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
   const items = ["Dashboard", "Scheme Listing", "AI Assistant", "Profile", "Settings"];
   const hrefs: Record<string, string> = {
     Dashboard: "/dashboard",
-    "Scheme Listing": "/schemes/ayushman-bharat",
-    "AI Assistant": "/dashboard",
+    "Scheme Listing": "/schemes",
+    "AI Assistant": "/assistant",
     Profile: "/profile-setup",
     Settings: "/settings",
   };

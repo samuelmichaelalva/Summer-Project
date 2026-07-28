@@ -1,7 +1,10 @@
 import { ArrowRight, CheckCircle2, Download, HeartPulse, Share2 } from "lucide-react";
 import { AppShell, Badge, Button, Card } from "@/components/ui";
+import { featuredScheme } from "@/lib/data";
 
 export default function SchemeDetailsPage() {
+  const scheme = featuredScheme;
+
   return (
     <AppShell active="Scheme Listing">
       <div className="mx-auto max-w-content">
@@ -11,17 +14,17 @@ export default function SchemeDetailsPage() {
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <Badge tone="green">Highly Eligible</Badge>
-                  <h1 className="mt-4 text-3xl font-extrabold">Ayushman Bharat PMJAY</h1>
-                  <p className="mt-3 max-w-2xl text-on-surface-variant">Health coverage for secondary and tertiary hospitalization, presented as a clear citizen-facing scheme detail page.</p>
+                  <h1 className="mt-4 text-3xl font-extrabold">{scheme.title}</h1>
+                  <p className="mt-3 max-w-2xl text-on-surface-variant">{scheme.benefit}</p>
                 </div>
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-white">
                   <HeartPulse size={28} />
                 </div>
               </div>
               <div className="grid gap-4 md:grid-cols-3">
-                <Metric label="Annual cover" value="Rs. 5 lakh" />
-                <Metric label="Application time" value="10 mins" />
-                <Metric label="Documents" value="3 needed" />
+                <Metric label="Benefit" value={scheme.amount} />
+                <Metric label="Match score" value={`${scheme.matchScore}%`} />
+                <Metric label="Documents" value={`${scheme.documents.length} needed`} />
               </div>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button>
@@ -39,7 +42,7 @@ export default function SchemeDetailsPage() {
             <Card className="mt-6">
               <h2 className="text-xl font-bold">Eligibility Checklist</h2>
               <div className="mt-5 grid gap-3">
-                {["Resident family with eligible income profile", "Valid identity document", "Household details available", "Mobile number for verification"].map((item) => (
+                {scheme.eligibility.map((item) => (
                   <div key={item} className="flex items-center gap-3 rounded-xl bg-surface-container-low p-4">
                     <CheckCircle2 className="text-secondary" size={20} />
                     <span className="text-sm font-semibold">{item}</span>
