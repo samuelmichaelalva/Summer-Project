@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock, FileText, Plus, TriangleAlert } from "lucide-react";
 import { topMatchedSchemes } from "@/lib/eligibility";
+import { ProfileSummary } from "@/components/profile-summary";
 import { AppShell, Badge, Button, Card } from "@/components/ui";
 
 export default function DashboardPage() {
@@ -22,7 +23,7 @@ export default function DashboardPage() {
           <Card className="text-center">
             <p className="mb-5 text-sm font-semibold text-on-surface-variant">Profile Completion</p>
             <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full border-[10px] border-primary bg-surface-container-low text-2xl font-extrabold">75%</div>
-            <p className="mt-5 text-sm leading-6 text-on-surface-variant">Add income certificate to unlock 4 more schemes.</p>
+            <ProfileSummary />
           </Card>
         </div>
 

@@ -7,11 +7,12 @@ export function Button({
   children,
   variant = "primary",
   className = "",
+  ...props
 }: {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost" | "danger";
   className?: string;
-}) {
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const styles = {
     primary: "bg-primary text-on-primary shadow-sm hover:bg-[#003ea8]",
     secondary: "border border-outline-variant bg-white text-primary hover:bg-surface-container-low",
@@ -20,7 +21,7 @@ export function Button({
   };
 
   return (
-    <button className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition active:scale-[0.98] ${styles[variant]} ${className}`}>
+    <button className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition active:scale-[0.98] ${styles[variant]} ${className}`} {...props}>
       {children}
     </button>
   );
