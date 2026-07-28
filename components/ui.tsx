@@ -46,7 +46,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-4 shadow-sm backdrop-blur md:px-10">
       <Link href="/" className="text-xl font-extrabold text-primary">
-        JanSeva AI
+        JanSeva
       </Link>
       <nav className="hidden items-center gap-7 md:flex">
         {navItems.map((item) => (
@@ -89,7 +89,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
     <div className="min-h-screen bg-background pb-20 lg:pb-0">
       <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface px-4 shadow-sm md:px-10">
         <Link href="/" className="text-xl font-extrabold text-primary">
-          JanSeva AI
+          JanSeva
         </Link>
         <div className="hidden w-full max-w-md md:block">
           <label className="relative block">
