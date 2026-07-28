@@ -1,9 +1,10 @@
 import { ArrowRight, CheckCircle2, Download, HeartPulse, Share2 } from "lucide-react";
 import { AppShell, Badge, Button, Card } from "@/components/ui";
-import { featuredScheme } from "@/lib/data";
+import { getSchemeBySlug } from "@/lib/schemes-api";
 
-export default function SchemeDetailsPage() {
-  const scheme = featuredScheme;
+export default async function SchemeDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const scheme = getSchemeBySlug(slug) ?? getSchemeBySlug("ayushman-bharat")!;
 
   return (
     <AppShell active="Scheme Listing">
