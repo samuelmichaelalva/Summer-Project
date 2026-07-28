@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "lucide-react";
-import { Button, Card, LanguagePills, TopNav } from "@/components/ui";
+import { ShieldCheck } from "lucide-react";
+import { LoginForm } from "@/components/login-form";
+import { Card, LanguagePills, TopNav } from "@/components/ui";
 
 export default function LoginPage() {
   return (
@@ -25,36 +25,9 @@ export default function LoginPage() {
               <p className="text-sm text-on-surface-variant">Login/Register</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 rounded-lg bg-surface-container p-1">
-            <button className="rounded-md bg-white py-2 text-sm font-bold shadow-sm">Login</button>
-            <button className="rounded-md py-2 text-sm font-bold text-on-surface-variant">Register</button>
-          </div>
-          <form className="mt-6 space-y-4">
-            <Field label="Mobile number or email" placeholder="Enter registered contact" />
-            <Field label="Password" placeholder="Enter password" type="password" />
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 text-on-surface-variant">
-                <input type="checkbox" className="rounded border-outline-variant" /> Remember me
-              </label>
-              <a className="font-semibold text-primary" href="#">Forgot password?</a>
-            </div>
-            <Link href="/profile-setup" className="block">
-              <Button className="w-full">
-                Continue <ArrowRight size={18} />
-              </Button>
-            </Link>
-          </form>
+          <LoginForm />
         </Card>
       </main>
     </div>
-  );
-}
-
-function Field({ label, placeholder, type = "text" }: { label: string; placeholder: string; type?: string }) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-sm font-semibold">{label}</span>
-      <input className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" placeholder={placeholder} type={type} />
-    </label>
   );
 }

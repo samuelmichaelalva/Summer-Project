@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { schemeCards } from "@/lib/data";
+import { matchedSchemes } from "@/lib/eligibility";
 import { AppShell, Badge, Card } from "@/components/ui";
 
 export default function SchemesPage() {
@@ -13,7 +13,7 @@ export default function SchemesPage() {
           <p className="mt-3 max-w-2xl text-on-surface-variant">Browse matched government benefits before opening a detailed application view.</p>
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {schemeCards.map((scheme) => (
+          {matchedSchemes.map((scheme) => (
             <Card key={scheme.title}>
               <div className="mb-5 flex items-start justify-between">
                 <div className="rounded-xl bg-surface-container p-3 text-primary">
@@ -26,8 +26,9 @@ export default function SchemesPage() {
               <p className="mt-3 text-sm leading-6 text-on-surface-variant">{scheme.benefit}</p>
               <div className="mt-4 flex items-center justify-between rounded-xl bg-surface-container-low p-3">
                 <span className="text-xs font-bold text-on-surface-variant">Match</span>
-                <span className="text-sm font-extrabold text-primary">{scheme.matchScore}%</span>
+                <span className="text-sm font-extrabold text-primary">{scheme.readiness}%</span>
               </div>
+              <p className="mt-3 text-xs font-semibold text-on-surface-variant">{scheme.reasons[0] ?? "Review eligibility details"}</p>
               <Link href={`/schemes/${scheme.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">
                 View details <ArrowRight size={16} />
               </Link>

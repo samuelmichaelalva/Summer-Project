@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock, FileText, Plus, TriangleAlert } from "lucide-react";
-import { schemeCards } from "@/lib/data";
+import { topMatchedSchemes } from "@/lib/eligibility";
 import { AppShell, Badge, Button, Card } from "@/components/ui";
 
 export default function DashboardPage() {
@@ -33,7 +33,7 @@ export default function DashboardPage() {
               <Link href="/schemes/ayushman-bharat" className="text-sm font-bold text-primary">View All</Link>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
-              {schemeCards.slice(0, 2).map((scheme) => (
+              {topMatchedSchemes.slice(0, 2).map((scheme) => (
                 <Card key={scheme.title} className="group">
                   <div className="mb-5 flex items-start justify-between">
                     <div className="rounded-xl bg-surface-container p-3 text-primary transition group-hover:bg-primary group-hover:text-white">
@@ -43,6 +43,7 @@ export default function DashboardPage() {
                   </div>
                   <h3 className="text-lg font-bold">{scheme.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-on-surface-variant">{scheme.benefit}</p>
+                  <p className="mt-3 text-xs font-bold text-secondary">{scheme.reasons[0] ?? "Strong profile match"}</p>
                   <div className="mt-5 flex items-center justify-between border-t border-outline-variant pt-4">
                     <span className="flex items-center gap-1 text-xs font-semibold text-on-surface-variant"><Clock size={16} /> {scheme.deadline}</span>
                     <Link href={`/schemes/${scheme.slug}`} className="flex items-center gap-1 text-sm font-bold text-primary">

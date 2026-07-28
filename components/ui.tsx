@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Bell, ChevronDown, Globe2, LogOut, Menu, Search, UserCircle } from "lucide-react";
+import { Bell, ChevronDown, Globe2, Menu, Search, UserCircle } from "lucide-react";
+import { LogoutLink } from "@/components/logout-link";
 import { languages, navItems } from "@/lib/data";
 
 export function Button({
@@ -119,9 +120,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
             </Link>
           ))}
         </nav>
-        <Link href="/login" className="mt-auto hidden items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-error hover:bg-error-container lg:flex">
-          <LogOut size={18} /> Logout
-        </Link>
+        <LogoutLink />
       </aside>
       <main className="p-4 md:p-10 lg:ml-64">{children}</main>
     </div>
