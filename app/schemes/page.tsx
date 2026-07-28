@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { matchedSchemes } from "@/lib/eligibility";
+import { EligibilityRefresh } from "@/components/eligibility-refresh";
 import { AppShell, Badge, Card } from "@/components/ui";
 
 export default function SchemesPage() {
@@ -11,6 +12,7 @@ export default function SchemesPage() {
           <p className="text-sm font-bold uppercase tracking-wider text-primary">Scheme Listing</p>
           <h1 className="mt-2 text-3xl font-extrabold">Recommended schemes</h1>
           <p className="mt-3 max-w-2xl text-on-surface-variant">Browse matched government benefits before opening a detailed application view.</p>
+          <EligibilityRefresh />
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {matchedSchemes.map((scheme) => (
