@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, Eye, EyeOff, KeyRound } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui";
 
@@ -33,6 +33,7 @@ function getPasswordScore(password: string) {
 
 export function LoginForm() {
   const { login, register } = useAuth();
+  const formRef = useRef<HTMLFormElement>(null);
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -40,6 +41,21 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const clearForm = () => {
+      setContact("");
+      setPassword("");
+      setName("");
+      setError(null);
+      setShowPassword(false);
+      formRef.current?.reset();
+    };
+
+    clearForm();
+    window.addEventListener("pageshow", clearForm);
+    return () => window.removeEventListener("pageshow", clearForm);
+  }, []);
 
   const passwordScore = getPasswordScore(password);
   const nameError = mode === "register" && name && !/^[A-Za-z][A-Za-z\s.'-]{1,}$/.test(name)
@@ -104,7 +120,7 @@ export function LoginForm() {
         </button>
       </div>
       
-      <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+      <form ref={formRef} className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
         {error && (
           <div className="rounded-lg bg-error/10 p-3 text-sm font-semibold text-error">
             {error}
@@ -155,7 +171,7 @@ export function LoginForm() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              autoComplete="off"
               required
             />
             <button
@@ -164,7 +180,7 @@ export function LoginForm() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>
           </div>
           {mode === "register" && (
