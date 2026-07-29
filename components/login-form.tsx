@@ -34,27 +34,49 @@ function getPasswordScore(password: string) {
 export function LoginForm() {
   const { login, register } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
+  const clearTimersRef = useRef<number[]>([]);
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [formKey, setFormKey] = useState(0);
   const [mode, setMode] = useState<"login" | "register">("login");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
+    const clearNativeInputs = () => {
+      formRef.current?.reset();
+      formRef.current?.querySelectorAll<HTMLInputElement>("input").forEach((input) => {
+        if (input.type === "checkbox") {
+          input.checked = false;
+        } else {
+          input.value = "";
+        }
+      });
+    };
+
     const clearForm = () => {
       setContact("");
       setPassword("");
       setName("");
       setError(null);
       setShowPassword(false);
-      formRef.current?.reset();
+      setFormKey((key) => key + 1);
+      clearNativeInputs();
+      clearTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+      clearTimersRef.current = [
+        window.setTimeout(clearNativeInputs, 0),
+        window.setTimeout(clearNativeInputs, 100),
+      ];
     };
 
     clearForm();
     window.addEventListener("pageshow", clearForm);
-    return () => window.removeEventListener("pageshow", clearForm);
+    return () => {
+      window.removeEventListener("pageshow", clearForm);
+      clearTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+    };
   }, []);
 
   const passwordScore = getPasswordScore(password);
@@ -120,7 +142,7 @@ export function LoginForm() {
         </button>
       </div>
       
-      <form ref={formRef} className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
+      <form key={formKey} ref={formRef} className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
         {error && (
           <div className="rounded-lg bg-error/10 p-3 text-sm font-semibold text-error">
             {error}
@@ -134,7 +156,7 @@ export function LoginForm() {
             value={name}
             onChange={(value) => setName(value.replace(/[0-9]/g, ""))}
             error={nameError}
-            autoComplete="name"
+            autoComplete="off"
             required
           />
         )}
@@ -144,7 +166,7 @@ export function LoginForm() {
           placeholder="Enter registered contact"
           value={contact}
           onChange={setContact}
-          autoComplete={mode === "login" ? "username" : "email"}
+          autoComplete="off"
           required
         />
 
@@ -171,7 +193,7 @@ export function LoginForm() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              autoComplete="off"
+              autoComplete="new-password"
               required
             />
             <button

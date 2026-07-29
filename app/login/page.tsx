@@ -10,7 +10,7 @@ export default function LoginPage() {
         <section>
           <div className="inline-flex rounded-full bg-primary-fixed px-3 py-1 text-xs font-bold text-on-primary-fixed">Secure Citizen Access</div>
           <h1 className="mt-5 text-4xl font-extrabold leading-tight md:text-5xl">Login or register to continue your benefit journey</h1>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-on-surface-variant">A simple bilingual access screen with visible labels, touch-friendly inputs, and privacy-first reassurance.</p>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-on-surface-variant">A simple multilingual access screen with visible labels, touch-friendly inputs, and privacy-first reassurance.</p>
           <div className="mt-7">
             <LanguagePills />
           </div>
