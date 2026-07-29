@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Bell, ChevronDown, Globe2, Menu, Search, UserCircle } from "lucide-react";
 import { LogoutLink } from "@/components/logout-link";
+import { TopNavAccount } from "@/components/top-nav-account";
 import { languages, navItems } from "@/lib/data";
 
 export function Button({
@@ -14,7 +15,7 @@ export function Button({
   className?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const styles = {
-    primary: "bg-primary text-on-primary shadow-sm hover:bg-[#003ea8]",
+    primary: "bg-primary text-on-primary shadow-sm hover:bg-[#5c361c]",
     secondary: "border border-outline-variant bg-white text-primary hover:bg-surface-container-low",
     ghost: "text-on-surface-variant hover:bg-surface-container-low",
     danger: "bg-error text-white hover:opacity-90",
@@ -64,9 +65,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
         <IconButton label="Notifications">
           <Bell size={20} />
         </IconButton>
-        <IconButton label="Account">
-          <UserCircle size={22} />
-        </IconButton>
+        <TopNavAccount />
         <IconButton label="Menu" className="md:hidden">
           <Menu size={22} />
         </IconButton>

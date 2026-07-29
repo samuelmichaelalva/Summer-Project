@@ -1,9 +1,23 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, PlayCircle, Sparkles } from "lucide-react";
-import { benefits, featureCards } from "@/lib/data";
+import { featureCards, languages } from "@/lib/data";
+import { prisma } from "@/lib/db";
 import { Badge, Button, Card, LanguagePills, TopNav } from "@/components/ui";
 
-export default function LandingPage() {
+export const dynamic = "force-dynamic";
+
+export default async function LandingPage() {
+  const [approvedBenefits, registeredCitizens, indexedSchemes] = await Promise.all([
+    prisma.application.count({ where: { status: "approved" } }),
+    prisma.user.count(),
+    prisma.scheme.count(),
+  ]);
+  const benefits = [
+    { label: "Approved Benefits", value: approvedBenefits.toLocaleString("en-IN") },
+    { label: "Registered Citizens", value: registeredCitizens.toLocaleString("en-IN") },
+    { label: "Schemes Indexed", value: indexedSchemes.toLocaleString("en-IN") },
+    { label: "Languages Available", value: languages.length.toString() },
+  ];
   return (
     <div className="min-h-screen bg-background">
       <TopNav active="Home" />

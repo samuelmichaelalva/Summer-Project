@@ -67,6 +67,6 @@ export function getPasswordStrength(password: string): { score: number; label: s
 
   if (score <= 2) return { score, label: "Weak", color: "bg-red-500" };
   if (score <= 4) return { score, label: "Fair", color: "bg-amber-500" };
-  if (score <= 5) return { score, label: "Strong", color: "bg-blue-500" };
-  return { score, label: "Very Strong", color: "bg-green-600" };
+  if (score <= 5) return { score, label: "Strong", color: "bg-primary" };
+  return { score, label: "Very Strong", color: "bg-[#FCF0DE]" };
 }

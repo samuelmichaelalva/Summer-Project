@@ -104,7 +104,7 @@ export const featureCards = [
   },
   {
     title: "Regional Language UI",
-    copy: "Interfaces are planned for English, Hindi, Bengali, Tamil, Telugu, and more regional languages.",
+    copy: "Interfaces are planned for English, Hindi, Bengali, Tamil and Telugu.",
     icon: Leaf,
   },
   {

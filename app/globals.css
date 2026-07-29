@@ -31,7 +31,13 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid #714423;
+}
+
+/* Keep password visibility under the app's single, accessible eye control. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
 }
 
 .glass-card {
