@@ -21,7 +21,7 @@ const defaultProfile = {
   completionPercent: 0,
 };
 
-export function ProfileForm() {
+export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
   const [profile, setProfile] = useState(defaultProfile);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -63,6 +63,7 @@ export function ProfileForm() {
         setProfile(data.profile);
         setMessage("Profile saved successfully!");
         setTimeout(() => setMessage(null), 3000);
+        return true;
       } else {
         setMessage("Failed to save profile.");
       }
@@ -72,6 +73,7 @@ export function ProfileForm() {
     } finally {
       setSaving(false);
     }
+    return false;
   };
 
   if (loading) {
@@ -147,10 +149,9 @@ export function ProfileForm() {
             {saving ? "Saving..." : "Save Draft"}
           </Button>
           <Button onClick={async () => {
-            await saveProfile();
-            window.location.href = "/dashboard";
+            if (await saveProfile()) window.location.href = schemeSlug ? `/schemes/${schemeSlug}` : "/dashboard";
           }} disabled={saving}>
-            View Dashboard <ArrowRight size={18} />
+            {schemeSlug ? "View Scheme" : "View Dashboard"} <ArrowRight size={18} />
           </Button>
         </div>
       </Card>

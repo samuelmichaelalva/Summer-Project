@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return { success: false, error: data.error || "Login failed" };
           }
           setUser(data.user);
-          router.push("/profile-setup");
+          router.push("/schemes");
           return { success: true };
         } catch (err) {
           return { success: false, error: "Network error. Please try again." };
@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return { success: false, error: data.error || "Registration failed" };
           }
           setUser(data.user);
-          router.push("/profile-setup");
+          router.push("/schemes");
           return { success: true };
         } catch (err) {
           return { success: false, error: "Network error. Please try again." };
