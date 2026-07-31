@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Bell, ChevronDown, Globe2, Menu, Search, UserCircle } from "lucide-react";
+import { useState } from "react";
 import { LogoutLink } from "@/components/logout-link";
 import { TopNavAccount } from "@/components/top-nav-account";
 import { languages, navItems } from "@/lib/data";
@@ -75,6 +78,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
 }
 
 export function AppShell({ children, active = "Dashboard" }: { children: React.ReactNode; active?: string }) {
+  const [open, setOpen] = useState(true);
   const items = ["Dashboard", "Scheme Listing", "AI Assistant", "Profile", "Settings"];
   const hrefs: Record<string, string> = {
     Dashboard: "/dashboard",
@@ -108,8 +112,11 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
           </IconButton>
         </div>
       </header>
-      <aside className="fixed bottom-0 left-0 z-40 flex h-16 w-full justify-around border-t border-outline-variant bg-surface shadow-lg lg:bottom-auto lg:top-16 lg:h-[calc(100vh-4rem)] lg:w-64 lg:flex-col lg:justify-start lg:border-r lg:border-t-0 lg:p-4">
-        <div className="hidden px-4 py-5 lg:block">
+      <button onClick={() => setOpen(!open)} className="fixed left-3 top-20 z-[60] hidden h-9 w-9 items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-low lg:flex" aria-label={open ? "Close sidebar" : "Open sidebar"}>
+        <Menu size={20} />
+      </button>
+      <aside className={`fixed bottom-0 left-0 z-40 flex h-16 w-full justify-around border-t border-outline-variant bg-surface shadow-lg transition-transform duration-200 lg:bottom-auto lg:top-16 lg:h-[calc(100vh-4rem)] lg:w-64 lg:flex-col lg:justify-start lg:border-r lg:border-t-0 lg:p-4 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className={`hidden px-4 pb-5 pt-14 lg:block ${!open && "invisible"}`}>
           <p className="text-sm font-semibold text-on-surface">Welcome, Citizen</p>
           <p className="text-xs text-on-surface-variant">Verify your Aadhaar</p>
         </div>
@@ -120,9 +127,9 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
             </Link>
           ))}
         </nav>
-        <LogoutLink />
+        <LogoutLink collapsed={!open} />
       </aside>
-      <main className="p-4 md:p-10 lg:ml-64">{children}</main>
+      <main className={`p-4 transition-[margin] duration-200 md:p-10 ${open ? "lg:ml-64" : "lg:ml-0"}`}>{children}</main>
     </div>
   );
 }

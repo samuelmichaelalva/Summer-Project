@@ -1,11 +1,10 @@
 import { ProfileForm } from "@/components/profile-form";
-import { TopNav } from "@/components/ui";
+import { AppShell } from "@/components/ui";
 
 export default async function ProfileSetupPage({ searchParams }: { searchParams: Promise<{ scheme?: string }> }) {
   const { scheme } = await searchParams;
   return (
-    <div className="min-h-screen bg-background">
-      <TopNav active="Profile" />
+    <AppShell active="Profile">
       <main className="mx-auto max-w-content px-4 py-10 md:px-10">
         <div className="mb-8">
           <p className="text-sm font-bold uppercase tracking-wider text-primary">Profile Setup</p>
@@ -14,6 +13,6 @@ export default async function ProfileSetupPage({ searchParams }: { searchParams:
         </div>
         <ProfileForm schemeSlug={scheme} />
       </main>
-    </div>
+    </AppShell>
   );
 }

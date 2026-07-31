@@ -5,6 +5,9 @@ const publicPaths = ["/", "/login"];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const session = request.cookies.get("janseva_session");
+
+  if (pathname === "/" && session) return NextResponse.redirect(new URL("/schemes", request.url));
 
   if (
     publicPaths.includes(pathname) ||
@@ -14,8 +17,6 @@ export function proxy(request: NextRequest) {
   ) {
     return NextResponse.next();
   }
-
-  const session = request.cookies.get("janseva_session");
 
   if (!session) {
     const loginUrl = new URL("/login", request.url);
