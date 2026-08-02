@@ -1,6 +1,6 @@
 "use client";
 
-import { Send, Sparkles } from "lucide-react";
+import { RefreshCw, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Card } from "@/components/ui";
 
@@ -22,7 +22,7 @@ export function AssistantChat() {
 
   return (
     <Card>
-      <div className="mb-6 flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white"><Sparkles size={22} /></div><div><h2 className="font-bold">JanSeva Assistant</h2><p className="text-xs font-semibold text-secondary">Ready to help</p></div></div>
+      <div className="mb-6 flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white"><Sparkles size={22} /></div><div className="flex-1"><h2 className="font-bold">JanSeva Assistant</h2><p className="text-xs font-semibold text-secondary">Ready to help</p></div><button onClick={() => setMessages([{ role: "assistant", text: "Chat refreshed. How can I help?" }])} className="inline-flex items-center gap-1 text-xs font-bold text-primary" type="button"><RefreshCw size={14} /> Refresh Chat</button></div>
       <div className="space-y-4">{messages.map((message, index) => <Bubble key={index} mine={message.role === "user"}>{message.text}</Bubble>)}</div>
       <div className="mt-6 flex gap-2 border-t border-outline-variant pt-4">
         <input value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => event.key === "Enter" && send()} className="h-11 flex-1 rounded-full border border-outline-variant bg-white px-4 text-sm" placeholder="Type your question..." />
