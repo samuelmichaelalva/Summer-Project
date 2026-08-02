@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { schemeCards } from "@/lib/data";
-import { AppShell, Badge, Card } from "@/components/ui";
+import { SchemeBrowser } from "@/components/scheme-browser";
+import { AppShell } from "@/components/ui";
 
 export default function SchemesPage() {
   return (
@@ -12,28 +10,7 @@ export default function SchemesPage() {
           <h1 className="mt-2 text-3xl font-extrabold">Explore government schemes</h1>
           <p className="mt-3 max-w-2xl text-on-surface-variant">Browse all available benefits. Complete your profile after choosing a scheme to see your eligibility.</p>
         </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {schemeCards.map((scheme) => (
-            <Card key={scheme.title}>
-              <div className="mb-5 flex items-start justify-between">
-                <div className="rounded-xl bg-surface-container p-3 text-primary">
-                  <scheme.icon size={24} />
-                </div>
-                <Badge tone="green">{scheme.status}</Badge>
-              </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-primary">{scheme.category}</p>
-              <h2 className="mt-2 text-lg font-bold">{scheme.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-on-surface-variant">{scheme.benefit}</p>
-              <div className="mt-4 flex items-center justify-between rounded-xl bg-surface-container-low p-3">
-                <span className="text-xs font-bold text-on-surface-variant">Coverage</span>
-                <span className="text-sm font-extrabold text-primary">{scheme.state}</span>
-              </div>
-              <Link href={`/profile-setup?scheme=${scheme.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">
-                Check eligibility <ArrowRight size={16} />
-              </Link>
-            </Card>
-          ))}
-        </div>
+        <SchemeBrowser />
       </div>
     </AppShell>
   );

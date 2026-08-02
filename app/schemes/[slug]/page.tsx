@@ -56,12 +56,12 @@ export default async function SchemeDetailsPage({ params }: { params: Promise<{ 
           <aside className="space-y-6">
             <Card>
               <h2 className="font-bold">Application Steps</h2>
-              {["Confirm eligibility", "Upload documents", "Review details", "Submit application"].map((step, index) => (
+              {["Check official eligibility", "Collect required documents", "Apply on the official portal", "Track application status"].map((step, index) => (
                 <div key={step} className="mt-5 flex gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">{index + 1}</div>
                   <div>
                     <p className="text-sm font-semibold">{step}</p>
-                    <p className="text-xs text-on-surface-variant">UI placeholder</p>
+                    <p className="text-xs text-on-surface-variant">Follow the scheme instructions carefully.</p>
                   </div>
                 </div>
               ))}
