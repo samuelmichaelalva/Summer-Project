@@ -20,7 +20,7 @@ export function SchemeBrowser() {
   useEffect(() => { fetch("/api/profile").then((res) => res.ok ? res.json() : null).then((data) => data?.success && setProfile(data.profile)); }, []);
 
   const all = useMemo(() => directorySchemes, []);
-  const text = `${profile?.occupation ?? ""} ${profile?.primaryNeed ?? ""} ${profile?.income ?? ""}`.toLowerCase();
+  const text = Object.values(profile ?? {}).join(" ").toLowerCase();
   const eligible = all.filter(({ category }) => rules[category]?.some((word) => text.includes(word)) || (category === "EWS / BPL" && /under|lakh|low/.test(text)));
   const visible = all.filter(({ title, category }) => `${title} ${category}`.toLowerCase().includes(query.toLowerCase()));
   const href = (slug: string) => profile?.completionPercent ? `/schemes/${slug}` : `/profile-setup?scheme=${slug}`;

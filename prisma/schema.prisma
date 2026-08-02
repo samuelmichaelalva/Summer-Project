@@ -26,10 +26,23 @@ model CitizenProfile {
   userId            String   @unique
   state             String
   district          String
+  residenceType     String   @default("")
   incomeBand        String
   occupation        String
   householdSize     Int
   primaryNeed       String
+  dateOfBirth       String   @default("")
+  gender            String   @default("")
+  maritalStatus     String   @default("")
+  socialCategory    String   @default("General")
+  minorityStatus    String   @default("")
+  disabilityStatus  String   @default("")
+  educationLevel    String   @default("")
+  employmentStatus  String   @default("")
+  landholding       String   @default("")
+  houseOwnership    String   @default("")
+  rationCardType    String   @default("")
+  lpgConnection     String   @default("")
   hasAadhaar        Boolean  @default(false)
   hasBankAccount    Boolean  @default(false)
   completionPercent Int      @default(0)
@@ -88,4 +101,3 @@ model Application {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   scheme    Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
 }
-

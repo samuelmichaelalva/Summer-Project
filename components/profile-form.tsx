@@ -9,10 +9,21 @@ const defaultProfile = {
   name: "",
   state: "",
   district: "",
+  residenceType: "Rural / Semi-urban",
+  dateOfBirth: "",
+  gender: "",
+  maritalStatus: "",
+  socialCategory: "General",
+  minorityStatus: "",
+  disabilityStatus: "",
+  educationLevel: "",
+  employmentStatus: "",
+  landholding: "",
+  houseOwnership: "",
+  rationCardType: "",
+  lpgConnection: "",
   language: "English",
   householdSize: "1 members",
-  residenceType: "Rural / Semi-urban",
-  category: "General",
   primaryNeed: "",
   income: "",
   occupation: "",
@@ -116,20 +127,31 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
 
         <FormSection icon={<UserRound size={20} />} title="Identity">
           <Field label="Full name" value={profile.name} onChange={(name) => setProfile({ ...profile, name })} />
+          <Field label="Date of birth (DD/MM/YYYY)" value={profile.dateOfBirth} onChange={(dateOfBirth) => setProfile({ ...profile, dateOfBirth })} />
+          <Field label="Gender" value={profile.gender} onChange={(gender) => setProfile({ ...profile, gender })} />
+          <Field label="Marital status" value={profile.maritalStatus} onChange={(maritalStatus) => setProfile({ ...profile, maritalStatus })} />
           <Field label="State" value={profile.state} onChange={(state) => setProfile({ ...profile, state })} />
           <Field label="District" value={profile.district} onChange={(district) => setProfile({ ...profile, district })} />
           <Field label="Preferred language" value={profile.language} onChange={(language) => setProfile({ ...profile, language })} />
         </FormSection>
         <FormSection icon={<Home size={20} />} title="Household">
           <Field label="Household size (e.g. 4)" value={profile.householdSize} onChange={(householdSize) => setProfile({ ...profile, householdSize })} />
-          <Field label="Residence type" value={profile.residenceType} onChange={(residenceType) => setProfile({ ...profile, residenceType })} />
-          <Field label="Category" value={profile.category} onChange={(category) => setProfile({ ...profile, category })} />
+          <Field label="Residence type (Rural / Urban)" value={profile.residenceType} onChange={(residenceType) => setProfile({ ...profile, residenceType })} />
+          <Field label="Social category (General / SC / ST / OBC)" value={profile.socialCategory} onChange={(socialCategory) => setProfile({ ...profile, socialCategory })} />
+          <Field label="Minority status (Yes / No)" value={profile.minorityStatus} onChange={(minorityStatus) => setProfile({ ...profile, minorityStatus })} />
+          <Field label="Disability status (Yes / No)" value={profile.disabilityStatus} onChange={(disabilityStatus) => setProfile({ ...profile, disabilityStatus })} />
+          <Field label="House ownership (Owned / Rented / None)" value={profile.houseOwnership} onChange={(houseOwnership) => setProfile({ ...profile, houseOwnership })} />
+          <Field label="Ration card type (AAY / BPL / NFSA / None)" value={profile.rationCardType} onChange={(rationCardType) => setProfile({ ...profile, rationCardType })} />
           <Field label="Primary need" value={profile.primaryNeed} onChange={(primaryNeed) => setProfile({ ...profile, primaryNeed })} />
         </FormSection>
         <FormSection icon={<IndianRupee size={20} />} title="Income and occupation">
           <Field label="Annual family income" value={profile.income} onChange={(income) => setProfile({ ...profile, income })} />
           <Field label="Primary occupation" value={profile.occupation} onChange={(occupation) => setProfile({ ...profile, occupation })} />
+          <Field label="Employment status" value={profile.employmentStatus} onChange={(employmentStatus) => setProfile({ ...profile, employmentStatus })} />
+          <Field label="Highest education level" value={profile.educationLevel} onChange={(educationLevel) => setProfile({ ...profile, educationLevel })} />
+          <Field label="Landholding (if applicable)" value={profile.landholding} onChange={(landholding) => setProfile({ ...profile, landholding })} />
           <Field label="Bank account status (Available / Not available)" value={profile.bank} onChange={(bank) => setProfile({ ...profile, bank })} />
+          <Field label="LPG connection (Yes / No)" value={profile.lpgConnection} onChange={(lpgConnection) => setProfile({ ...profile, lpgConnection })} />
           <div className="flex items-center gap-3 mt-6 pl-1 col-span-2">
             <input
               type="checkbox"
