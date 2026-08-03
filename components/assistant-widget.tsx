@@ -22,10 +22,10 @@ export function AssistantWidget() {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, context: pathname }) });
+      const res = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, context: pathname, history: messages.slice(-8) }) });
       const data = await res.json();
       setMessages((items) => [...items, { role: "assistant", text: data.answer || "I could not find an answer yet." }]);
-    } finally { setLoading(false); }
+    } catch { setMessages((items) => [...items, { role: "assistant", text: "JanSeva AI is temporarily unavailable." }]); } finally { setLoading(false); }
   }
 
   return <>

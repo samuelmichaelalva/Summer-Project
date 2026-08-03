@@ -15,7 +15,7 @@ export function AssistantChat() {
     const next = [...messages, { role: "user", text: input }];
     setMessages(next);
     setInput("");
-    const response = await fetch("/api/assistant", { method: "POST", body: JSON.stringify({ message: input }) });
+    const response = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: input, context: "/assistant", history: messages.slice(-8) }) });
     const data = await response.json();
     setMessages([...next, { role: "assistant", text: data.answer }]);
   }
