@@ -127,31 +127,31 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
 
         <FormSection icon={<UserRound size={20} />} title="Identity">
           <Field label="Full name" value={profile.name} onChange={(name) => setProfile({ ...profile, name })} />
-          <Field label="Date of birth (DD/MM/YYYY)" value={profile.dateOfBirth} onChange={(dateOfBirth) => setProfile({ ...profile, dateOfBirth })} />
-          <Field label="Gender" value={profile.gender} onChange={(gender) => setProfile({ ...profile, gender })} />
-          <Field label="Marital status" value={profile.maritalStatus} onChange={(maritalStatus) => setProfile({ ...profile, maritalStatus })} />
+          <Field label="Date of birth" type="date" value={profile.dateOfBirth} onChange={(dateOfBirth) => setProfile({ ...profile, dateOfBirth })} />
+          <Field label="Gender" value={profile.gender} options={["Male", "Female", "Prefer not to say"]} onChange={(gender) => setProfile({ ...profile, gender })} />
+          <Field label="Marital status" value={profile.maritalStatus} options={["Single", "Married", "Widowed", "Divorced"]} onChange={(maritalStatus) => setProfile({ ...profile, maritalStatus })} />
           <Field label="State" value={profile.state} onChange={(state) => setProfile({ ...profile, state })} />
           <Field label="District" value={profile.district} onChange={(district) => setProfile({ ...profile, district })} />
-          <Field label="Preferred language" value={profile.language} onChange={(language) => setProfile({ ...profile, language })} />
+          <Field label="Preferred language" value={profile.language} options={["English", "Hindi", "Bengali", "Tamil", "Telugu"]} onChange={(language) => setProfile({ ...profile, language })} />
         </FormSection>
         <FormSection icon={<Home size={20} />} title="Household">
           <Field label="Household size (e.g. 4)" value={profile.householdSize} onChange={(householdSize) => setProfile({ ...profile, householdSize })} />
-          <Field label="Residence type (Rural / Urban)" value={profile.residenceType} onChange={(residenceType) => setProfile({ ...profile, residenceType })} />
-          <Field label="Social category (General / SC / ST / OBC)" value={profile.socialCategory} onChange={(socialCategory) => setProfile({ ...profile, socialCategory })} />
-          <Field label="Minority status (Yes / No)" value={profile.minorityStatus} onChange={(minorityStatus) => setProfile({ ...profile, minorityStatus })} />
-          <Field label="Disability status (Yes / No)" value={profile.disabilityStatus} onChange={(disabilityStatus) => setProfile({ ...profile, disabilityStatus })} />
-          <Field label="House ownership (Owned / Rented / None)" value={profile.houseOwnership} onChange={(houseOwnership) => setProfile({ ...profile, houseOwnership })} />
-          <Field label="Ration card type (AAY / BPL / NFSA / None)" value={profile.rationCardType} onChange={(rationCardType) => setProfile({ ...profile, rationCardType })} />
+          <Field label="Residence type" value={profile.residenceType} options={["Rural / Semi-urban", "Urban"]} onChange={(residenceType) => setProfile({ ...profile, residenceType })} />
+          <Field label="Social category" value={profile.socialCategory} options={["General", "SC", "ST", "OBC"]} onChange={(socialCategory) => setProfile({ ...profile, socialCategory })} />
+          <Field label="Minority status" value={profile.minorityStatus} options={["Yes", "No"]} onChange={(minorityStatus) => setProfile({ ...profile, minorityStatus })} />
+          <Field label="Disability status" value={profile.disabilityStatus} options={["Yes", "No"]} onChange={(disabilityStatus) => setProfile({ ...profile, disabilityStatus })} />
+          <Field label="House ownership" value={profile.houseOwnership} options={["Owned", "Rented", "None"]} onChange={(houseOwnership) => setProfile({ ...profile, houseOwnership })} />
+          <Field label="Ration card type" value={profile.rationCardType} options={["AAY", "BPL", "NFSA", "None"]} onChange={(rationCardType) => setProfile({ ...profile, rationCardType })} />
           <Field label="Primary need" value={profile.primaryNeed} onChange={(primaryNeed) => setProfile({ ...profile, primaryNeed })} />
         </FormSection>
         <FormSection icon={<IndianRupee size={20} />} title="Income and occupation">
           <Field label="Annual family income" value={profile.income} onChange={(income) => setProfile({ ...profile, income })} />
           <Field label="Primary occupation" value={profile.occupation} onChange={(occupation) => setProfile({ ...profile, occupation })} />
-          <Field label="Employment status" value={profile.employmentStatus} onChange={(employmentStatus) => setProfile({ ...profile, employmentStatus })} />
-          <Field label="Highest education level" value={profile.educationLevel} onChange={(educationLevel) => setProfile({ ...profile, educationLevel })} />
+          <Field label="Employment status" value={profile.employmentStatus} options={["Employed", "Self-employed", "Unemployed", "Student", "Retired"]} onChange={(employmentStatus) => setProfile({ ...profile, employmentStatus })} />
+          <Field label="Highest education level" value={profile.educationLevel} options={["No formal education", "School", "Higher secondary", "Graduate", "Postgraduate"]} onChange={(educationLevel) => setProfile({ ...profile, educationLevel })} />
           <Field label="Landholding (if applicable)" value={profile.landholding} onChange={(landholding) => setProfile({ ...profile, landholding })} />
-          <Field label="Bank account status (Available / Not available)" value={profile.bank} onChange={(bank) => setProfile({ ...profile, bank })} />
-          <Field label="LPG connection (Yes / No)" value={profile.lpgConnection} onChange={(lpgConnection) => setProfile({ ...profile, lpgConnection })} />
+          <Field label="Bank account status" value={profile.bank} options={["Available", "Not available"]} onChange={(bank) => setProfile({ ...profile, bank })} />
+          <Field label="LPG connection" value={profile.lpgConnection} options={["Yes", "No"]} onChange={(lpgConnection) => setProfile({ ...profile, lpgConnection })} />
           <div className="flex items-center gap-3 mt-6 pl-1 col-span-2">
             <input
               type="checkbox"
@@ -224,15 +224,11 @@ function FormSection({ icon, title, children }: { icon: React.ReactNode; title: 
   );
 }
 
-function Field({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+function Field({ label, value, onChange, type = "text", options }: { label: string; value: string; onChange: (value: string) => void; type?: string; options?: string[] }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-semibold">{label}</span>
-      <input
-        className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm"
-        value={value || ""}
-        onChange={(event) => onChange(event.target.value)}
-      />
+      {options ? <select className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)}><option value="">Select {label.toLowerCase()}</option>{options.map((option) => <option key={option}>{option}</option>)}</select> : <input type={type} className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)} />}
     </label>
   );
 }
