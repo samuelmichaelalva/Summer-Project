@@ -1,11 +1,7 @@
 import { PrismaClient } from "../generated/prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-import path from "path";
-
-const dbPath = path.resolve(process.cwd(), "prisma/dev.db");
-const url = `file:${dbPath}`;
-const adapter = new PrismaLibSql({ url });
+const adapter = new PrismaPg({ connectionString: process.env.DIRECT_URL || process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 const schemesData = [

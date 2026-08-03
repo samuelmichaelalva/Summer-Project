@@ -1,4 +1,4 @@
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
@@ -6,8 +6,9 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function makePrisma() {
-  const url = process.env.DATABASE_URL || "file:prisma/dev.db";
-  const adapter = new PrismaLibSql({ url });
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is required");
+  const adapter = new PrismaPg({ connectionString: url });
   return new PrismaClient({ adapter });
 }
 
