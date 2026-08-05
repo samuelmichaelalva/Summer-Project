@@ -58,3 +58,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useLanguage = () => useContext(Context);
+
+export function LanguageSwitcher() {
+  const { language, setLanguage } = useLanguage();
+  const [open, setOpen] = useState(false);
+  return <div className="relative"><button type="button" onClick={() => setOpen(!open)} className="flex items-center gap-2 rounded-full border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface-variant"><span>◎</span><span>{language}</span><span>⌄</span></button>{open && <div className="absolute right-0 top-12 z-[80] min-w-36 rounded-xl border border-outline-variant bg-white p-1 shadow-xl">{languages.map((item) => <button key={item} type="button" onClick={() => { setLanguage(item); setOpen(false); }} className={`block w-full rounded-lg px-3 py-2 text-left text-sm ${item === language ? "bg-primary text-white" : "hover:bg-surface-container-low"}`}>{item}</button>)}</div>}</div>;
+}

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { LogoutLink } from "@/components/logout-link";
 import { TopNavAccount } from "@/components/top-nav-account";
 import { navItems } from "@/lib/data";
-import { languages, useLanguage } from "@/components/language-provider";
+import { LanguageSwitcher, languages, useLanguage } from "@/components/language-provider";
 
 export function Button({
   children,
@@ -48,7 +48,6 @@ export function Badge({ children, tone = "blue" }: { children: React.ReactNode; 
 }
 
 export function TopNav({ active = "Home" }: { active?: string }) {
-  const { language, setLanguage } = useLanguage();
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-4 shadow-sm backdrop-blur md:px-10">
       <Link href="/" className="text-xl font-extrabold text-primary">
@@ -64,8 +63,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
       <div className="flex items-center gap-2">
         <div className="hidden items-center gap-2 rounded-full border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface-variant sm:flex">
           <Globe2 size={18} className="text-primary" />
-          <button type="button" onClick={() => setLanguage(languages[(languages.indexOf(language) + 1) % languages.length])}>{language}</button>
-          <ChevronDown size={16} />
+          <LanguageSwitcher />
         </div>
         <IconButton label="Notifications">
           <Bell size={20} />
@@ -104,9 +102,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
           </label>
         </div>
         <div className="flex items-center gap-2">
-          <IconButton label="Language">
-            <Globe2 size={20} />
-          </IconButton>
+          <LanguageSwitcher />
           <IconButton label="Notifications">
             <Bell size={20} />
           </IconButton>

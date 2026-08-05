@@ -145,7 +145,7 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
           <Field label="Primary need" value={profile.primaryNeed} onChange={(primaryNeed) => setProfile({ ...profile, primaryNeed })} />
         </FormSection>
         <FormSection icon={<IndianRupee size={20} />} title="Income and occupation">
-          <Field label="Annual family income" value={profile.income} onChange={(income) => setProfile({ ...profile, income })} />
+          <Field label="Annual family income" prefix="₹" value={profile.income} onChange={(income) => setProfile({ ...profile, income })} />
           <Field label="Primary occupation" value={profile.occupation} onChange={(occupation) => setProfile({ ...profile, occupation })} />
           <Field label="Employment status" value={profile.employmentStatus} options={["Employed", "Self-employed", "Unemployed", "Student", "Retired"]} onChange={(employmentStatus) => setProfile({ ...profile, employmentStatus })} />
           <Field label="Highest education level" value={profile.educationLevel} options={["No formal education", "School", "Higher secondary", "Graduate", "Postgraduate"]} onChange={(educationLevel) => setProfile({ ...profile, educationLevel })} />
@@ -224,11 +224,11 @@ function FormSection({ icon, title, children }: { icon: React.ReactNode; title: 
   );
 }
 
-function Field({ label, value, onChange, type = "text", options }: { label: string; value: string; onChange: (value: string) => void; type?: string; options?: string[] }) {
+function Field({ label, value, onChange, type = "text", options, prefix }: { label: string; value: string; onChange: (value: string) => void; type?: string; options?: string[]; prefix?: string }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-semibold">{label}</span>
-      {options ? <select className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)}><option value="">Select {label.toLowerCase()}</option>{options.map((option) => <option key={option}>{option}</option>)}</select> : <input type={type} className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)} />}
+      {options ? <select className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)}><option value="">Select {label.toLowerCase()}</option>{options.map((option) => <option key={option}>{option}</option>)}</select> : <div className="flex h-11 items-center rounded-lg border border-outline-variant bg-white"><span className="pl-3 text-sm font-semibold text-primary">{prefix}</span><input type={type} className="h-full min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" value={value || ""} onChange={(event) => onChange(event.target.value)} /> </div>}
     </label>
   );
 }
