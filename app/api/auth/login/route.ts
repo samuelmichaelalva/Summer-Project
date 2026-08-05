@@ -17,12 +17,12 @@ export async function POST(request: Request) {
       where: { contact: normalizedContact },
     });
 
-    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
+    if (!user || !user.active || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
       return NextResponse.json({ error: "Invalid contact or password" }, { status: 401 });
     }
 
     // Create session token (JWT)
-    const token = signToken({ id: user.id, name: user.name, contact: user.contact });
+    const token = signToken({ id: user.id, name: user.name, contact: user.contact, role: user.role });
 
     // Set secure cookie
     const cookieStore = await cookies();
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      user: { id: user.id, name: user.name, contact: user.contact },
+      user: { id: user.id, name: user.name, contact: user.contact, role: user.role },
     });
   } catch (error) {
     console.error("Login error:", error);
