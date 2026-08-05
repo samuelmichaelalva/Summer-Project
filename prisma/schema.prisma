@@ -19,8 +19,24 @@ model User {
   active            Boolean         @default(true)
   preferredLanguage String          @default("English")
   createdAt         DateTime        @default(now())
+  settings          UserSettings?
   profile           CitizenProfile?
   applications      Application[]
+}
+
+model UserSettings {
+  id                       String   @id @default(uuid())
+  userId                   String   @unique
+  theme                    String   @default("system")
+  notificationsSchemes     Boolean  @default(true)
+  notificationsMatches     Boolean  @default(true)
+  notificationsApplications Boolean  @default(false)
+  showSensitiveAmounts     Boolean  @default(true)
+  profileReminders         Boolean  @default(false)
+  compactDashboard         Boolean  @default(false)
+  highContrast             Boolean  @default(true)
+  largerLabels             Boolean  @default(false)
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CitizenProfile {

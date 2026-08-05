@@ -20,6 +20,15 @@ body {
   color: #131b2e;
 }
 
+.dark { color-scheme: dark; }
+.dark body { background: #111827; color: #f1f5f9; }
+.dark .bg-white { background: #1f2937 !important; }
+.dark .bg-background, .dark .bg-surface { background: #111827 !important; }
+.dark .bg-surface-container-low { background: #273244 !important; }
+.dark .text-on-surface-variant { color: #cbd5e1 !important; }
+.dark .border-outline-variant { border-color: #475569 !important; }
+.dark input, .dark select { background: #1f2937; color: #f1f5f9; }
+
 button,
 a,
 input,
