@@ -32,11 +32,18 @@ body {
 .dark .bg-primary-fixed, .dark .bg-secondary-container { background: #4b3525 !important; }
 .dark .bg-error-container { background: #54282d !important; }
 .dark .text-on-surface-variant { color: #c5d0e1 !important; }
+.dark .text-on-surface { color: #f5f7fb !important; }
+.dark .text-on-primary-fixed { color: #ffe6cf !important; }
+.dark .text-on-secondary-container { color: #b8f5d8 !important; }
+.dark .text-secondary-container { color: #ffe6cf !important; }
+.dark .text-error { color: #ffb4ab !important; }
+.dark .text-outline { color: #aebbd0 !important; }
 .dark .text-primary { color: #e3a66f !important; }
 .dark .text-secondary { color: #55d69a !important; }
 .dark .border-outline-variant { border-color: #4b5f7c !important; }
-.dark input, .dark select { background: #1b2638; color: #f1f5f9; }
+.dark input, .dark select { background: #1b2638 !important; color: #f1f5f9 !important; }
 .dark input::placeholder { color: #9aa9bf; }
+.dark option { background: #1b2638; color: #f1f5f9; }
 .dark .shadow-sm, .dark .shadow-soft { box-shadow: 0 10px 30px rgba(0, 0, 0, .28); }
 
 button,
