@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: `try{const t=localStorage.getItem('janseva-theme');if(t==='dark'||t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')}catch{}` }} /></head>
       <body className="font-sans antialiased">
         <AuthProvider><LanguageProvider><ThemeProvider />{children}<AssistantWidget /></LanguageProvider></AuthProvider>
       </body>

@@ -14,6 +14,16 @@ const words: Record<Language, Record<Key, string>> = {
 };
 
 const phrases: Record<string, Record<Language, string>> = {
+  "Login or register to continue your benefit journey": { English: "Login or register to continue your benefit journey", हिन्दी: "अपने लाभ की यात्रा जारी रखने के लिए लॉगिन या पंजीकरण करें", বাংলা: "আপনার সুবিধার যাত্রা চালিয়ে যেতে লগইন বা নিবন্ধন করুন", தமிழ்: "உங்கள் நன்மைப் பயணத்தைத் தொடர உள்நுழையவும் அல்லது பதிவு செய்யவும்", తెలుగు: "మీ ప్రయోజనాల ప్రయాణాన్ని కొనసాగించడానికి లాగిన్ లేదా నమోదు చేయండి" },
+  "A simple multilingual access screen with visible labels, touch-friendly inputs, and privacy-first reassurance.": { English: "A simple multilingual access screen with visible labels, touch-friendly inputs, and privacy-first reassurance.", हिन्दी: "स्पष्ट लेबल, आसान इनपुट और गोपनीयता के साथ सरल बहुभाषी प्रवेश स्क्रीन।", বাংলা: "স্পষ্ট লেবেল, সহজ ইনপুট এবং গোপনীয়তার আশ্বাসসহ একটি সহজ বহুভাষিক প্রবেশ স্ক্রিন।", தமிழ்: "தெளிவான லேபிள்கள், எளிய உள்ளீடுகள் மற்றும் தனியுரிமை பாதுகாப்புடன் கூடிய பலமொழி அணுகல் திரை.", తెలుగు: "స్పష్టమైన లేబుళ్లు, సులభమైన ఇన్‌పుట్‌లు మరియు గోప్యతా భరోసాతో సరళమైన బహుభాషా యాక్సెస్ స్క్రీన్." },
+  "Citizen Account": { English: "Citizen Account", हिन्दी: "नागरिक खाता", বাংলা: "নাগরিক অ্যাকাউন্ট", தமிழ்: "குடிமக்கள் கணக்கு", తెలుగు: "పౌర ఖాతా" },
+  "Login/Register": { English: "Login/Register", हिन्दी: "लॉगिन/पंजीकरण", বাংলা: "লগইন/নিবন্ধন", தமிழ்: "உள்நுழைவு/பதிவு", తెలుగు: "లాగిన్/నమోదు" },
+  "Enter registered contact": { English: "Enter registered contact", हिन्दी: "पंजीकृत संपर्क दर्ज करें", বাংলা: "নিবন্ধিত যোগাযোগ লিখুন", தமிழ்: "பதிவு செய்யப்பட்ட தொடர்பை உள்ளிடவும்", తెలుగు: "నమోదిత సంప్రదింపును నమోదు చేయండి" },
+  "Enter password": { English: "Enter password", हिन्दी: "पासवर्ड दर्ज करें", বাংলা: "পাসওয়ার্ড লিখুন", தமிழ்: "கடவுச்சொல்லை உள்ளிடவும்", తెలుగు: "పాస్‌వర్డ్ నమోదు చేయండి" },
+  "Confirm password": { English: "Confirm password", हिन्दी: "पासवर्ड की पुष्टि करें", বাংলা: "পাসওয়ার্ড নিশ্চিত করুন", தமிழ்: "கடவுச்சொல்லை உறுதிப்படுத்தவும்", తెలుగు: "పాస్‌వర్డ్‌ను నిర్ధారించండి" },
+  "Re-enter your password": { English: "Re-enter your password", हिन्दी: "अपना पासवर्ड फिर से दर्ज करें", বাংলা: "আপনার পাসওয়ার্ড আবার লিখুন", தமிழ்: "உங்கள் கடவுச்சொல்லை மீண்டும் உள்ளிடவும்", తెలుగు: "మీ పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి" },
+  "Ask JanSeva AI...": { English: "Ask JanSeva AI...", हिन्दी: "JanSeva AI से पूछें...", বাংলা: "JanSeva AI-কে জিজ্ঞাসা করুন...", தமிழ்: "JanSeva AI-யிடம் கேளுங்கள்...", తెలుగు: "JanSeva AIని అడగండి..." },
+  "Namaste! Ask me about this page, schemes, eligibility, or applications.": { English: "Namaste! Ask me about this page, schemes, eligibility, or applications.", हिन्दी: "नमस्ते! इस पेज, योजनाओं, पात्रता या आवेदनों के बारे में पूछें।", বাংলা: "নমস্কার! এই পেজ, প্রকল্প, যোগ্যতা বা আবেদন সম্পর্কে জিজ্ঞাসা করুন।", தமிழ்: "வணக்கம்! இந்தப் பக்கம், திட்டங்கள், தகுதி அல்லது விண்ணப்பங்களைப் பற்றி கேளுங்கள்.", తెలుగు: "నమస్తే! ఈ పేజీ, పథకాలు, అర్హత లేదా దరఖాస్తుల గురించి అడగండి." },
   Login: { English: "Login", हिन्दी: "लॉगिन", বাংলা: "লগইন", தமிழ்: "உள்நுழைவு", తెలుగు: "లాగిన్" },
   Register: { English: "Register", हिन्दी: "पंजीकरण", বাংলা: "নিবন্ধন", தமிழ்: "பதிவு", తెలుగు: "నమోదు" },
   Password: { English: "Password", हिन्दी: "पासवर्ड", বাংলা: "পাসওয়ার্ড", தமிழ்: "கடவுச்சொல்", తెలుగు: "పాస్‌వర్డ్" },
@@ -32,15 +42,18 @@ const phrases: Record<string, Record<Language, string>> = {
   "Processing...": { English: "Processing...", हिन्दी: "प्रक्रिया जारी है...", বাংলা: "প্রক্রিয়া চলছে...", தமிழ்: "செயலாக்கப்படுகிறது...", తెలుగు: "ప్రాసెస్ అవుతోంది..." },
 };
 
+const originals = new WeakMap<Text, string>();
+const attributes = new WeakMap<Element, Record<string, string>>();
+
 const Context = createContext<{ language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string }>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key] });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>("English");
   useEffect(() => { const saved = localStorage.getItem("janseva-language") as Language; if (languages.includes(saved)) setLanguageState(saved); fetch("/api/settings").then((r) => r.ok ? r.json() : null).then((data) => data?.language && languages.includes(data.language) && setLanguageState(data.language)); }, []);
-  const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const text = node.textContent?.trim(); const translated = text && (phrases[text]?.[next] || Object.entries(words).find(([, values]) => Object.values(values).includes(text))?.[1][Object.keys(words.English).find((key) => words.English[key as Key] === text) as Key]); if (text && translated && node.textContent) node.textContent = node.textContent.replace(text, translated); } };
+  const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const textNode = node as Text; const original = originals.get(textNode) || textNode.textContent?.trim(); if (!original) continue; originals.set(textNode, original); const key = Object.keys(words.English).find((item) => words.English[item as Key] === original); const translated = phrases[original]?.[next] || (key ? words[next][key as Key] : original); if (textNode.textContent !== translated) textNode.textContent = translated; } document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; const key = Object.keys(words.English).find((item) => words.English[item as Key] === original); element.setAttribute(name, phrases[original]?.[next] || (key ? words[next][key as Key] : original)); }); }); };
   const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.documentElement.lang = next; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }); };
   const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key] }), [language]);
-  useEffect(() => { if (typeof document !== "undefined") translatePage(language); }, [language]);
+  useEffect(() => { translatePage(language); const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
