@@ -8,8 +8,8 @@ type User = { id: string; name: string; contact: string };
 type AuthContextValue = {
   user: User | null;
   loading: boolean;
-  login: (contact: string, password?: string) => Promise<{ success: boolean; error?: string }>;
-  register: (name: string, contact: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  login: (contact: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, contact: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
 };
 
@@ -41,12 +41,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     () => ({
       user,
       loading,
-      login: async (contact: string, password?: string) => {
+      login: async (contact: string, password: string) => {
         try {
           const res = await fetch("/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contact, password: password || "password123" }),
+            body: JSON.stringify({ contact, password }),
           });
           const data = await res.json();
           if (!res.ok) {
@@ -59,12 +59,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return { success: false, error: "Network error. Please try again." };
         }
       },
-      register: async (name: string, contact: string, password?: string) => {
+      register: async (name: string, contact: string, password: string) => {
         try {
           const res = await fetch("/api/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, contact, password: password || "password123" }),
+            body: JSON.stringify({ name, contact, password }),
           });
           const data = await res.json();
           if (!res.ok) {

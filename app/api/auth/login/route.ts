@@ -6,14 +6,15 @@ import { cookies } from "next/headers";
 export async function POST(request: Request) {
   try {
     const { contact, password } = await request.json();
+    const normalizedContact = String(contact || "").trim().toLowerCase();
 
-    if (!contact || !password) {
+    if (!normalizedContact || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // Find user in DB
     const user = await prisma.user.findUnique({
-      where: { contact },
+      where: { contact: normalizedContact },
     });
 
     if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {

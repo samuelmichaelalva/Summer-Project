@@ -6,8 +6,9 @@ import { cookies } from "next/headers";
 export async function POST(request: Request) {
   try {
     const { name, contact, password } = await request.json();
+    const normalizedContact = String(contact || "").trim().toLowerCase();
 
-    if (!name || !contact || !password) {
+    if (!name || !normalizedContact || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
 
     // Check if user already exists
     const existing = await prisma.user.findUnique({
-      where: { contact },
+      where: { contact: normalizedContact },
     });
 
     if (existing) {
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         name: name.trim().replace(/\s+/g, " "),
-        contact,
+        contact: normalizedContact,
         passwordHash,
         preferredLanguage: "English",
       },

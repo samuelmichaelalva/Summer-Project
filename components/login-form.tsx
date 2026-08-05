@@ -37,6 +37,7 @@ export function LoginForm() {
   const clearTimersRef = useRef<number[]>([]);
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [formKey, setFormKey] = useState(0);
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -59,6 +60,7 @@ export function LoginForm() {
     const clearForm = () => {
       setContact("");
       setPassword("");
+      setConfirmPassword("");
       setName("");
       setError(null);
       setShowPassword(false);
@@ -96,6 +98,10 @@ export function LoginForm() {
       setError("Use a stronger password or choose the suggested password.");
       return;
     }
+    if (mode === "register" && password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -123,6 +129,8 @@ export function LoginForm() {
         <button
           onClick={() => {
             setMode("login");
+            setPassword("");
+            setConfirmPassword("");
             setError(null);
           }}
           className={`rounded-md py-2 text-sm font-bold ${mode === "login" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
@@ -133,6 +141,8 @@ export function LoginForm() {
         <button
           onClick={() => {
             setMode("register");
+            setPassword("");
+            setConfirmPassword("");
             setError(null);
           }}
           className={`rounded-md py-2 text-sm font-bold ${mode === "register" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
@@ -166,7 +176,7 @@ export function LoginForm() {
           placeholder="Enter registered contact"
           value={contact}
           onChange={setContact}
-          autoComplete="off"
+          autoComplete={mode === "login" ? "username" : "email"}
           required
         />
 
@@ -193,7 +203,7 @@ export function LoginForm() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              autoComplete="new-password"
+              autoComplete={mode === "register" ? "new-password" : "current-password"}
               required
             />
             <button
@@ -216,6 +226,8 @@ export function LoginForm() {
             </div>
           )}
         </label>
+
+        {mode === "register" && <Field label="Confirm password" placeholder="Re-enter your password" type={showPassword ? "text" : "password"} value={confirmPassword} onChange={setConfirmPassword} autoComplete="new-password" required />}
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-on-surface-variant">
