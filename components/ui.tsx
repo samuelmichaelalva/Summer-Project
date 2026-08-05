@@ -5,7 +5,8 @@ import { Bell, ChevronDown, Globe2, Menu, Search, UserCircle } from "lucide-reac
 import { useState } from "react";
 import { LogoutLink } from "@/components/logout-link";
 import { TopNavAccount } from "@/components/top-nav-account";
-import { languages, navItems } from "@/lib/data";
+import { navItems } from "@/lib/data";
+import { languages, useLanguage } from "@/components/language-provider";
 
 export function Button({
   children,
@@ -47,6 +48,7 @@ export function Badge({ children, tone = "blue" }: { children: React.ReactNode; 
 }
 
 export function TopNav({ active = "Home" }: { active?: string }) {
+  const { language, setLanguage } = useLanguage();
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-4 shadow-sm backdrop-blur md:px-10">
       <Link href="/" className="text-xl font-extrabold text-primary">
@@ -62,7 +64,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
       <div className="flex items-center gap-2">
         <div className="hidden items-center gap-2 rounded-full border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface-variant sm:flex">
           <Globe2 size={18} className="text-primary" />
-          <span>English</span>
+          <button type="button" onClick={() => setLanguage(languages[(languages.indexOf(language) + 1) % languages.length])}>{language}</button>
           <ChevronDown size={16} />
         </div>
         <IconButton label="Notifications">
@@ -79,6 +81,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
 
 export function AppShell({ children, active = "Dashboard" }: { children: React.ReactNode; active?: string }) {
   const [open, setOpen] = useState(true);
+  const { t } = useLanguage();
   const items = ["Dashboard", "Scheme Listing", "AI Assistant", "Profile", "Settings"];
   const hrefs: Record<string, string> = {
     Dashboard: "/dashboard",
@@ -97,7 +100,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
         <div className="hidden w-full max-w-md md:block">
           <label className="relative block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" size={18} />
-            <input className="h-11 w-full rounded-full border-0 bg-surface-container pl-10 pr-4 text-sm" placeholder="Search schemes, benefits, or help..." />
+            <input className="h-11 w-full rounded-full border-0 bg-surface-container pl-10 pr-4 text-sm" placeholder={t("search")} />
           </label>
         </div>
         <div className="flex items-center gap-2">
@@ -117,13 +120,13 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
       </button>
       <aside className={`fixed bottom-0 left-0 z-40 flex h-16 w-full justify-around border-t border-outline-variant bg-surface shadow-lg transition-transform duration-200 lg:bottom-auto lg:top-16 lg:h-[calc(100vh-4rem)] lg:w-64 lg:flex-col lg:justify-start lg:border-r lg:border-t-0 lg:p-4 ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className={`hidden px-4 pb-5 pt-14 lg:block ${!open && "invisible"}`}>
-          <p className="text-sm font-semibold text-on-surface">Welcome, Citizen</p>
-          <p className="text-xs text-on-surface-variant">Verify your Aadhaar</p>
+          <p className="text-sm font-semibold text-on-surface">{t("welcome")}</p>
+          <p className="text-xs text-on-surface-variant">{t("verifyAadhaar")}</p>
         </div>
         <nav className="flex w-full justify-around lg:flex-col lg:gap-1">
           {items.map((item) => (
             <Link key={item} href={hrefs[item]} className={`flex flex-col items-center justify-center rounded-lg px-3 py-2 text-xs font-semibold transition lg:flex-row lg:justify-start lg:gap-3 lg:text-sm ${active === item ? "bg-primary-container text-on-primary" : "text-on-surface-variant hover:bg-surface-container-low"}`}>
-              <span>{item.split(" ")[0]}</span>
+              <span>{t(item === "Scheme Listing" ? "schemeListing" : item === "AI Assistant" ? "aiAssistant" : item.toLowerCase() as never)}</span>
             </Link>
           ))}
         </nav>
@@ -135,12 +138,13 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
 }
 
 export function LanguagePills() {
+  const { language, setLanguage } = useLanguage();
   return (
     <div className="flex flex-wrap gap-2">
-      {languages.map((language) => (
-        <span key={language} className="rounded-full border border-outline-variant bg-white px-3 py-1 text-xs font-semibold text-on-surface-variant">
-          {language}
-        </span>
+      {languages.map((item) => (
+        <button key={item} type="button" onClick={() => setLanguage(item)} className={`rounded-full border px-3 py-1 text-xs font-semibold ${language === item ? "border-primary bg-primary text-white" : "border-outline-variant bg-white text-on-surface-variant"}`}>
+          {item}
+        </button>
       ))}
     </div>
   );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AuthProvider } from "@/components/auth-provider";
 import { AssistantWidget } from "@/components/assistant-widget";
 import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageProvider } from "@/components/language-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <AuthProvider><ThemeProvider />{children}<AssistantWidget /></AuthProvider>
+        <AuthProvider><LanguageProvider><ThemeProvider />{children}<AssistantWidget /></LanguageProvider></AuthProvider>
       </body>
     </html>
   );
