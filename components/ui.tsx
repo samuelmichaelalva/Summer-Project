@@ -50,7 +50,7 @@ export function Badge({ children, tone = "blue" }: { children: React.ReactNode; 
 export function TopNav({ active = "Home" }: { active?: string }) {
   const { t } = useLanguage();
   return (
-    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-4 shadow-sm backdrop-blur md:px-10">
+    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-[#dff1ff]/95 px-4 shadow-sm backdrop-blur md:px-10">
       <Link href="/" className="text-xl font-extrabold text-primary">
         JanSeva
       </Link>
@@ -92,7 +92,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-0">
-      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface px-4 shadow-sm md:px-10">
+      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-[#dff1ff] px-4 shadow-sm md:px-10">
         <Link href="/" className="text-xl font-extrabold text-primary">
           JanSeva
         </Link>
@@ -154,4 +154,3 @@ function IconButton({ children, label, className = "" }: { children: React.React
     </button>
   );
 }
-

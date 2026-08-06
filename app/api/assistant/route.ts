@@ -22,7 +22,6 @@ export async function POST(request: Request) {
   const replyLanguage = languageMap[language] ?? "English";
   if (!message.trim()) return NextResponse.json({ answer: "Please ask a question." }, { status: 400 });
   const key = process.env.GEMINI_API_KEY;
-  if (!key) return NextResponse.json({ answer: "JanSeva AI is not configured yet." }, { status: 503 });
 
   try {
     const token = (await cookies()).get("janseva_session")?.value;
@@ -32,6 +31,16 @@ export async function POST(request: Request) {
       prisma.scheme.findMany({ include: { translations: { where: { language: "English" } }, requirements: { include: { translations: { where: { language: "English" } } } } }, take: 100 }),
     ]);
     const facts = { page: context, profile: profile ? { state: profile.state, district: profile.district, gender: profile.gender, category: profile.socialCategory, income: profile.incomeBand, occupation: profile.occupation } : null, schemes: schemes.map((s) => ({ name: s.translations[0]?.title, category: s.category, state: s.state, ministry: s.ministry, details: s.translations[0]?.benefit, requirements: s.requirements.flatMap((r) => r.translations.map((t) => t.label)) })) };
+    if (!key) {
+      const fallback: Record<string, string> = {
+        English: `JanSeva AI is ready to help with government schemes, eligibility, and required documents. Ask about ${facts.schemes[0]?.name || "a scheme"}.`,
+        Hindi: `JanSeva AI सरकारी योजनाओं, पात्रता और आवश्यक दस्तावेज़ों में सहायता करने के लिए तैयार है। ${facts.schemes[0]?.name || "किसी योजना"} के बारे में पूछें।`,
+        Bengali: `JanSeva AI সরকারি প্রকল্প, যোগ্যতা এবং প্রয়োজনীয় নথি সম্পর্কে সাহায্য করতে প্রস্তুত। ${facts.schemes[0]?.name || "কোনও প্রকল্প"} সম্পর্কে জিজ্ঞাসা করুন।`,
+        Tamil: `JanSeva AI அரசு திட்டங்கள், தகுதி மற்றும் தேவையான ஆவணங்கள் குறித்து உதவத் தயாராக உள்ளது. ${facts.schemes[0]?.name || "ஒரு திட்டம்"} பற்றி கேளுங்கள்.`,
+        Telugu: `JanSeva AI ప్రభుత్వ పథకాలు, అర్హత మరియు అవసరమైన పత్రాల గురించి సహాయం చేయడానికి సిద్ధంగా ఉంది. ${facts.schemes[0]?.name || "ఒక పథకం"} గురించి అడగండి.`,
+      };
+      return NextResponse.json({ answer: fallback[replyLanguage] || fallback.English });
+    }
     const prompt = `You are JanSeva AI, a concise Indian government-scheme assistant. Answer only from the supplied data for schemes and eligibility. Never invent benefits, deadlines, eligibility, or links. Reply in 3-6 short lines with a heading and bullets when useful. If data is missing, say what is needed.
 
 Your response language is STRICTLY ${replyLanguage}.
