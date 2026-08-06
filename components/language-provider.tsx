@@ -207,6 +207,22 @@ const morePhrases: [string, string, string, string, string][] = [
   ["Instant Eligibility Matching", "तुरंत पात्रता मिलान", "তাৎক্ষণিক যোগ্যতা মিলানো", "உடனடி தகுதி பொருத்தம்", "తక్షణ అర్హత సరిపోలిక"],
   ["Regional Language UI", "क्षेत्रीय भाषा इंटरफ़ेस", "আঞ্চলিক ভাষার ইন্টারফেস", "பிராந்திய மொழி இடைமுகம்", "ప్రాంతీయ భాషా ఇంటర్‌ఫేస్"],
   ["Privacy-first Forms", "गोपनीयता-केंद्रित फ़ॉर्म", "গোপনীয়তা-কেন্দ্রিক ফর্ম", "தனியுரிமை முன்னுரிமை படிவங்கள்", "గోప్యతకు ప్రాధాన్యమిచ్చే ఫారమ్‌లు"],
+  ["I could not find an answer yet.", "मुझे अभी उत्तर नहीं मिल सका।", "আমি এখনও উত্তর খুঁজে পাইনি।", "என்னால் இன்னும் பதிலைக் கண்டுபிடிக்க முடியவில்லை.", "నేను ఇంకా సమాధానం కనుగొనలేకపోయాను."],
+  ["I could not prepare an answer.", "मैं उत्तर तैयार नहीं कर सका।", "আমি উত্তর প্রস্তুত করতে পারিনি।", "என்னால் பதிலைத் தயாரிக்க முடியவில்லை.", "నేను సమాధానం సిద్ధం చేయలేకపోయాను."],
+  ["JanSeva AI is temporarily unavailable.", "JanSeva AI अस्थायी रूप से उपलब्ध नहीं है।", "JanSeva AI সাময়িকভাবে উপলব্ধ নয়।", "JanSeva AI தற்காலிகமாக கிடைக்கவில்லை.", "JanSeva AI తాత్కాలికంగా అందుబాటులో లేదు."],
+  ["JanSeva AI is not configured yet.", "JanSeva AI अभी कॉन्फ़िगर नहीं है।", "JanSeva AI এখনও কনফিগার করা হয়নি।", "JanSeva AI இன்னும் கட்டமைக்கப்படவில்லை.", "JanSeva AI ఇంకా కాన్ఫిగర్ చేయబడలేదు."],
+  ["Please ask a question.", "कृपया कोई प्रश्न पूछें।", "অনুগ্রহ করে একটি প্রশ্ন করুন।", "தயவுசெய்து ஒரு கேள்வியைக் கேளுங்கள்.", "దయచేసి ఒక ప్రశ్న అడగండి."],
+  ["Unauthorized", "अनधिकृत", "অননুমোদিত", "அங்கீகரிக்கப்படாதது", "అనధికారికం"],
+  ["Login required", "लॉगिन आवश्यक है", "লগইন প্রয়োজন", "உள்நுழைவு தேவை", "లాగిన్ అవసరం"],
+  ["User not found", "उपयोगकर्ता नहीं मिला", "ব্যবহারকারী পাওয়া যায়নি", "பயனர் கிடைக்கவில்லை", "వినియోగదారు కనుగొనబడలేదు"],
+  ["Internal Server Error", "आंतरिक सर्वर त्रुटि", "অভ্যন্তরীণ সার্ভার ত্রুটি", "உள் சேவையகப் பிழை", "అంతర్గత సర్వర్ లోపం"],
+  ["Missing required fields", "आवश्यक फ़ील्ड गायब हैं", "প্রয়োজনীয় ক্ষেত্র অনুপস্থিত", "தேவையான புலங்கள் இல்லை", "అవసరమైన ఫీల్డ్‌లు లేవు"],
+  ["Enter a valid name using letters and spaces", "अक्षरों और रिक्त स्थान का उपयोग करके मान्य नाम दर्ज करें", "অক্ষর ও স্পেস ব্যবহার করে একটি বৈধ নাম লিখুন", "எழுத்துகள் மற்றும் இடைவெளிகளைப் பயன்படுத்தி சரியான பெயரை உள்ளிடவும்", "అక్షరాలు మరియు ఖాళీలను ఉపయోగించి చెల్లుబాటు అయ్యే పేరు నమోదు చేయండి"],
+  ["Password must be at least 8 characters", "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए", "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে", "கடவுச்சொல் குறைந்தது 8 எழுத்துகளைக் கொண்டிருக்க வேண்டும்", "పాస్‌వర్డ్ కనీసం 8 అక్షరాలు ఉండాలి"],
+  ["Contact already registered", "संपर्क पहले से पंजीकृत है", "যোগাযোগ ইতিমধ্যে নিবন্ধিত", "தொடர்பு ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது", "సంప్రదింపు ఇప్పటికే నమోదు చేయబడింది"],
+  ["Invalid contact or password", "अमान्य संपर्क या पासवर्ड", "অবৈধ যোগাযোগ বা পাসওয়ার্ড", "தவறான தொடர்பு அல்லது கடவுச்சொல்", "చెల్లని సంప్రదింపు లేదా పాస్‌వర్డ్"],
+  ["Scheme not found", "योजना नहीं मिली", "প্রকল্প পাওয়া যায়নি", "திட்டம் கிடைக்கவில்லை", "పథకం కనుగొనబడలేదు"],
+  ["Could not complete action", "कार्रवाई पूरी नहीं की जा सकी", "কাজটি সম্পূর্ণ করা যায়নি", "செயலை முடிக்க முடியவில்லை", "చర్యను పూర్తి చేయలేకపోయాము"],
 ];
 extraPhrases.push(...morePhrases);
 extraPhrases.forEach(([english, ...translated]) => { phrases[english] = Object.fromEntries(languages.map((language, index) => [language, translated[index]])) as Record<Language, string>; });
@@ -229,13 +245,13 @@ const translated = (original: string, next: Language) => {
 
 const Context = createContext<{ language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string }>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key] });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("English");
+export function LanguageProvider({ children, initialLanguage = "English" }: { children: React.ReactNode; initialLanguage?: Language }) {
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
   useEffect(() => { const saved = localStorage.getItem("janseva-language") as Language; if (languages.includes(saved)) { setLanguageState(saved); return; } fetch("/api/settings").then((r) => r.ok ? r.json() : null).then((data) => data?.language && languages.includes(data.language) && setLanguageState(data.language)); }, []);
   const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const textNode = node as Text; if (!textNode.textContent?.trim() || textNode.parentElement?.closest("script, style, [data-no-translate]")) continue; const original = originals.get(textNode) || textNode.textContent; originals.set(textNode, original); const value = translated(original, next); if (textNode.textContent !== value) textNode.textContent = value; } document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
-  const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.documentElement.lang = languageCodes[next]; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }).catch(() => {}); };
+  const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.cookie = `janseva-language=${encodeURIComponent(next)}; path=/; max-age=31536000; samesite=lax`; document.documentElement.lang = languageCodes[next]; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }).catch(() => {}); };
   const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key] }), [language]);
-  useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
+  useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); document.body.dataset.i18nReady = "true"; const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => { observer.disconnect(); delete document.body.dataset.i18nReady; }; }, [language]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
