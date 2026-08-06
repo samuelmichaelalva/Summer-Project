@@ -2,22 +2,27 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui";
-import { T } from "@/components/language-provider";
+import { T, useLanguage } from "@/components/language-provider";
 
 export function EligibilityRefresh() {
-  const [status, setStatus] = useState("Using saved profile match");
+  const { t } = useLanguage();
+  const [status, setStatus] = useState<string>("usingSavedProfileMatch");
 
   async function refresh() {
-    setStatus("Checking eligibility...");
+    setStatus("checkingEligibility");
     const response = await fetch("/api/eligibility");
     const data = await response.json();
-    setStatus(`${data.matches.length} schemes ranked from eligibility engine`);
+    setStatus(`${data.matches.length} ${t("schemesRanked")}`);
   }
 
   return (
     <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
-      <Button onClick={refresh} variant="secondary"><T>Refresh eligibility</T></Button>
-      <span className="text-sm font-semibold text-on-surface-variant"><T>{status}</T></span>
+      <Button onClick={refresh} variant="secondary">
+        <T id="refreshChat" />
+      </Button>
+      <span className="text-sm font-semibold text-on-surface-variant">
+        {status === "usingSavedProfileMatch" || status === "checkingEligibility" ? t(status as any) : status}
+      </span>
     </div>
   );
 }

@@ -27,7 +27,11 @@ export function ProfileSummary() {
 
   return (
     <p className="mt-3 text-sm leading-6 text-on-surface-variant">
-      {profile ? `${profile.state} • ${profile.income} • ${profile.primaryNeed}` : <T>Configure your profile details to see tailored schemes.</T>}
+      {profile ? (
+        `${profile.state} • ${profile.income} • ${profile.primaryNeed}`
+      ) : (
+        <T id="configureProfilePrompt" />
+      )}
     </p>
   );
 }

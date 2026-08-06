@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui";
 import { T, useLanguage } from "@/components/language-provider";
+import { Dictionary } from "@/lib/i18n/dictionaries";
 
 function generateStrongPassword() {
   const letters = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
@@ -34,6 +35,7 @@ function getPasswordScore(password: string) {
 
 export function LoginForm() {
   const { login, register } = useAuth();
+  const { t } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
   const clearTimersRef = useRef<number[]>([]);
   const [contact, setContact] = useState("");
@@ -42,7 +44,8 @@ export function LoginForm() {
   const [name, setName] = useState("");
   const [formKey, setFormKey] = useState(0);
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<keyof Dictionary | null>(null);
+  const [customError, setCustomError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -63,7 +66,8 @@ export function LoginForm() {
       setPassword("");
       setConfirmPassword("");
       setName("");
-      setError(null);
+      setErrorKey(null);
+      setCustomError(null);
       setShowPassword(false);
       setFormKey((key) => key + 1);
       clearNativeInputs();
@@ -83,24 +87,24 @@ export function LoginForm() {
   }, []);
 
   const passwordScore = getPasswordScore(password);
-  const nameError = mode === "register" && name && !/^[A-Za-z][A-Za-z\s.'-]{1,}$/.test(name)
-    ? "Enter a valid name using letters and spaces."
-    : null;
-  const passwordLabel = passwordScore >= 5 ? "Strong" : passwordScore >= 3 ? "Good" : password ? "Weak" : "Required";
+  const isNameInvalid = mode === "register" && name.length > 0 && !/^[A-Za-z][A-Za-z\s.'-]{1,}$/.test(name);
+  const passwordLabelKey: keyof Dictionary = passwordScore >= 5 ? "strong" : passwordScore >= 3 ? "good" : password ? "weak" : "required";
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError(null);
-    if (nameError) {
-      setError(nameError);
+    setErrorKey(null);
+    setCustomError(null);
+
+    if (isNameInvalid) {
+      setErrorKey("validNameError");
       return;
     }
     if (mode === "register" && passwordScore < 3) {
-      setError("Use a stronger password or choose the suggested password.");
+      setErrorKey("useStrongerPassword");
       return;
     }
     if (mode === "register" && password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setErrorKey("passwordsDoNotMatch");
       return;
     }
     setLoading(true);
@@ -109,16 +113,16 @@ export function LoginForm() {
       if (mode === "login") {
         const res = await login(contact, password);
         if (!res.success) {
-          setError(res.error || "Login failed");
+          setCustomError(res.error || t("loginFailed"));
         }
       } else {
         const res = await register(name, contact, password);
         if (!res.success) {
-          setError(res.error || "Registration failed");
+          setCustomError(res.error || t("registrationFailed"));
         }
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      setErrorKey("unexpectedError");
     } finally {
       setLoading(false);
     }
@@ -132,49 +136,51 @@ export function LoginForm() {
             setMode("login");
             setPassword("");
             setConfirmPassword("");
-            setError(null);
+            setErrorKey(null);
+            setCustomError(null);
           }}
           className={`rounded-md py-2 text-sm font-bold ${mode === "login" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
           type="button"
         >
-          <T>Login</T>
+          <T id="login" />
         </button>
         <button
           onClick={() => {
             setMode("register");
             setPassword("");
             setConfirmPassword("");
-            setError(null);
+            setErrorKey(null);
+            setCustomError(null);
           }}
           className={`rounded-md py-2 text-sm font-bold ${mode === "register" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
           type="button"
         >
-          <T>Register</T>
+          <T id="register" />
         </button>
       </div>
-      
+
       <form key={formKey} ref={formRef} className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
-        {error && (
+        {(errorKey || customError) && (
           <div className="rounded-lg bg-error/10 p-3 text-sm font-semibold text-error">
-            <T>{error}</T>
+            {errorKey ? t(errorKey) : customError}
           </div>
         )}
 
         {mode === "register" && (
           <Field
-            label="Full Name"
-            placeholder="Enter your full name"
+            labelKey="fullName"
+            placeholderKey="fullName"
             value={name}
             onChange={(value) => setName(value.replace(/[0-9]/g, ""))}
-            error={nameError}
+            errorKey={isNameInvalid ? "validNameError" : undefined}
             autoComplete="off"
             required
           />
         )}
 
         <Field
-          label="Mobile number or email"
-          placeholder="Enter registered contact"
+          labelKey="mobileOrEmail"
+          placeholderKey="contactPlaceholder"
           value={contact}
           onChange={setContact}
           autoComplete={mode === "login" ? "username" : "email"}
@@ -183,7 +189,7 @@ export function LoginForm() {
 
         <label className="block">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-semibold"><T>Password</T></span>
+            <span className="text-sm font-semibold"><T id="password" /></span>
             {mode === "register" && (
               <button
                 type="button"
@@ -193,14 +199,14 @@ export function LoginForm() {
                 }}
                 className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
               >
-                <KeyRound size={14} /> <T>Suggest strong password</T>
+                <KeyRound size={14} /> <T id="suggestStrongPassword" />
               </button>
             )}
           </div>
           <div className="relative">
             <input
               className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 pr-11 text-sm"
-              placeholder="Enter password"
+              placeholder={t("passwordPlaceholder")}
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
@@ -223,26 +229,36 @@ export function LoginForm() {
                   <span key={level} className={`h-1.5 flex-1 rounded-full ${passwordScore >= level ? "bg-primary" : "bg-surface-container"}`} />
                 ))}
               </div>
-              <p className="mt-1 text-xs font-semibold text-on-surface-variant"><T>{`Password strength: ${passwordLabel}`}</T></p>
+              <p className="mt-1 text-xs font-semibold text-on-surface-variant">{t(passwordLabelKey)}</p>
             </div>
           )}
         </label>
 
-        {mode === "register" && <Field label="Confirm password" placeholder="Re-enter your password" type={showPassword ? "text" : "password"} value={confirmPassword} onChange={setConfirmPassword} autoComplete="new-password" required />}
+        {mode === "register" && (
+          <Field
+            labelKey="confirmPassword"
+            placeholderKey="reEnterPasswordPlaceholder"
+            type={showPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            autoComplete="new-password"
+            required
+          />
+        )}
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-on-surface-variant">
-            <input type="checkbox" className="rounded border-outline-variant" /> <T>Remember me</T>
+            <input type="checkbox" className="rounded border-outline-variant" /> <T id="rememberMe" />
           </label>
-          <a className="font-semibold text-primary" href="#"><T>Forgot password?</T></a>
+          <a className="font-semibold text-primary" href="#"><T id="forgotPassword" /></a>
         </div>
 
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? (
-            <T>Processing...</T>
+            <T id="processing" />
           ) : (
             <>
-              <T>{mode === "login" ? "Login" : "Create account"}</T> <ArrowRight size={18} />
+              <T id={mode === "login" ? "login" : "createAccount"} /> <ArrowRight size={18} />
             </>
           )}
         </Button>
@@ -252,38 +268,38 @@ export function LoginForm() {
 }
 
 function Field({
-  label,
-  placeholder,
+  labelKey,
+  placeholderKey,
   type = "text",
   value,
   onChange,
   required = false,
-  error,
+  errorKey,
   autoComplete,
 }: {
-  label: string;
-  placeholder: string;
+  labelKey: keyof Dictionary;
+  placeholderKey: keyof Dictionary;
   type?: string;
   value?: string;
   onChange?: (value: string) => void;
   required?: boolean;
-  error?: string | null;
+  errorKey?: keyof Dictionary;
   autoComplete?: string;
 }) {
-  const { translate } = useLanguage();
+  const { t } = useLanguage();
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-semibold"><T>{label}</T></span>
+      <span className="mb-2 block text-sm font-semibold"><T id={labelKey} /></span>
       <input
-        className={`h-11 w-full rounded-lg border bg-white px-3 text-sm ${error ? "border-error" : "border-outline-variant"}`}
-        placeholder={translate(placeholder)}
+        className={`h-11 w-full rounded-lg border bg-white px-3 text-sm ${errorKey ? "border-error" : "border-outline-variant"}`}
+        placeholder={t(placeholderKey)}
         type={type}
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
         required={required}
         autoComplete={autoComplete}
       />
-      {error && <p className="mt-1 text-xs font-semibold text-error"><T>{error}</T></p>}
+      {errorKey && <p className="mt-1 text-xs font-semibold text-error"><T id={errorKey} /></p>}
     </label>
   );
 }

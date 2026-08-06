@@ -70,7 +70,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
           <Bell size={20} />
         </IconButton>
         <TopNavAccount />
-        <IconButton label="Menu" className="md:hidden">
+        <IconButton label={t("menu")} className="md:hidden">
           <Menu size={22} />
         </IconButton>
       </div>
@@ -107,12 +107,12 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
           <IconButton label={t("notifications")}>
             <Bell size={20} />
           </IconButton>
-          <IconButton label="Account">
+          <IconButton label={t("account")}>
             <UserCircle size={22} />
           </IconButton>
         </div>
       </header>
-      <button onClick={() => setOpen(!open)} className="fixed left-3 top-20 z-[60] hidden h-9 w-9 items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-low lg:flex" aria-label={open ? "Close sidebar" : "Open sidebar"}>
+      <button onClick={() => setOpen(!open)} className="fixed left-3 top-20 z-[60] hidden h-9 w-9 items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-low lg:flex" aria-label={t("menu")}>
         <Menu size={20} />
       </button>
       <aside className={`fixed bottom-0 left-0 z-40 flex h-16 w-full justify-around border-t border-outline-variant bg-surface shadow-lg transition-transform duration-200 lg:bottom-auto lg:top-16 lg:h-[calc(100vh-4rem)] lg:w-64 lg:flex-col lg:justify-start lg:border-r lg:border-t-0 lg:p-4 ${open ? "translate-x-0" : "-translate-x-full"}`}>
@@ -148,6 +148,12 @@ export function LanguagePills() {
 }
 
 function IconButton({ children, label, className = "" }: { children: React.ReactNode; label: string; className?: string }) {
+  return (
+    <button aria-label={label} title={label} className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition hover:bg-surface-container-low ${className}`}>
+      {children}
+    </button>
+  );
+}
   return (
     <button aria-label={label} title={label} className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition hover:bg-surface-container-low ${className}`}>
       {children}

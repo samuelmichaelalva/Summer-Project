@@ -7,14 +7,33 @@ import { T, useLanguage } from "@/components/language-provider";
 
 export function AssistantWidget() {
   const pathname = usePathname();
-  const { language, translate } = useLanguage();
+  const { language, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const boxRef = useRef<HTMLElement>(null);
-  const [messages, setMessages] = useState([{ role: "assistant", text: "Namaste! Ask me about this page, schemes, eligibility, or applications." }]);
-  useEffect(() => { setOpen(false); }, [pathname]);
-  useEffect(() => { const close = (event: MouseEvent) => { const target = event.target; if (!boxRef.current?.contains(target as Node) && !(target instanceof Element && target.closest("[data-assistant-launcher]"))) setOpen(false); }; document.addEventListener("mousedown", close); return () => document.removeEventListener("mousedown", close); }, []);
+  const [messages, setMessages] = useState<Array<{ role: "assistant" | "user"; text: string }>>([
+    { role: "assistant", text: t("assistantGreeting") },
+  ]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      const target = event.target;
+      if (
+        !boxRef.current?.contains(target as Node) &&
+        !(target instanceof Element && target.closest("[data-assistant-launcher]"))
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
   if (pathname === "/assistant") return null;
 
   async function send() {
@@ -23,19 +42,110 @@ export function AssistantWidget() {
     setMessages((items) => [...items, { role: "user", text: message }]);
     setInput("");
     setLoading(true);
+
     try {
-      const res = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, language, context: pathname, history: messages.slice(-8) }) });
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message,
+          language,
+          context: pathname,
+          history: messages.slice(-8),
+        }),
+      });
       const data = await res.json();
-      setMessages((items) => [...items, { role: "assistant", text: data.answer || "I could not find an answer yet." }]);
-    } catch { setMessages((items) => [...items, { role: "assistant", text: "JanSeva AI is temporarily unavailable." }]); } finally { setLoading(false); }
+      setMessages((items) => [
+        ...items,
+        { role: "assistant", text: data.answer || t("couldNotFindAnswer") },
+      ]);
+    } catch {
+      setMessages((items) => [
+        ...items,
+        { role: "assistant", text: t("aiUnavailable") },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  return <>
-    {open && <section ref={boxRef} className="fixed bottom-24 right-5 z-[70] flex h-[min(30rem,calc(100vh-8rem))] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-outline-variant bg-white shadow-2xl">
-      <header className="flex items-center justify-between bg-primary p-4 text-white"><div className="flex items-center gap-2"><Sparkles size={18} /><div><p className="font-bold">JanSeva AI</p><p className="text-xs opacity-80"><T>{`Context: ${pathname.slice(1) || "home"}`}</T></p></div></div><div className="flex items-center gap-2"><button onClick={() => setMessages([{ role: "assistant", text: "Chat refreshed. How can I help?" }])} className="text-xs underline" type="button"><T>Refresh Chat</T></button><button onClick={() => setOpen(false)} aria-label="Close assistant"><X size={18} /></button></div></header>
-       <div className="flex-1 space-y-3 overflow-y-auto p-4">{messages.map((message, index) => <p key={index} className={`max-w-[88%] rounded-xl p-3 text-sm leading-5 ${message.role === "user" ? "ml-auto bg-primary text-white" : "bg-surface-container-high"}`}>{message.role === "assistant" ? <T>{message.text}</T> : message.text}</p>)}{loading && <p className="text-sm text-on-surface-variant"><T>Thinking...</T></p>}</div>
-       <div className="flex gap-2 border-t border-outline-variant p-3"><input autoFocus={open} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => event.key === "Enter" && send()} className="h-10 min-w-0 flex-1 rounded-full border border-outline-variant px-3 text-sm" placeholder={translate("Ask JanSeva AI...")} /><button onClick={send} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-label={translate("Send")}><Send size={16} /></button></div>
-    </section>}
-    <button data-assistant-launcher onClick={() => setOpen(!open)} className="fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:scale-105" aria-label={open ? "Close JanSeva AI" : "Open JanSeva AI"}>{open ? <X size={22} /> : <MessageCircle size={24} />}</button>
-  </>;
+  return (
+    <>
+      {open && (
+        <section
+          ref={boxRef}
+          className="fixed bottom-24 right-5 z-[70] flex h-[min(30rem,calc(100vh-8rem))] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-outline-variant bg-white shadow-2xl"
+        >
+          <header className="flex items-center justify-between bg-primary p-4 text-white">
+            <div className="flex items-center gap-2">
+              <Sparkles size={18} />
+              <div>
+                <p className="font-bold">JanSeva AI</p>
+                <p className="text-xs opacity-80">
+                  {t("contextLabel")} {pathname.slice(1) || t("home")}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMessages([{ role: "assistant", text: t("chatRefreshed") }])}
+                className="text-xs underline"
+                type="button"
+              >
+                <T id="refreshChat" />
+              </button>
+              <button onClick={() => setOpen(false)} aria-label={t("closeAssistant")}>
+                <X size={18} />
+              </button>
+            </div>
+          </header>
+
+          <div className="flex-1 space-y-3 overflow-y-auto p-4">
+            {messages.map((message, index) => (
+              <p
+                key={index}
+                className={`max-w-[88%] rounded-xl p-3 text-sm leading-5 ${
+                  message.role === "user" ? "ml-auto bg-primary text-white" : "bg-surface-container-high text-on-surface"
+                }`}
+              >
+                {message.text}
+              </p>
+            ))}
+            {loading && (
+              <p className="text-sm text-on-surface-variant">
+                <T id="thinking" />
+              </p>
+            )}
+          </div>
+
+          <div className="flex gap-2 border-t border-outline-variant p-3">
+            <input
+              autoFocus={open}
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => event.key === "Enter" && send()}
+              className="h-10 min-w-0 flex-1 rounded-full border border-outline-variant px-3 text-sm"
+              placeholder={t("askJanSevaAi")}
+            />
+            <button
+              onClick={send}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white"
+              aria-label={t("send")}
+            >
+              <Send size={16} />
+            </button>
+          </div>
+        </section>
+      )}
+
+      <button
+        data-assistant-launcher
+        onClick={() => setOpen(!open)}
+        className="fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:scale-105"
+        aria-label={open ? "Close JanSeva AI" : "Open JanSeva AI"}
+      >
+        {open ? <X size={22} /> : <MessageCircle size={24} />}
+      </button>
+    </>
+  );
 }
