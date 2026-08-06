@@ -3,9 +3,11 @@
 import { RefreshCw, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Card } from "@/components/ui";
+import { useLanguage } from "@/components/language-provider";
 
 export function AssistantChat() {
   const [input, setInput] = useState("");
+  const { language } = useLanguage();
   const [messages, setMessages] = useState([
     { role: "assistant", text: "Namaste. Ask me about schemes, eligibility, or documents." },
   ]);
@@ -15,7 +17,7 @@ export function AssistantChat() {
     const next = [...messages, { role: "user", text: input }];
     setMessages(next);
     setInput("");
-    try { const response = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: input, context: "/assistant", history: messages.slice(-8) }) }); const data = await response.json(); setMessages([...next, { role: "assistant", text: data.answer || "I could not prepare an answer." }]); } catch { setMessages([...next, { role: "assistant", text: "JanSeva AI is temporarily unavailable." }]); }
+    try { const response = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: input, language, context: "/assistant", history: messages.slice(-8) }) }); const data = await response.json(); setMessages([...next, { role: "assistant", text: data.answer || "I could not prepare an answer." }]); } catch { setMessages([...next, { role: "assistant", text: "JanSeva AI is temporarily unavailable." }]); }
   }
 
   return (

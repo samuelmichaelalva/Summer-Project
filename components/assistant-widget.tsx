@@ -3,9 +3,11 @@
 import { MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/components/language-provider";
 
 export function AssistantWidget() {
   const pathname = usePathname();
+  const { language } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ export function AssistantWidget() {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, context: pathname, history: messages.slice(-8) }) });
+      const res = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, language, context: pathname, history: messages.slice(-8) }) });
       const data = await res.json();
       setMessages((items) => [...items, { role: "assistant", text: data.answer || "I could not find an answer yet." }]);
     } catch { setMessages((items) => [...items, { role: "assistant", text: "JanSeva AI is temporarily unavailable." }]); } finally { setLoading(false); }
