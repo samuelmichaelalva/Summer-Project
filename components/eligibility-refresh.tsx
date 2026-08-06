@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui";
+import { T } from "@/components/language-provider";
 
 export function EligibilityRefresh() {
   const [status, setStatus] = useState("Using saved profile match");
@@ -15,8 +16,8 @@ export function EligibilityRefresh() {
 
   return (
     <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
-      <Button onClick={refresh} variant="secondary">Refresh eligibility</Button>
-      <span className="text-sm font-semibold text-on-surface-variant">{status}</span>
+      <Button onClick={refresh} variant="secondary"><T>Refresh eligibility</T></Button>
+      <span className="text-sm font-semibold text-on-surface-variant"><T>{status}</T></span>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { T } from "@/components/language-provider";
 
 type StoredProfile = { state?: string; income?: string; primaryNeed?: string };
 
@@ -26,7 +27,7 @@ export function ProfileSummary() {
 
   return (
     <p className="mt-3 text-sm leading-6 text-on-surface-variant">
-      {profile ? `${profile.state} • ${profile.income} • ${profile.primaryNeed}` : "Configure your profile details to see tailored schemes."}
+      {profile ? `${profile.state} • ${profile.income} • ${profile.primaryNeed}` : <T>Configure your profile details to see tailored schemes.</T>}
     </p>
   );
 }

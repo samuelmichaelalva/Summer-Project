@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, PlayCircle, Sparkles } from "lucide-react";
 import { featureCards, languages } from "@/lib/data";
 import { prisma } from "@/lib/db";
 import { Badge, Button, Card, LanguagePills, TopNav } from "@/components/ui";
+import { T } from "@/components/language-provider";
 
 export const dynamic = "force-dynamic";
 
@@ -25,21 +26,21 @@ export default async function LandingPage() {
         <section className="relative overflow-hidden px-4 py-14 md:px-10 md:py-20">
           <div className="mx-auto grid max-w-content items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <Badge>Government of India Initiative</Badge>
+              <Badge><T>Government of India Initiative</T></Badge>
               <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-on-surface md:text-6xl">
-                Find government benefits <span className="text-primary">you are eligible for</span>
+                <T>Find government benefits</T> <span className="text-primary"><T>you are eligible for</T></span>
               </h1>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-on-surface-variant">
-                Navigate Indian welfare schemes with a clear multilingual interface that helps citizens discover, understand, and prepare applications.
+                <T>Navigate Indian welfare schemes with a clear multilingual interface that helps citizens discover, understand, and prepare applications.</T>
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link href="/login">
                   <Button>
-                    Get Started <ArrowRight size={18} />
+                    <T>Get Started</T> <ArrowRight size={18} />
                   </Button>
                 </Link>
                 <Button variant="secondary">
-                  <PlayCircle size={18} /> How it works
+                  <PlayCircle size={18} /> <T>How it works</T>
                 </Button>
               </div>
               <div className="mt-8">
@@ -54,18 +55,18 @@ export default async function LandingPage() {
                       <Sparkles size={22} />
                     </div>
                     <div>
-                      <p className="font-semibold">JanSeva Assistant</p>
-                      <p className="text-xs font-semibold text-secondary">Online and ready</p>
+                      <p className="font-semibold">JanSeva <T>Assistant</T></p>
+                      <p className="text-xs font-semibold text-secondary"><T>Online and ready</T></p>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <ChatBubble>Namaste. I can help you find benefits for education, health, housing, and farming.</ChatBubble>
-                  <ChatBubble mine>I am from Karnataka and my annual income is under Rs. 2.5 lakh.</ChatBubble>
-                  <ChatBubble>You may qualify for 4 schemes, including Vidya Siri. Review application steps now?</ChatBubble>
+                  <ChatBubble><T>Namaste. I can help you find benefits for education, health, housing, and farming.</T></ChatBubble>
+                  <ChatBubble mine><T>I am from Karnataka and my annual income is under Rs. 2.5 lakh.</T></ChatBubble>
+                  <ChatBubble><T>You may qualify for 4 schemes, including Vidya Siri. Review application steps now?</T></ChatBubble>
                 </div>
                 <div className="mt-6 flex gap-2 border-t border-outline-variant pt-4">
-                  <div className="flex-1 rounded-full border border-outline-variant bg-white px-4 py-2 text-sm text-on-surface-variant">Type a message...</div>
+                  <div className="flex-1 rounded-full border border-outline-variant bg-white px-4 py-2 text-sm text-on-surface-variant"><T>Type a message...</T></div>
                   <button className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white" aria-label="Send">
                     <ArrowRight size={18} />
                   </button>
@@ -80,7 +81,7 @@ export default async function LandingPage() {
             {benefits.map((item) => (
               <div key={item.label} className="text-center">
                 <p className="text-3xl font-extrabold text-secondary-container">{item.value}</p>
-                <p className="mt-1 text-xs font-bold uppercase tracking-wider opacity-80">{item.label}</p>
+                <p className="mt-1 text-xs font-bold uppercase tracking-wider opacity-80"><T>{item.label}</T></p>
               </div>
             ))}
           </div>
@@ -89,15 +90,15 @@ export default async function LandingPage() {
         <section className="bg-surface-container-low px-4 py-14 md:px-10">
           <div className="mx-auto max-w-content">
             <div className="mb-9 text-center">
-              <h2 className="text-3xl font-bold">Smarter bureaucracy, better living</h2>
-              <p className="mx-auto mt-3 max-w-2xl text-on-surface-variant">Designed for every citizen, with responsive pages and multilingual UI patterns.</p>
+              <h2 className="text-3xl font-bold"><T>Smarter bureaucracy, better living</T></h2>
+              <p className="mx-auto mt-3 max-w-2xl text-on-surface-variant"><T>Designed for every citizen, with responsive pages and multilingual UI patterns.</T></p>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
               {featureCards.map((feature) => (
                 <Card key={feature.title}>
                   <feature.icon className="mb-5 text-primary" size={32} />
-                  <h3 className="text-xl font-bold">{feature.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-on-surface-variant">{feature.copy}</p>
+                  <h3 className="text-xl font-bold"><T>{feature.title}</T></h3>
+                  <p className="mt-3 text-sm leading-6 text-on-surface-variant"><T>{feature.copy}</T></p>
                 </Card>
               ))}
             </div>

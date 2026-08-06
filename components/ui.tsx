@@ -48,6 +48,7 @@ export function Badge({ children, tone = "blue" }: { children: React.ReactNode; 
 }
 
 export function TopNav({ active = "Home" }: { active?: string }) {
+  const { t } = useLanguage();
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-4 shadow-sm backdrop-blur md:px-10">
       <Link href="/" className="text-xl font-extrabold text-primary">
@@ -56,7 +57,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
       <nav className="hidden items-center gap-7 md:flex">
         {navItems.map((item) => (
           <Link key={item.label} href={item.href} className={`rounded px-2 py-1 text-sm font-semibold transition ${active === item.label ? "border-b-2 border-primary text-primary" : "text-on-surface-variant hover:bg-surface-container-low"}`}>
-            {item.label}
+            {t(item.label.toLowerCase() as "home" | "schemes" | "assistant" | "profile")}
           </Link>
         ))}
       </nav>
@@ -65,7 +66,7 @@ export function TopNav({ active = "Home" }: { active?: string }) {
           <Globe2 size={18} className="text-primary" />
           <LanguageSwitcher />
         </div>
-        <IconButton label="Notifications">
+        <IconButton label={t("notifications")}>
           <Bell size={20} />
         </IconButton>
         <TopNavAccount />
@@ -103,7 +104,7 @@ export function AppShell({ children, active = "Dashboard" }: { children: React.R
         </div>
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
-          <IconButton label="Notifications">
+          <IconButton label={t("notifications")}>
             <Bell size={20} />
           </IconButton>
           <IconButton label="Account">

@@ -207,6 +207,8 @@ const morePhrases: [string, string, string, string, string][] = [
   ["Instant Eligibility Matching", "तुरंत पात्रता मिलान", "তাৎক্ষণিক যোগ্যতা মিলানো", "உடனடி தகுதி பொருத்தம்", "తక్షణ అర్హత సరిపోలిక"],
   ["Regional Language UI", "क्षेत्रीय भाषा इंटरफ़ेस", "আঞ্চলিক ভাষার ইন্টারফেস", "பிராந்திய மொழி இடைமுகம்", "ప్రాంతీయ భాషా ఇంటర్‌ఫేస్"],
   ["Privacy-first Forms", "गोपनीयता-केंद्रित फ़ॉर्म", "গোপনীয়তা-কেন্দ্রিক ফর্ম", "தனியுரிமை முன்னுரிமை படிவங்கள்", "గోప్యతకు ప్రాధాన్యమిచ్చే ఫారమ్‌లు"],
+  ["I am from Karnataka and my annual income is under Rs. 2.5 lakh.", "मैं कर्नाटक से हूँ और मेरी वार्षिक आय 2.5 लाख रुपये से कम है।", "আমি কর্ণাটক থেকে এসেছি এবং আমার বার্ষিক আয় ২.৫ লক্ষ টাকার কম।", "நான் கர்நாடகாவைச் சேர்ந்தவன், எனது ஆண்டு வருமானம் ரூ. 2.5 லட்சத்திற்கும் குறைவு.", "నేను కర్ణాటకకు చెందినవాడిని, నా వార్షిక ఆదాయం రూ. 2.5 లక్షల కంటే తక్కువ."],
+  ["You may qualify for 4 schemes, including Vidya Siri. Review application steps now?", "विद्या सिरी सहित 4 योजनाओं के लिए आप पात्र हो सकते हैं। क्या अभी आवेदन के चरण देखें?", "বিদ্যা সিরি সহ ৪টি প্রকল্পের জন্য আপনি যোগ্য হতে পারেন। এখন আবেদনের ধাপ দেখবেন?", "வித்யா சிரி உட்பட 4 திட்டங்களுக்கு நீங்கள் தகுதியுடையவராக இருக்கலாம். விண்ணப்பப் படிகளை இப்போது பார்க்கவா?", "విద్యా సిరితో సహా 4 పథకాలకు మీరు అర్హులు కావచ్చు. దరఖాస్తు దశలను ఇప్పుడు చూడాలా?"],
   ["I could not find an answer yet.", "मुझे अभी उत्तर नहीं मिल सका।", "আমি এখনও উত্তর খুঁজে পাইনি।", "என்னால் இன்னும் பதிலைக் கண்டுபிடிக்க முடியவில்லை.", "నేను ఇంకా సమాధానం కనుగొనలేకపోయాను."],
   ["I could not prepare an answer.", "मैं उत्तर तैयार नहीं कर सका।", "আমি উত্তর প্রস্তুত করতে পারিনি।", "என்னால் பதிலைத் தயாரிக்க முடியவில்லை.", "నేను సమాధానం సిద్ధం చేయలేకపోయాను."],
   ["JanSeva AI is temporarily unavailable.", "JanSeva AI अस्थायी रूप से उपलब्ध नहीं है।", "JanSeva AI সাময়িকভাবে উপলব্ধ নয়।", "JanSeva AI தற்காலிகமாக கிடைக்கவில்லை.", "JanSeva AI తాత్కాలికంగా అందుబాటులో లేదు."],
@@ -223,6 +225,88 @@ const morePhrases: [string, string, string, string, string][] = [
   ["Invalid contact or password", "अमान्य संपर्क या पासवर्ड", "অবৈধ যোগাযোগ বা পাসওয়ার্ড", "தவறான தொடர்பு அல்லது கடவுச்சொல்", "చెల్లని సంప్రదింపు లేదా పాస్‌వర్డ్"],
   ["Scheme not found", "योजना नहीं मिली", "প্রকল্প পাওয়া যায়নি", "திட்டம் கிடைக்கவில்லை", "పథకం కనుగొనబడలేదు"],
   ["Could not complete action", "कार्रवाई पूरी नहीं की जा सकी", "কাজটি সম্পূর্ণ করা যায়নি", "செயலை முடிக்க முடியவில்லை", "చర్యను పూర్తి చేయలేకపోయాము"],
+  ["Profile-based scheme matches", "प्रोफ़ाइल आधारित योजना मिलान", "প্রোফাইল-ভিত্তিক প্রকল্পের মিল", "சுயவிவர அடிப்படையிலான திட்டப் பொருத்தங்கள்", "ప్రొఫైల్ ఆధారిత పథక సరిపోలికలు"],
+  ["Based on your saved profile", "आपकी सहेजी गई प्रोफ़ाइल के आधार पर", "আপনার সংরক্ষিত প্রোফাইলের ভিত্তিতে", "சேமிக்கப்பட்ட சுயவிவரத்தின் அடிப்படையில்", "మీ సేవ్ చేసిన ప్రొఫైల్ ఆధారంగా"],
+  ["Complete your profile to get matches", "मिलान पाने के लिए अपनी प्रोफ़ाइल पूरी करें", "মিল পেতে আপনার প্রোফাইল সম্পূর্ণ করুন", "பொருத்தங்களைப் பெற சுயவிவரத்தை முடிக்கவும்", "సరిపోలికలు పొందడానికి మీ ప్రొఫైల్ పూర్తి చేయండి"],
+  ["Explore Schemes", "योजनाएँ देखें", "প্রকল্প দেখুন", "திட்டங்களை ஆராயுங்கள்", "పథకాలను అన్వేషించండి"],
+  ["Profile Completion", "प्रोफ़ाइल पूर्णता", "প্রোফাইল সম্পূর্ণতা", "சுயவிவர நிறைவு", "ప్రొఫైల్ పూర్తి"],
+  ["Add your state", "अपना राज्य जोड़ें", "আপনার রাজ্য যোগ করুন", "உங்கள் மாநிலத்தைச் சேர்க்கவும்", "మీ రాష్ట్రాన్ని జోడించండి"],
+  ["Eligible Schemes", "पात्र योजनाएँ", "যোগ্য প্রকল্প", "தகுதியான திட்டங்கள்", "అర్హత ఉన్న పథకాలు"],
+  ["View All", "सभी देखें", "সব দেখুন", "அனைத்தையும் பார்க்கவும்", "అన్నింటినీ చూడండి"],
+  ["Complete more profile details to see personalized matches.", "व्यक्तिगत मिलान देखने के लिए प्रोफ़ाइल की अधिक जानकारी पूरी करें।", "ব্যক্তিগত মিল দেখতে আরও প্রোফাইলের তথ্য সম্পূর্ণ করুন।", "தனிப்பயன் பொருத்தங்களைக் காண மேலும் சுயவிவர விவரங்களை முடிக்கவும்.", "వ్యక్తిగత సరిపోలికలు చూడటానికి మరిన్ని ప్రొఫైల్ వివరాలు పూర్తి చేయండి."],
+  ["Complete profile", "प्रोफ़ाइल पूरी करें", "প্রোফাইল সম্পূর্ণ করুন", "சுயவிவரத்தை முடிக்கவும்", "ప్రొఫైల్ పూర్తి చేయండి"],
+  ["Profile checklist", "प्रोफ़ाइल चेकलिस्ट", "প্রোফাইল চেকলিস্ট", "சுயவிவர சரிபார்ப்புப் பட்டியல்", "ప్రొఫైల్ చెక్‌లిస్ట్"],
+  ["Recent Applications", "हाल के आवेदन", "সাম্প্রতিক আবেদন", "சமீபத்திய விண்ணப்பங்கள்", "ఇటీవలి దరఖాస్తులు"],
+  ["Schemes available", "उपलब्ध योजनाएँ", "উপলব্ধ প্রকল্প", "கிடைக்கும் திட்டங்கள்", "అందుబాటులో ఉన్న పథకాలు"],
+  ["Strong", "मज़बूत", "শক্তিশালী", "வலுவானது", "బలమైనది"],
+  ["Good", "अच्छा", "ভালো", "நல்லது", "మంచిది"],
+  ["Weak", "कमज़ोर", "দুর্বল", "பலவீனமானது", "బలహీనమైనది"],
+  ["Required", "आवश्यक", "প্রয়োজনীয়", "தேவை", "అవసరం"],
+  ["Suggest strong password", "मज़बूत पासवर्ड सुझाएँ", "শক্তিশালী পাসওয়ার্ড সাজেস্ট করুন", "வலுவான கடவுச்சொல்லைப் பரிந்துரைக்கவும்", "బలమైన పాస్‌వర్డ్‌ను సూచించండి"],
+  ["Remember me", "मुझे याद रखें", "আমাকে মনে রাখুন", "என்னை நினைவில் வைத்திருக்கவும்", "నన్ను గుర్తుంచుకోండి"],
+  ["Processing...", "प्रक्रिया जारी है...", "প্রক্রিয়া চলছে...", "செயலாக்கப்படுகிறது...", "ప్రాసెస్ అవుతోంది..."],
+  ["Create account", "खाता बनाएँ", "অ্যাকাউন্ট তৈরি করুন", "கணக்கை உருவாக்கவும்", "ఖాతాను సృష్టించండి"],
+  ["Passwords do not match.", "पासवर्ड मेल नहीं खाते।", "পাসওয়ার্ড মিলছে না।", "கடவுச்சொற்கள் பொருந்தவில்லை.", "పాస్‌వర్డ్‌లు సరిపోలడం లేదు."],
+  ["Use a stronger password or choose the suggested password.", "एक मज़बूत पासवर्ड इस्तेमाल करें या सुझाया गया पासवर्ड चुनें।", "আরও শক্তিশালী পাসওয়ার্ড ব্যবহার করুন বা সাজেস্ট করা পাসওয়ার্ড বেছে নিন।", "வலுவான கடவுச்சொல்லைப் பயன்படுத்தவும் அல்லது பரிந்துரைக்கப்பட்ட கடவுச்சொல்லைத் தேர்ந்தெடுக்கவும்.", "బలమైన పాస్‌వర్డ్‌ను ఉపయోగించండి లేదా సూచించిన పాస్‌వర్డ్‌ను ఎంచుకోండి."],
+  ["Login failed", "लॉगिन विफल", "লগইন ব্যর্থ", "உள்நுழைவு தோல்வியடைந்தது", "లాగిన్ విఫలమైంది"],
+  ["Registration failed", "पंजीकरण विफल", "নিবন্ধন ব্যর্থ", "பதிவு தோல்வியடைந்தது", "నమోదు విఫలమైంది"],
+  ["An unexpected error occurred. Please try again.", "एक अनपेक्षित त्रुटि हुई। कृपया फिर से प्रयास करें।", "একটি অপ্রত্যাশিত ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।", "எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.", "ఊహించని లోపం సంభవించింది. దయచేసి మళ్లీ ప్రయత్నించండి."],
+  ["Saving...", "सहेजा जा रहा है...", "সংরক্ষণ করা হচ্ছে...", "சேமிக்கப்படுகிறது...", "సేవ్ అవుతోంది..."],
+  ["View Scheme", "योजना देखें", "প্রকল্প দেখুন", "திட்டத்தைப் பார்க்கவும்", "పథకాన్ని చూడండి"],
+  ["View Dashboard", "डैशबोर्ड देखें", "ড্যাশবোর্ড দেখুন", "டாஷ்போர்டைப் பார்க்கவும்", "డాష్‌బోర్డ్ చూడండి"],
+  ["Saved profile details now persist securely in the database.", "सहेजी गई प्रोफ़ाइल जानकारी अब डेटाबेस में सुरक्षित रूप से बनी रहती है।", "সংরক্ষিত প্রোফাইলের তথ্য এখন ডেটাবেসে নিরাপদে থাকে।", "சேமிக்கப்பட்ட சுயவிவர விவரங்கள் இப்போது தரவுத்தளத்தில் பாதுகாப்பாக சேமிக்கப்படுகின்றன.", "సేవ్ చేసిన ప్రొఫైల్ వివరాలు ఇప్పుడు డేటాబేస్‌లో సురక్షితంగా ఉంటాయి."],
+  ["Start Application", "आवेदन शुरू करें", "আবেদন শুরু করুন", "விண்ணப்பத்தைத் தொடங்கவும்", "దరఖాస్తు ప్రారంభించండి"],
+  ["Download Checklist", "चेकलिस्ट डाउनलोड करें", "চেকলিস্ট ডাউনলোড করুন", "சரிபார்ப்புப் பட்டியலைப் பதிவிறக்கவும்", "చెక్‌లిస్ట్‌ను డౌన్‌లోడ్ చేయండి"],
+  ["Share", "साझा करें", "শেয়ার করুন", "பகிரவும்", "భాగస్వామ్యం చేయండి"],
+  ["The assistant panel can explain scheme terms in simple language.", "सहायक पैनल योजना की शर्तों को सरल भाषा में समझा सकता है।", "সহায়ক প্যানেল প্রকল্পের শর্তগুলি সহজ ভাষায় ব্যাখ্যা করতে পারে।", "உதவியாளர் பலகை திட்ட விதிமுறைகளை எளிய மொழியில் விளக்கலாம்.", "సహాయక ప్యానెల్ పథకం నిబంధనలను సరళమైన భాషలో వివరించగలదు."],
+  ["Check official eligibility", "आधिकारिक पात्रता जाँचें", "সরকারি যোগ্যতা পরীক্ষা করুন", "அதிகாரப்பூர்வ தகுதியைச் சரிபார்க்கவும்", "అధికారిక అర్హతను తనిఖీ చేయండి"],
+  ["Collect required documents", "आवश्यक दस्तावेज़ इकट्ठा करें", "প্রয়োজনীয় নথি সংগ্রহ করুন", "தேவையான ஆவணங்களைச் சேகரிக்கவும்", "అవసరమైన పత్రాలను సేకరించండి"],
+  ["Apply on the official portal", "आधिकारिक पोर्टल पर आवेदन करें", "সরকারি পোর্টালে আবেদন করুন", "அதிகாரப்பூர்வ போர்ட்டலில் விண்ணப்பிக்கவும்", "అధికారిక పోర్టల్‌లో దరఖాస్తు చేయండి"],
+  ["Track application status", "आवेदन की स्थिति ट्रैक करें", "আবেদনের অবস্থা ট্র্যাক করুন", "விண்ணப்ப நிலையை கண்காணிக்கவும்", "దరఖాస్తు స్థితిని ట్రాక్ చేయండి"],
+  ["Assistant", "सहायक", "সহায়ক", "உதவியாளர்", "సహాయకుడు"],
+  ["Search schemes by name or category...", "नाम या श्रेणी से योजनाएँ खोजें...", "নাম বা বিভাগ দিয়ে প্রকল্প খুঁজুন...", "பெயர் அல்லது வகை மூலம் திட்டங்களைத் தேடுங்கள்...", "పేరు లేదా వర్గం ద్వారా పథకాలను వెతకండి..."],
+  ["Schemes you may be eligible for", "वे योजनाएँ जिनके लिए आप पात्र हो सकते हैं", "আপনি যে প্রকল্পগুলির জন্য যোগ্য হতে পারেন", "நீங்கள் தகுதியுடைய திட்டங்கள்", "మీరు అర్హత పొందగల పథకాలు"],
+  ["All schemes", "सभी योजनाएँ", "সমস্ত প্রকল্প", "அனைத்து திட்டங்கள்", "అన్ని పథకాలు"],
+  ["Configure your profile details to see tailored schemes.", "अनुकूलित योजनाएँ देखने के लिए अपनी प्रोफ़ाइल जानकारी सेट करें।", "নিজের জন্য উপযুক্ত প্রকল্প দেখতে প্রোফাইলের তথ্য সেট করুন।", "உங்களுக்கான திட்டங்களைக் காண சுயவிவர விவரங்களை அமைக்கவும்.", "మీకు అనుకూలమైన పథకాలను చూడటానికి ప్రొఫైల్ వివరాలను కాన్ఫిగర్ చేయండి."],
+  ["Type your question...", "अपना प्रश्न लिखें...", "আপনার প্রশ্ন লিখুন...", "உங்கள் கேள்வியை உள்ளிடவும்...", "మీ ప్రశ్నను టైప్ చేయండి..."],
+  ["Send", "भेजें", "পাঠান", "அனுப்பவும்", "పంపండి"],
+  ["Send message", "संदेश भेजें", "বার্তা পাঠান", "செய்தியை அனுப்பவும்", "సందేశం పంపండి"],
+  ["Close assistant", "सहायक बंद करें", "সহায়ক বন্ধ করুন", "உதவியாளரை மூடவும்", "సహాయకుడిని మూసివేయండి"],
+  ["Account", "खाता", "অ্যাকাউন্ট", "கணக்கு", "ఖాతా"],
+  ["Menu", "मेनू", "মেনু", "மெனு", "మెను"],
+  ["Identity", "पहचान", "পরিচয়", "அடையாளம்", "గుర్తింపు"],
+  ["Date of birth", "जन्म तिथि", "জন্মতারিখ", "பிறந்த தேதி", "పుట్టిన తేదీ"],
+  ["Gender", "लिंग", "লিঙ্গ", "பாலினம்", "లింగం"],
+  ["Marital status", "वैवाहिक स्थिति", "বৈবাহিক অবস্থা", "திருமண நிலை", "వైవాహిక స్థితి"],
+  ["Preferred language", "पसंदीदा भाषा", "পছন্দের ভাষা", "விருப்ப மொழி", "ఇష్టమైన భాష"],
+  ["Household", "परिवार", "পরিবার", "குடும்பம்", "కుటుంబం"],
+  ["Income and occupation", "आय और व्यवसाय", "আয় ও পেশা", "வருமானம் மற்றும் தொழில்", "ఆదాయం మరియు వృత్తి"],
+  ["Documents", "दस्तावेज़", "নথি", "ஆவணங்கள்", "పత్రాలు"],
+  ["Full name", "पूरा नाम", "পুরো নাম", "முழுப் பெயர்", "పూర్తి పేరు"],
+  ["SC", "एससी", "এসসি", "SC", "ఎస్సీ"],
+  ["ST", "एसटी", "এসটি", "ST", "ఎస్టీ"],
+  ["OBC", "ओबीसी", "ওবিসি", "OBC", "ఓబీసీ"],
+  ["General", "सामान्य", "সাধারণ", "பொது", "సాధారణ"],
+  ["Yes", "हाँ", "হ্যাঁ", "ஆம்", "అవును"],
+  ["No", "नहीं", "না", "இல்லை", "కాదు"],
+  ["AAY", "एएवाई", "এএওয়াই", "AAY", "ఏఏవై"],
+  ["BPL", "बीपीएल", "বিপিএল", "BPL", "బీపీఎల్"],
+  ["NFSA", "एनएफएसए", "এনএফএসএ", "NFSA", "ఎన్ఎఫ్ఎస్ఏ"],
+  ["ADMIN", "प्रशासक", "অ্যাডমিন", "நிர்வாகி", "అడ్మిన్"],
+  ["Enter a valid name using letters and spaces.", "अक्षरों और रिक्त स्थान का उपयोग करके मान्य नाम दर्ज करें।", "অক্ষর ও স্পেস ব্যবহার করে একটি বৈধ নাম লিখুন।", "எழுத்துகள் மற்றும் இடைவெளிகளைப் பயன்படுத்தி சரியான பெயரை உள்ளிடவும்.", "అక్షరాలు మరియు ఖాళీలను ఉపయోగించి చెల్లుబాటు అయ్యే పేరు నమోదు చేయండి."],
+  ["Profile saved successfully!", "प्रोफ़ाइल सफलतापूर्वक सहेजी गई!", "প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে!", "சுயவிவரம் வெற்றிகரமாகச் சேமிக்கப்பட்டது!", "ప్రొఫైల్ విజయవంతంగా సేవ్ చేయబడింది!"],
+  ["Failed to save profile.", "प्रोफ़ाइल सहेजना विफल रहा।", "প্রোফাইল সংরক্ষণ ব্যর্থ হয়েছে।", "சுயவிவரத்தைச் சேமிக்க முடியவில்லை.", "ప్రొఫైల్‌ను సేవ్ చేయడం విఫలమైంది."],
+  ["Error connecting to server.", "सर्वर से जुड़ने में त्रुटि।", "সার্ভারের সাথে সংযোগে ত্রুটি।", "சேவையகத்துடன் இணைப்பதில் பிழை.", "సర్వర్‌కు కనెక్ట్ చేయడంలో లోపం."],
+  ["Using saved profile match", "सहेजी गई प्रोफ़ाइल का मिलान उपयोग हो रहा है", "সংরক্ষিত প্রোফাইলের মিল ব্যবহার করা হচ্ছে", "சேமிக்கப்பட்ட சுயவிவரப் பொருத்தம் பயன்படுத்தப்படுகிறது", "సేవ్ చేసిన ప్రొఫైల్ సరిపోలికను ఉపయోగిస్తోంది"],
+  ["Checking eligibility...", "पात्रता जाँची जा रही है...", "যোগ্যতা পরীক্ষা করা হচ্ছে...", "தகுதி சரிபார்க்கப்படுகிறது...", "అర్హత తనిఖీ చేస్తోంది..."],
+  ["schemes ranked from eligibility engine", "पात्रता इंजन से क्रमित योजनाएँ", "যোগ্যতা ইঞ্জিন থেকে র‌্যাঙ্ক করা প্রকল্প", "தகுதி இயந்திரத்தால் வரிசைப்படுத்தப்பட்ட திட்டங்கள்", "అర్హత ఇంజిన్ ద్వారా ర్యాంక్ చేసిన పథకాలు"],
+  ["Selected:", "चयनित:", "নির্বাচিত:", "தேர்ந்தெடுக்கப்பட்டது:", "ఎంచుకున్నది:"],
+  ["Slug", "स्लग", "স্লাগ", "ஸ்லக்", "స్లగ్"],
+  ["State", "राज्य", "রাজ্য", "மாநிலம்", "రాష్ట్రం"],
+  ["Category", "श्रेणी", "বিভাগ", "வகை", "వర్గం"],
+  ["Ministry", "मंत्रालय", "মন্ত্রণালয়", "அமைச்சகம்", "మంత్రిత్వ శాఖ"],
+  ["Benefit", "लाभ", "সুবিধা", "நன்மை", "ప్రయోజనం"],
+  ["Deadline", "अंतिम तिथि", "সময়সীমা", "காலக்கெடு", "గడువు"],
 ];
 extraPhrases.push(...morePhrases);
 extraPhrases.forEach(([english, ...translated]) => { phrases[english] = Object.fromEntries(languages.map((language, index) => [language, translated[index]])) as Record<Language, string>; });
@@ -243,19 +327,29 @@ const translated = (original: string, next: Language) => {
   return value.replace(/JanSeva AI|JanSeva/gi, (token) => token.toLowerCase().includes("ai") ? "JanSeva AI" : "JanSeva");
 };
 
-const Context = createContext<{ language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string }>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key] });
+type I18nContext = { language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string; translate: (text: string) => string };
+const Context = createContext<I18nContext>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key], translate: (text) => text });
 
 export function LanguageProvider({ children, initialLanguage = "English" }: { children: React.ReactNode; initialLanguage?: Language }) {
   const [language, setLanguageState] = useState<Language>(initialLanguage);
-  useEffect(() => { const saved = localStorage.getItem("janseva-language") as Language; if (languages.includes(saved)) { setLanguageState(saved); return; } fetch("/api/settings").then((r) => r.ok ? r.json() : null).then((data) => data?.language && languages.includes(data.language) && setLanguageState(data.language)); }, []);
-  const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const textNode = node as Text; if (!textNode.textContent?.trim() || textNode.parentElement?.closest("script, style, [data-no-translate]")) continue; const original = originals.get(textNode) || textNode.textContent; originals.set(textNode, original); const value = translated(original, next); if (textNode.textContent !== value) textNode.textContent = value; } document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
+  useEffect(() => { const cookieValue = document.cookie.split(";").map((item) => item.trim()).find((item) => item.startsWith("janseva-language="))?.split("=").slice(1).join("="); const cookieLanguage = cookieValue ? decodeURIComponent(cookieValue) as Language : undefined; const saved = localStorage.getItem("janseva-language") as Language; if (cookieLanguage && languages.includes(cookieLanguage)) { setLanguageState(cookieLanguage); return; } if (languages.includes(saved)) { setLanguageState(saved); return; } fetch("/api/settings").then((r) => r.ok ? r.json() : null).then((data) => data?.language && languages.includes(data.language) && setLanguageState(data.language)); }, []);
+  // Text is rendered declaratively through <T>. This function only handles
+  // accessibility attributes on third-party/native elements; it never mutates
+  // React text nodes, which prevents stale-language caching between switches.
+  const translatePage = (next: Language) => { document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
   const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.cookie = `janseva-language=${encodeURIComponent(next)}; path=/; max-age=31536000; samesite=lax`; document.documentElement.lang = languageCodes[next]; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }).catch(() => {}); };
-  const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key] }), [language]);
-  useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); document.body.dataset.i18nReady = "true"; const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => { observer.disconnect(); delete document.body.dataset.i18nReady; }; }, [language]);
+  const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key], translate: (text: string) => translated(text, language) }), [language]);
+  useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); document.body.dataset.i18nReady = "true"; const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export const useLanguage = () => useContext(Context);
+
+/** Declarative translation primitive for every user-visible string. */
+export function T({ children }: { children: string }) {
+  const { translate } = useLanguage();
+  return <>{translate(children)}</>;
+}
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, FileCheck2, Home, IndianRupee, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge, Button, Card } from "@/components/ui";
+import { T } from "@/components/language-provider";
 
 const defaultProfile = {
   name: "",
@@ -90,7 +91,7 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
   if (loading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
-        <p className="text-lg font-semibold text-on-surface-variant">Loading citizen profile...</p>
+        <p className="text-lg font-semibold text-on-surface-variant"><T>Loading citizen profile...</T></p>
       </div>
     );
   }
@@ -113,7 +114,7 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
                 <div className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${stepPercent === 100 ? "bg-secondary text-white" : "bg-primary text-white"}`}>
                   {stepPercent === 100 ? <CheckCircle2 size={18} /> : index + 1}
                 </div>
-                <span className="text-sm font-semibold">{step}</span>
+                <span className="text-sm font-semibold"><T>{step}</T></span>
               </div>
             );
           })}
@@ -121,7 +122,7 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
 
         {message && (
           <div className={`mb-6 rounded-lg p-3 text-sm font-semibold ${message.includes("success") ? "bg-secondary/10 text-secondary" : "bg-error/10 text-error"}`}>
-            {message}
+            <T>{message}</T>
           </div>
         )}
 
@@ -161,26 +162,26 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
               className="h-5 w-5 rounded border-outline-variant text-primary focus:ring-primary"
             />
             <label htmlFor="hasAadhaarCheck" className="text-sm font-semibold text-on-surface cursor-pointer select-none">
-              I have a valid Aadhaar card
+              <T>I have a valid Aadhaar card</T>
             </label>
           </div>
         </FormSection>
 
         <div className="mt-8 flex flex-col justify-end gap-3 sm:flex-row">
           <Button variant="secondary" onClick={saveProfile} disabled={saving}>
-            {saving ? "Saving..." : "Save Draft"}
+            <T>{saving ? "Saving..." : "Save Draft"}</T>
           </Button>
           <Button onClick={async () => {
             if (await saveProfile()) window.location.href = schemeSlug ? `/schemes/${schemeSlug}` : "/dashboard";
           }} disabled={saving}>
-            {schemeSlug ? "View Scheme" : "View Dashboard"} <ArrowRight size={18} />
+            <T>{schemeSlug ? "View Scheme" : "View Dashboard"}</T> <ArrowRight size={18} />
           </Button>
         </div>
       </Card>
       <aside className="space-y-6">
         <Card>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-bold">Profile Readiness</h2>
+            <h2 className="font-bold"><T>Profile Readiness</T></h2>
             <Badge tone={profile.completionPercent > 80 ? "green" : "blue"}>{profile.completionPercent}%</Badge>
           </div>
           <div className="h-3 overflow-hidden rounded-full bg-surface-container">
@@ -190,19 +191,19 @@ export function ProfileForm({ schemeSlug }: { schemeSlug?: string }) {
             />
           </div>
           <p className="mt-4 text-sm leading-6 text-on-surface-variant">
-            Saved profile details now persist securely in the database.
+            <T>Saved profile details now persist securely in the database.</T>
           </p>
         </Card>
         <Card>
           <div className="mb-4 flex items-center gap-2">
             <FileCheck2 className="text-primary" size={20} />
-            <h2 className="font-bold">Document Checklist</h2>
+            <h2 className="font-bold"><T>Document Checklist</T></h2>
           </div>
           <div className="space-y-3">
             {documents.map((doc) => (
               <div key={doc.name} className="flex items-center gap-3 rounded-xl bg-surface-container-low p-3">
                 <CheckCircle2 className={doc.checked ? "text-secondary" : "text-outline"} size={18} />
-                <span className="text-sm font-semibold">{doc.name}</span>
+                <span className="text-sm font-semibold"><T>{doc.name}</T></span>
               </div>
             ))}
           </div>
@@ -217,7 +218,7 @@ function FormSection({ icon, title, children }: { icon: React.ReactNode; title: 
     <section className="mb-8 last:mb-0">
       <div className="mb-4 flex items-center gap-2 border-b border-outline-variant pb-3">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-fixed text-primary">{icon}</div>
-        <h2 className="font-bold">{title}</h2>
+        <h2 className="font-bold"><T>{title}</T></h2>
       </div>
       <div className="grid gap-5 md:grid-cols-2">{children}</div>
     </section>
@@ -227,8 +228,8 @@ function FormSection({ icon, title, children }: { icon: React.ReactNode; title: 
 function Field({ label, value, onChange, type = "text", options, prefix }: { label: string; value: string; onChange: (value: string) => void; type?: string; options?: string[]; prefix?: string }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-semibold">{label}</span>
-      {options ? <select className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)}><option value="">Select {label.toLowerCase()}</option>{options.map((option) => <option key={option}>{option}</option>)}</select> : <div className="flex h-11 items-center rounded-lg border border-outline-variant bg-white"><span className="pl-3 text-sm font-semibold text-primary">{prefix}</span><input type={type} className="h-full min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" value={value || ""} onChange={(event) => onChange(event.target.value)} /> </div>}
+      <span className="mb-2 block text-sm font-semibold"><T>{label}</T></span>
+      {options ? <select className="h-11 w-full rounded-lg border border-outline-variant bg-white px-3 text-sm" value={value || ""} onChange={(event) => onChange(event.target.value)}><option value=""><T>{`Select ${label.toLowerCase()}`}</T></option>{options.map((option) => <option key={option}><T>{option}</T></option>)}</select> : <div className="flex h-11 items-center rounded-lg border border-outline-variant bg-white"><span className="pl-3 text-sm font-semibold text-primary">{prefix}</span><input type={type} className="h-full min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" value={value || ""} onChange={(event) => onChange(event.target.value)} /> </div>}
     </label>
   );
 }

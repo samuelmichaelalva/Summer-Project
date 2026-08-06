@@ -3,11 +3,11 @@
 import { MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useLanguage } from "@/components/language-provider";
+import { T, useLanguage } from "@/components/language-provider";
 
 export function AssistantWidget() {
   const pathname = usePathname();
-  const { language } = useLanguage();
+  const { language, translate } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,9 +32,9 @@ export function AssistantWidget() {
 
   return <>
     {open && <section ref={boxRef} className="fixed bottom-24 right-5 z-[70] flex h-[min(30rem,calc(100vh-8rem))] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-outline-variant bg-white shadow-2xl">
-      <header className="flex items-center justify-between bg-primary p-4 text-white"><div className="flex items-center gap-2"><Sparkles size={18} /><div><p className="font-bold">JanSeva AI</p><p className="text-xs opacity-80">Context: {pathname.slice(1) || "home"}</p></div></div><div className="flex items-center gap-2"><button onClick={() => setMessages([{ role: "assistant", text: "Chat refreshed. How can I help?" }])} className="text-xs underline" type="button">Refresh Chat</button><button onClick={() => setOpen(false)} aria-label="Close assistant"><X size={18} /></button></div></header>
-      <div className="flex-1 space-y-3 overflow-y-auto p-4">{messages.map((message, index) => <p key={index} className={`max-w-[88%] rounded-xl p-3 text-sm leading-5 ${message.role === "user" ? "ml-auto bg-primary text-white" : "bg-surface-container-high"}`}>{message.text}</p>)}{loading && <p className="text-sm text-on-surface-variant">Thinking...</p>}</div>
-      <div className="flex gap-2 border-t border-outline-variant p-3"><input autoFocus={open} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => event.key === "Enter" && send()} className="h-10 min-w-0 flex-1 rounded-full border border-outline-variant px-3 text-sm" placeholder="Ask JanSeva AI..." /><button onClick={send} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-label="Send"><Send size={16} /></button></div>
+      <header className="flex items-center justify-between bg-primary p-4 text-white"><div className="flex items-center gap-2"><Sparkles size={18} /><div><p className="font-bold">JanSeva AI</p><p className="text-xs opacity-80"><T>{`Context: ${pathname.slice(1) || "home"}`}</T></p></div></div><div className="flex items-center gap-2"><button onClick={() => setMessages([{ role: "assistant", text: "Chat refreshed. How can I help?" }])} className="text-xs underline" type="button"><T>Refresh Chat</T></button><button onClick={() => setOpen(false)} aria-label="Close assistant"><X size={18} /></button></div></header>
+       <div className="flex-1 space-y-3 overflow-y-auto p-4">{messages.map((message, index) => <p key={index} className={`max-w-[88%] rounded-xl p-3 text-sm leading-5 ${message.role === "user" ? "ml-auto bg-primary text-white" : "bg-surface-container-high"}`}>{message.role === "assistant" ? <T>{message.text}</T> : message.text}</p>)}{loading && <p className="text-sm text-on-surface-variant"><T>Thinking...</T></p>}</div>
+       <div className="flex gap-2 border-t border-outline-variant p-3"><input autoFocus={open} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => event.key === "Enter" && send()} className="h-10 min-w-0 flex-1 rounded-full border border-outline-variant px-3 text-sm" placeholder={translate("Ask JanSeva AI...")} /><button onClick={send} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-label={translate("Send")}><Send size={16} /></button></div>
     </section>}
     <button data-assistant-launcher onClick={() => setOpen(!open)} className="fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:scale-105" aria-label={open ? "Close JanSeva AI" : "Open JanSeva AI"}>{open ? <X size={22} /> : <MessageCircle size={24} />}</button>
   </>;

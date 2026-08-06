@@ -4,6 +4,7 @@ import { ArrowRight, Eye, EyeOff, KeyRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui";
+import { T, useLanguage } from "@/components/language-provider";
 
 function generateStrongPassword() {
   const letters = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
@@ -136,7 +137,7 @@ export function LoginForm() {
           className={`rounded-md py-2 text-sm font-bold ${mode === "login" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
           type="button"
         >
-          Login
+          <T>Login</T>
         </button>
         <button
           onClick={() => {
@@ -148,14 +149,14 @@ export function LoginForm() {
           className={`rounded-md py-2 text-sm font-bold ${mode === "register" ? "bg-white shadow-sm" : "text-on-surface-variant"}`}
           type="button"
         >
-          Register
+          <T>Register</T>
         </button>
       </div>
       
       <form key={formKey} ref={formRef} className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
         {error && (
           <div className="rounded-lg bg-error/10 p-3 text-sm font-semibold text-error">
-            {error}
+            <T>{error}</T>
           </div>
         )}
 
@@ -182,7 +183,7 @@ export function LoginForm() {
 
         <label className="block">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-semibold">Password</span>
+            <span className="text-sm font-semibold"><T>Password</T></span>
             {mode === "register" && (
               <button
                 type="button"
@@ -192,7 +193,7 @@ export function LoginForm() {
                 }}
                 className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
               >
-                <KeyRound size={14} /> Suggest strong password
+                <KeyRound size={14} /> <T>Suggest strong password</T>
               </button>
             )}
           </div>
@@ -222,7 +223,7 @@ export function LoginForm() {
                   <span key={level} className={`h-1.5 flex-1 rounded-full ${passwordScore >= level ? "bg-primary" : "bg-surface-container"}`} />
                 ))}
               </div>
-              <p className="mt-1 text-xs font-semibold text-on-surface-variant">Password strength: {passwordLabel}</p>
+              <p className="mt-1 text-xs font-semibold text-on-surface-variant"><T>{`Password strength: ${passwordLabel}`}</T></p>
             </div>
           )}
         </label>
@@ -231,17 +232,17 @@ export function LoginForm() {
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-on-surface-variant">
-            <input type="checkbox" className="rounded border-outline-variant" /> Remember me
+            <input type="checkbox" className="rounded border-outline-variant" /> <T>Remember me</T>
           </label>
-          <a className="font-semibold text-primary" href="#">Forgot password?</a>
+          <a className="font-semibold text-primary" href="#"><T>Forgot password?</T></a>
         </div>
 
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? (
-            "Processing..."
+            <T>Processing...</T>
           ) : (
             <>
-              {mode === "login" ? "Login" : "Create account"} <ArrowRight size={18} />
+              <T>{mode === "login" ? "Login" : "Create account"}</T> <ArrowRight size={18} />
             </>
           )}
         </Button>
@@ -269,19 +270,20 @@ function Field({
   error?: string | null;
   autoComplete?: string;
 }) {
+  const { translate } = useLanguage();
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-semibold">{label}</span>
+      <span className="mb-2 block text-sm font-semibold"><T>{label}</T></span>
       <input
         className={`h-11 w-full rounded-lg border bg-white px-3 text-sm ${error ? "border-error" : "border-outline-variant"}`}
-        placeholder={placeholder}
+        placeholder={translate(placeholder)}
         type={type}
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
         required={required}
         autoComplete={autoComplete}
       />
-      {error && <p className="mt-1 text-xs font-semibold text-error">{error}</p>}
+      {error && <p className="mt-1 text-xs font-semibold text-error"><T>{error}</T></p>}
     </label>
   );
 }
