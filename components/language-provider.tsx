@@ -5,6 +5,14 @@ import { ChevronDown, Globe2 } from "lucide-react";
 
 export const languages = ["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు"] as const;
 type Language = (typeof languages)[number];
+const languageLabels: Record<Language, string> = {
+  English: "English",
+  "हिन्दी": "हिन्दी",
+  "বাংলা": "বাংলা",
+  "தமிழ்": "தமிழ்",
+  "తెలుగు": "తెలుగు",
+};
+const languageCodes: Record<Language, string> = { English: "en", "हिन्दी": "hi", "বাংলা": "bn", "தமிழ்": "ta", "తెలుగు": "te" };
 type Key = "home" | "schemes" | "assistant" | "profile" | "settings" | "dashboard" | "schemeListing" | "aiAssistant" | "search" | "welcome" | "verifyAadhaar" | "logout" | "language" | "notifications" | "privacy" | "appearance" | "refreshChat" | "readyToHelp" | "askAbout" | "settingsSaved";
 const words: Record<Language, Record<Key, string>> = {
   English: { home: "Home", schemes: "Schemes", assistant: "Assistant", profile: "Profile", settings: "Settings", dashboard: "Dashboard", schemeListing: "Scheme Listing", aiAssistant: "AI Assistant", search: "Search schemes, benefits, or help...", welcome: "Welcome, Citizen", verifyAadhaar: "Verify your Aadhaar", logout: "Logout", language: "Language", notifications: "Notifications", privacy: "Privacy", appearance: "Appearance & accessibility", refreshChat: "Refresh Chat", readyToHelp: "Ready to help", askAbout: "Ask me about schemes, eligibility, or documents.", settingsSaved: "Settings saved successfully." },
@@ -77,17 +85,17 @@ extraPhrases.forEach(([english, ...translated]) => { phrases[english] = Object.f
 
 const originals = new WeakMap<Text, string>();
 const attributes = new WeakMap<Element, Record<string, string>>();
-const translated = (original: string, next: Language) => { const phrase = Object.keys(phrases).find((item) => item.toLowerCase() === original.toLowerCase()); const key = Object.keys(words.English).find((item) => words.English[item as Key].toLowerCase() === original.toLowerCase()); return phrases[phrase || original]?.[next] || (key ? words[next][key as Key] : original); };
+const translated = (original: string, next: Language) => { const trimmed = original.trim(); const phrase = Object.keys(phrases).find((item) => item.toLowerCase() === trimmed.toLowerCase()); const key = Object.keys(words.English).find((item) => words.English[item as Key].toLowerCase() === trimmed.toLowerCase()); const value = phrases[phrase || trimmed]?.[next] || (key ? words[next][key as Key] : original); return value.replace(/JanSeva AI|JanSeva/gi, (token) => token.toLowerCase().includes("ai") ? "JanSeva AI" : "JanSeva"); };
 
 const Context = createContext<{ language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string }>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key] });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>("English");
   useEffect(() => { const saved = localStorage.getItem("janseva-language") as Language; if (languages.includes(saved)) { setLanguageState(saved); return; } fetch("/api/settings").then((r) => r.ok ? r.json() : null).then((data) => data?.language && languages.includes(data.language) && setLanguageState(data.language)); }, []);
-  const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const textNode = node as Text; const original = originals.get(textNode) || textNode.textContent?.trim(); if (!original) continue; originals.set(textNode, original); const value = translated(original, next); if (textNode.textContent !== value) textNode.textContent = value; } document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
-  const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.documentElement.lang = next; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }); };
+  const translatePage = (next: Language) => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let node: Node | null; while ((node = walker.nextNode())) { const textNode = node as Text; if (!textNode.textContent?.trim() || textNode.parentElement?.closest("script, style, [data-no-translate]")) continue; const original = originals.get(textNode) || textNode.textContent; originals.set(textNode, original); const value = translated(original, next); if (textNode.textContent !== value) textNode.textContent = value; } document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
+  const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.documentElement.lang = languageCodes[next]; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }).catch(() => {}); };
   const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key] }), [language]);
-  useEffect(() => { translatePage(language); const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
+  useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
@@ -96,5 +104,5 @@ export const useLanguage = () => useContext(Context);
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
-  return <div className="relative"><button type="button" aria-label={`Language: ${language}`} onClick={() => setOpen(!open)} className="flex items-center gap-2 rounded-full border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface-variant"><Globe2 size={18} /><span>{language}</span><ChevronDown size={16} /></button>{open && <div className="absolute right-0 top-12 z-[80] min-w-36 rounded-xl border border-outline-variant bg-white p-1 shadow-xl">{languages.map((item) => <button key={item} type="button" aria-current={item === language} onClick={() => { setLanguage(item); setOpen(false); }} className={`block w-full rounded-lg px-3 py-2 text-left text-sm ${item === language ? "bg-primary text-white" : "hover:bg-surface-container-low"}`}>{item}</button>)}</div>}</div>;
+  return <div className="relative"><button type="button" aria-label={`Language: ${languageLabels[language]}`} onClick={() => setOpen(!open)} className="flex items-center gap-2 rounded-full border border-outline-variant bg-white px-3 py-2 text-sm text-on-surface-variant"><Globe2 size={18} /><span>{languageLabels[language]}</span><ChevronDown size={16} /></button>{open && <div className="absolute right-0 top-12 z-[80] min-w-36 rounded-xl border border-outline-variant bg-white p-1 shadow-xl">{languages.map((item) => <button key={item} type="button" aria-current={item === language} onClick={() => { setLanguage(item); setOpen(false); }} className={`block w-full rounded-lg px-3 py-2 text-left text-sm ${item === language ? "bg-primary text-white" : "hover:bg-surface-container-low"}`}>{languageLabels[item]}</button>)}</div>}</div>;
 }
