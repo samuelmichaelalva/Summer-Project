@@ -311,24 +311,32 @@ const morePhrases: [string, string, string, string, string][] = [
 extraPhrases.push(...morePhrases);
 extraPhrases.forEach(([english, ...translated]) => { phrases[english] = Object.fromEntries(languages.map((language, index) => [language, translated[index]])) as Record<Language, string>; });
 
+const missingTranslationKeys = languages.slice(1).flatMap((language) => Object.keys(words.English).filter((key) => !words[language]?.[key as Key]).map((key) => `${language}.${key}`));
+const missingPhraseTranslations = Object.entries(phrases).flatMap(([phrase, translations]) => languages.filter((language) => !translations?.[language]).map((language) => `${language}:${phrase}`));
+if (missingTranslationKeys.length || missingPhraseTranslations.length) {
+  console.error("Missing i18n translations:", [...missingTranslationKeys, ...missingPhraseTranslations]);
+} else {
+  console.info(`i18n audit passed: ${Object.keys(words.English).length} word keys and ${Object.keys(phrases).length} phrase keys exist for all five languages.`);
+}
+
 const originals = new WeakMap<Text, string>();
 const attributes = new WeakMap<Element, Record<string, string>>();
 const translated = (original: string, next: Language) => {
   const trimmed = original.trim();
   const phrase = Object.keys(phrases).find((item) => item.toLowerCase() === trimmed.toLowerCase());
   const key = Object.keys(words.English).find((item) => words.English[item as Key].toLowerCase() === trimmed.toLowerCase());
-  let value = phrases[phrase || trimmed]?.[next] || (key ? words[next][key as Key] : original);
+  let value = phrases[phrase || trimmed]?.[next] ?? (key ? words[next]?.[key as Key] ?? words.English[key as Key] : original);
   if (value === original && next !== "English") {
     for (const source of Object.keys(phrases).sort((a, b) => b.length - a.length)) {
       if (source.length < 4 || !trimmed.toLowerCase().includes(source.toLowerCase())) continue;
-      value = value.replace(new RegExp(source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), phrases[source][next]);
+      value = value.replace(new RegExp(source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), phrases[source]?.[next] ?? phrases[source]?.English ?? source);
     }
   }
   return value.replace(/JanSeva AI|JanSeva/gi, (token) => token.toLowerCase().includes("ai") ? "JanSeva AI" : "JanSeva");
 };
 
 type I18nContext = { language: Language; setLanguage: (language: Language) => void; t: (key: Key) => string; translate: (text: string) => string };
-const Context = createContext<I18nContext>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key], translate: (text) => text });
+const Context = createContext<I18nContext>({ language: "English", setLanguage: () => {}, t: (key) => words.English[key] ?? key, translate: (text) => text });
 
 export function LanguageProvider({ children, initialLanguage = "English" }: { children: React.ReactNode; initialLanguage?: Language }) {
   const [language, setLanguageState] = useState<Language>(initialLanguage);
@@ -338,7 +346,7 @@ export function LanguageProvider({ children, initialLanguage = "English" }: { ch
   // React text nodes, which prevents stale-language caching between switches.
   const translatePage = (next: Language) => { document.querySelectorAll<HTMLElement>("[placeholder], [aria-label], [title]").forEach((element) => { const saved = attributes.get(element) || {}; attributes.set(element, saved); ["placeholder", "aria-label", "title"].forEach((name) => { const original = saved[name] || element.getAttribute(name); if (!original) return; saved[name] = original; element.setAttribute(name, translated(original, next)); }); }); };
   const setLanguage = (next: Language) => { setLanguageState(next); localStorage.setItem("janseva-language", next); document.cookie = `janseva-language=${encodeURIComponent(next)}; path=/; max-age=31536000; samesite=lax`; document.documentElement.lang = languageCodes[next]; translatePage(next); fetch("/api/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: next }) }).catch(() => {}); };
-  const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language][key], translate: (text: string) => translated(text, language) }), [language]);
+  const value = useMemo(() => ({ language, setLanguage, t: (key: Key) => words[language]?.[key] ?? words.English[key] ?? key, translate: (text: string) => translated(text, language) }), [language]);
   useEffect(() => { document.documentElement.lang = languageCodes[language]; translatePage(language); document.body.dataset.i18nReady = "true"; const observer = new MutationObserver(() => translatePage(language)); observer.observe(document.body, { childList: true, subtree: true }); return () => observer.disconnect(); }, [language]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
