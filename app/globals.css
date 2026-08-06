@@ -20,9 +20,6 @@ body {
   color: #131b2e;
 }
 
-/* Prevent an English server-rendered frame from appearing before the saved
-   global language has translated the mounted app. */
-body:not([data-i18n-ready]) { visibility: hidden; }
 
 .dark { color-scheme: dark; }
 .dark body { background: #0b1220; color: #f1f5f9; }
