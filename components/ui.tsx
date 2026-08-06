@@ -154,9 +154,4 @@ function IconButton({ children, label, className = "" }: { children: React.React
     </button>
   );
 }
-  return (
-    <button aria-label={label} title={label} className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition hover:bg-surface-container-low ${className}`}>
-      {children}
-    </button>
-  );
-}
+

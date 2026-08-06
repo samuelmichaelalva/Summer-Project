@@ -1374,7 +1374,7 @@ export const Tamil: Dictionary = {
   newEligibilityMatches: "புதிய தகுதி பொருத்தங்கள்",
   statusUpdates: "விண்ணப்ப நிலை புதுப்பிப்புகள்",
   showSensitiveAmounts: "முக்கியமான நன்மைத் தொகைகளைக் காட்டவும்",
-  allowReminders: "சுயவிவர সম্পূর্ণতার நினைவூட்டல்களை அனுமதிக்கவும்",
+  allowReminders: "சுயவிவர மற்றும் நினைவூட்டல்களை அனுமதிக்கவும்",
   savePreferences: "விருப்பங்களைச் சேமிக்கவும்",
   saving: "சேமிக்கப்படுகிறது...",
 
@@ -1696,7 +1696,7 @@ export const Telugu: Dictionary = {
   totalApplications: "మొత్తం దరఖాస్తులు",
   userManagement: "వినియోగదారు నిర్వహణ",
   contactHeader: "సంప్రదింపు",
-  roleHeader: "పాత్ర",
+  roleHeader: "భూమిక",
   statusHeader: "స్థితి",
   activeStatus: "క్రియాశీల",
   inactiveStatus: "నిష్క్రియ",
@@ -1729,18 +1729,46 @@ export const dictionaries: Record<Language, Dictionary> = {
   "తెలుగు": Telugu,
 };
 
+// Auto-generate reverse lookup from English phrase values to dictionary keys
+const phraseToKeyMap: Record<string, keyof Dictionary> = {};
+(Object.keys(English) as (keyof Dictionary)[]).forEach((key) => {
+  const englishText = English[key];
+  if (englishText) {
+    phraseToKeyMap[englishText.trim().toLowerCase()] = key;
+  }
+});
+
 /**
- * Gets localized text for a given key.
+ * Gets localized text for a given key OR sentence phrase.
+ * Automatically resolves both string IDs (e.g. "findBenefits") and English phrases (e.g. "Find government benefits").
  * Always falls back to English if key is missing in selected language,
  * ensuring no undefined, null, or empty string is ever displayed.
  */
-export function getTranslation(language: Language, key: keyof Dictionary): string {
+export function getTranslation(language: Language, keyOrPhrase: string): string {
+  if (!keyOrPhrase) return "";
   const dict = dictionaries[language] ?? dictionaries.English;
-  const val = dict[key] ?? dictionaries.English[key];
-  if (!val) {
-    return key;
+
+  // 1. Direct dictionary key match
+  if (keyOrPhrase in dict) {
+    return dict[keyOrPhrase as keyof Dictionary] || dictionaries.English[keyOrPhrase as keyof Dictionary] || keyOrPhrase;
   }
-  return val;
+
+  // 2. Phrase lookup (case-insensitive)
+  const normalized = keyOrPhrase.trim().toLowerCase();
+  const matchedKey = phraseToKeyMap[normalized];
+  if (matchedKey && dict[matchedKey]) {
+    let result = dict[matchedKey];
+    // Preserve brand names strictly in English
+    result = result.replace(/JanSeva AI|JanSeva/gi, (token) =>
+      token.toLowerCase().includes("ai") ? "JanSeva AI" : "JanSeva"
+    );
+    return result;
+  }
+
+  // 3. Fallback: Return original phrase if brand name or unmapped string
+  return keyOrPhrase.replace(/JanSeva AI|JanSeva/gi, (token) =>
+    token.toLowerCase().includes("ai") ? "JanSeva AI" : "JanSeva"
+  );
 }
 
 /**
@@ -1771,7 +1799,6 @@ export function auditDictionaries(): void {
   }
 }
 
-// Run audit once on load
 if (process.env.NODE_ENV !== "production") {
   auditDictionaries();
 }
